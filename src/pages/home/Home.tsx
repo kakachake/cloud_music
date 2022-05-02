@@ -1,19 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-class Home extends React.Component<any, any> {
-  handleClick = () => {
-    console.log('click', this)
-  }
-  render() {
-    return (
-      <Wrapper>
-        <button onClick={() => this.handleClick}>点击</button>
-      </Wrapper>
-    )
-  }
+import { FunctionComponent } from 'react'
+import { Outlet } from 'react-router-dom'
+import style from './Home.module.css'
+interface HomeProps {}
+
+const Home: FunctionComponent<HomeProps> = () => {
+  return (
+    <div className={style.home}>
+      <div className={style.homeHeader}>
+        <div className={`${style.headerItem} ${style.active}`}>个性推荐</div>
+        <div className={style.headerItem}>歌单</div>
+      </div>
+      <div>
+        <Outlet />
+      </div>
+    </div>
+  )
 }
 
-const Wrapper = styled.div`
-  background: #000;
-`
 export default Home

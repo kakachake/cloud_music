@@ -82,16 +82,21 @@ export class AudioController {
     this.store!.dispatch(musicControlSlice.actions.setCurrentTime(time))
   }
   setVolume(volume: number) {
+    console.log(volume)
+
+    if (volume === 0) {
+      this.store?.dispatch(musicControlSlice.actions.setIsMute(true))
+    } else {
+      this.store?.dispatch(musicControlSlice.actions.setIsMute(false))
+      this.store!.dispatch(musicControlSlice.actions.setVolume(volume))
+    }
     this.audio.volume = volume
-    this.store!.dispatch(musicControlSlice.actions.setVolume(volume))
   }
   toggleVolume() {
     if (this.audio.volume === 0) {
       this.setVolume(this.store?.getState().musicControl.volume ?? 0.5)
-      this.store?.dispatch(musicControlSlice.actions.setIsMute(false))
     } else {
-      this.audio.volume = 0
-      this.store?.dispatch(musicControlSlice.actions.setIsMute(true))
+      this.setVolume(0)
     }
   }
 }

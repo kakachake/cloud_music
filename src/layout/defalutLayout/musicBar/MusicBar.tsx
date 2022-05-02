@@ -1,16 +1,17 @@
 import { FunctionComponent } from 'react'
 import style from './musicBar.module.css'
 import MusicControl from '../../../components/musicControl/MusicControl'
-import { createFromIconfontCN } from '@ant-design/icons'
+
 import { connect } from 'react-redux'
 import VolumeControl from '../../../components/volumeControl/VolumeControl'
-const IconFont = createFromIconfontCN({
-  scriptUrl: 'https://at.alicdn.com/t/font_3370146_f9nlawuexbc.js'
-})
+import { IconFont } from '../../../assets/css/iconFont'
 import audioInstance from '../../../controller/musicPlayer'
+import { useSelector } from '../../../redux/hooks'
 import { RootState } from '../../../redux/store'
-import { MusicControlState } from '../../../redux/musicControl/slice'
+
 const MusicBar: FunctionComponent = () => {
+  const isMute = useSelector((state: RootState) => state.musicControl.isMute)
+
   const toggleVolume = () => {
     audioInstance.toggleVolume()
   }
@@ -23,11 +24,16 @@ const MusicBar: FunctionComponent = () => {
       </div>
       <div className={style.other}>
         <div className={style.volume}>
-          <IconFont onClick={toggleVolume} className={style.icon} type={'icon-sound-on'} />
+          <IconFont
+            onClick={toggleVolume}
+            className={style.icon}
+            type={`${isMute ? 'icon-sound-off' : 'icon-sound-on'}`}
+          />
           <div className={style.volumeControl}>
             <VolumeControl />
           </div>
         </div>
+        <IconFont className={style.icon} type={`icon-playlist`} />
       </div>
     </div>
   )

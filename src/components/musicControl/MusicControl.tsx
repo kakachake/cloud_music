@@ -120,7 +120,6 @@ class MusicControl extends React.Component<PropsType, StateType> {
               ></div>
             </div>
           </div>
-          <div>{this.props.isMute === true ? '1' : '2'}</div>
           <div className={style.totalTime}>{parseSecondToTIme(this.props.duration)}</div>
         </div>
       </div>

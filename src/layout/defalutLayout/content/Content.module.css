@@ -1,0 +1,16 @@
+.content {
+  height: calc(100vh - var(--headerHeight) - var(--musicBarHeight));
+  position: relative;
+  display: flex;
+}
+
+.siderBar {
+  border-right: 1px solid #e5e5e5;
+  height: 100%;
+  width: var(--sideBarWidth);
+  flex: 0 0 var(--sideBarWidth);
+}
+
+.mainPage {
+  flex: 1;
+}
