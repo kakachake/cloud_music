@@ -1,0 +1,11 @@
+:root {
+  --color: #fff;
+  --backgroundColor: #ec4141;
+  --iconColor: #333333;
+  --iconSize: 24px;
+  --minWidth: 1024px;
+}
+
+.dark {
+  --color: #000;
+}
