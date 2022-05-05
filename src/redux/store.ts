@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { musicControlSlice } from './musicControl/slice'
 import { musicListSlice } from './musicList/slice'
+import { userSlice } from './user/slice'
 import musicInstance from '../controller/musicPlayer'
 const rootReducer = combineReducers({
   musicControl: musicControlSlice.reducer,
-  musicList: musicListSlice.reducer
+  musicList: musicListSlice.reducer,
+  user: userSlice.reducer
 })
 
 const store = configureStore({

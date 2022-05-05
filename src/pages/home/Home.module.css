@@ -9,10 +9,9 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  height: 54px;
-  padding: 10px 0;
+  height: 34px;
+
   line-height: 34px;
-  box-sizing: border-box;
 }
 
 .headerItem {
@@ -37,4 +36,10 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+.homeContent {
+  background-color: #fff;
+  padding: 10px 0;
+  max-width: 1000px;
+  margin: 0 auto;
 }

@@ -11,7 +11,7 @@
 
 .logoWraper {
   width: 176px;
-  height: 69px;
+  height: 64px;
   background-position: 0 0;
 }
 
@@ -82,4 +82,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.loginItem {
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loginItem a {
+  color: var(--color);
+}
+
+.loginItem .avatar {
+  height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  /* margin-right: 10px; */
 }
