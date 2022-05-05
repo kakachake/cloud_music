@@ -10,9 +10,14 @@ import { Link } from 'react-router-dom'
 import { formatNumber, formatTime } from '../../../utils'
 import HeaderButton from './headerButton/HeaderButton'
 import style from './PlayListHeader.module.css'
+
+export enum PLAY_LIST_TYPE {
+  songSheet = '歌单'
+}
+
 interface PlayListHeaderProps {
   listInfo: any
-  type: string
+  type: PLAY_LIST_TYPE
 }
 const IconFont = createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_3370146_f9nlawuexbc.js'
@@ -61,6 +66,30 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({ listInfo, type
             content={`收藏(${formatNumber(listInfo.shareCount)})`}
           />
           <HeaderButton icon={<DownloadOutlined />} content={`下载全部`} />
+        </div>
+        <div className={style.otherDesc}>
+          {type === PLAY_LIST_TYPE.songSheet ? (
+            <div>
+              <div className={`${style.otherDescItem} ${style.tags}`}>
+                标签：
+                {listInfo?.tags?.map((tag: any, idx: number) => (
+                  <div key={idx} className={style.tag}>
+                    {idx != 0 ? '/ ' : ''}
+                    {tag}
+                  </div>
+                ))}
+              </div>
+              <div className={`${style.otherDescItem}`}>
+                <div>歌曲：{listInfo.trackCount}</div>
+                <div>播放：{formatNumber(listInfo.playCount)}</div>
+              </div>
+              <div className={`${style.otherDescItem}`}>
+                <div>简介：{listInfo.description}</div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </div>

@@ -1,16 +1,33 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import style from './Home.module.css'
 import Toast from '../../components/Toast/Toast'
+import TabBar from '../component/tabBar/TabBar'
+import TabBarItem from '../component/tabBar/TabBarItem'
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
+  const [tabList, setTabList] = useState([
+    {
+      title: '个性推荐',
+      path: '/'
+    },
+    {
+      title: '歌单',
+      path: '/playList'
+    }
+  ])
   return (
     <div className={style.home}>
-      <div className={style.homeHeader}>
-        <div className={`${style.headerItem} ${style.active}`}>个性推荐</div>
-        <div className={style.headerItem}>歌单</div>
-      </div>
+      <TabBar route={true}>
+        {tabList.map((item, index) => {
+          return (
+            <TabBarItem key={index} path={item.path}>
+              {item.title}
+            </TabBarItem>
+          )
+        })}
+      </TabBar>
       <div className={style.homeContent}>
         <Outlet />
       </div>

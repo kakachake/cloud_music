@@ -1,9 +1,8 @@
 .playListHeader {
-  min-height: 280px;
-  margin: var(--defaultPadding);
+  min-height: 220px;
+
   display: flex;
   flex-direction: row;
-  padding: 10px;
 }
 
 .listDescribe > * {
@@ -11,6 +10,7 @@
 }
 
 .listImage {
+  flex: 0 0 200px;
   height: 200px;
   width: 200px;
   overflow: hidden;
@@ -95,4 +95,30 @@
 
 .handle > * {
   margin-right: 10px;
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+}
+
+.tags .tag {
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.otherDesc .otherDescItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.otherDesc .otherDescItem > * {
+  margin-right: 8px;
 }

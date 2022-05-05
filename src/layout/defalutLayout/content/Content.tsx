@@ -15,6 +15,7 @@ const Content: FunctionComponent = () => {
         <Routes>
           <Route path='/' element={<Home />}>
             <Route path='' element={<Suggest />} />
+            <Route path='/playList' element={<Suggest />} />
           </Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>
         </Routes>
