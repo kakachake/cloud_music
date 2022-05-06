@@ -114,7 +114,7 @@
 .otherDesc .otherDescItem {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   font-size: 12px;
   line-height: 20px;
 }

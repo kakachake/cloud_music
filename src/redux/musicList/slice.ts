@@ -1,13 +1,13 @@
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-interface MusicListState {
+export interface MusicListState {
   list: any[]
   current: number
 }
 
 const initialState: MusicListState = {
   list: [],
-  current: 0
+  current: -1
 }
 
 export const musicListSlice = createSlice({
@@ -16,9 +16,14 @@ export const musicListSlice = createSlice({
   reducers: {
     setList: (state, action: PayloadAction<any[]>) => {
       state.list = action.payload
+      state.current = 0
     },
     setCurrent: (state, action: PayloadAction<number>) => {
       state.current = action.payload
+    },
+    addSongToPlayList: (state, action: PayloadAction<any>) => {
+      state.list.splice(state.current, 0, action.payload)
+      state.current++
     }
   }
 })

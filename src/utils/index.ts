@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-export function parseSecondToTIme(second: number) {
+export function parseSecondToTime(second: number) {
   second = Math.floor(second)
   const hour = Math.floor(second / 3600)
   const minute = Math.floor((second - hour * 3600) / 60)
@@ -30,4 +30,39 @@ export function formatNumber(num: number) {
 //dayjs 时间戳转换成时间
 export function formatTime(time: number | string, format = 'YYYY-MM-DD HH:mm:ss') {
   return dayjs(time).format(format)
+}
+
+export function onDoubleClick() {
+  let isClick = false
+  let clickNum = 0
+  return function ({
+    singleClick,
+    doubleClick
+  }: {
+    singleClick: () => void
+    doubleClick: () => void
+  }) {
+    // 如果没有绑定双击函数，直接执行单击程序
+    if (!doubleClick) {
+      return singleClick && singleClick()
+    }
+
+    clickNum++
+    // 毫秒内点击过后阻止执行定时器
+    if (isClick) {
+      return
+    }
+    isClick = true
+
+    setTimeout(() => {
+      // 超过1次都属于双击
+      if (clickNum > 1) {
+        doubleClick && doubleClick()
+      } else {
+        singleClick && singleClick()
+      }
+      clickNum = 0
+      isClick = false
+    }, 300)
+  }
 }

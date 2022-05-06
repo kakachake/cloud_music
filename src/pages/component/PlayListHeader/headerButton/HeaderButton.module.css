@@ -8,6 +8,7 @@
   cursor: pointer;
   font-size: 0;
   transition: all 0.3s;
+  user-select: none;
 }
 .headerButton:hover {
   background-color: #f2f2f2;

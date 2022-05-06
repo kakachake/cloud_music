@@ -31,8 +31,6 @@ export const userSlice = createSlice({
     [getUserInfo.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.userInfo = action.payload.profile
       state.userAccount = action.payload.account
-      console.log(state.userInfo)
-      console.log(state.userAccount)
     }
   }
 })

@@ -2,11 +2,16 @@ import { StepBackwardOutlined } from '@ant-design/icons'
 import React from 'react'
 import style from './MusicControl.module.css'
 import { createFromIconfontCN } from '@ant-design/icons'
-import { parseSecondToTIme } from '../../utils'
+import { parseSecondToTime } from '../../utils'
 import { connect } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { musicControlSlice, MusicControlState } from '../../redux/musicControl/slice'
+import store, { RootState } from '../../redux/store'
+import {
+  getSongInfoAndSet,
+  musicControlSlice,
+  MusicControlState
+} from '../../redux/musicControl/slice'
 import audioInstance from '../../controller/musicPlayer'
+import { musicListSlice, MusicListState } from '../../redux/musicList/slice'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_3370146_f9nlawuexbc.js'
@@ -16,13 +21,12 @@ interface StateType {
   percent: number
 }
 
-interface PropsType extends MusicControlState {
+interface PropsType extends MusicControlState, MusicListState {
   setCurTime: (curTime: number) => void
   setDuration: (duration: number) => void
   setIsPlay: (isPlay: boolean) => void
   setProgress: (progress: number) => void
   setAdjust: (adjust: boolean) => void
-  setMusicInfo: (musicInfo: any) => void
 }
 
 class MusicControl extends React.Component<PropsType, StateType> {
@@ -79,20 +83,23 @@ class MusicControl extends React.Component<PropsType, StateType> {
     })
   }
   changeMusic = (direction: number) => {
-    const music = [
-      'http://m7.music.126.net/20220501215219/0b4fbd45b28b6fbb8203d898f038dc0e/ymusic/obj/w5zDlMODwrDDiGjCn8Ky/14056028108/0d1f/c4d2/7c02/887fc0efeb42f0e427782ff1e7904a2d.mp3',
-      'http://m7.music.126.net/20220501215219/0b4fbd45b28b6fbb8203d898f038dc0e/ymusic/obj/w5zDlMODwrDDiGjCn8Ky/14056028108/0d1f/c4d2/7c02/887fc0efeb42f0e427782ff1e7904a2d.mp3'
-    ]
-    this.props.setMusicInfo({
-      url: music[direction]
-    })
+    const { list, current } = this.props
+    const newIndex = current + direction
+    if (newIndex < 0) {
+      return
+    }
+    if (newIndex > list.length - 1) {
+      return
+    }
+    store.dispatch(getSongInfoAndSet(list[newIndex]))
+    store.dispatch(musicListSlice.actions.setCurrent(newIndex))
   }
   render() {
     return (
       <div className={style.musicControl}>
         <div className={style.top}>
           <IconFont
-            onClick={() => this.changeMusic(0)}
+            onClick={() => this.changeMusic(-1)}
             className={style.icon}
             type='icon-play-previous'
           />
@@ -108,7 +115,7 @@ class MusicControl extends React.Component<PropsType, StateType> {
           />
         </div>
         <div className={style.bottom}>
-          <div className={style.curTime}>{parseSecondToTIme(this.props.currentTime)}</div>
+          <div className={style.curTime}>{parseSecondToTime(this.props.currentTime)}</div>
           <div id='progressBar' onClick={this.handlePgClick} className={style.progress}>
             <div className={style.progressBar}>
               <div style={{ width: `${this.props.progress}%` }} className={style.curBar}>
@@ -120,7 +127,7 @@ class MusicControl extends React.Component<PropsType, StateType> {
               ></div>
             </div>
           </div>
-          <div className={style.totalTime}>{parseSecondToTIme(this.props.duration)}</div>
+          <div className={style.totalTime}>{parseSecondToTime(this.props.duration)}</div>
         </div>
       </div>
     )
@@ -129,14 +136,14 @@ class MusicControl extends React.Component<PropsType, StateType> {
 
 export default connect(
   (state: RootState) => ({
-    ...state.musicControl
+    ...state.musicControl,
+    ...state.musicList
   }),
   (dispatch: any) => ({
     setCurTime: (curTime: number) => dispatch(musicControlSlice.actions.setCurrentTime(curTime)),
     setDuration: (duration: number) => dispatch(musicControlSlice.actions.setDuration(duration)),
     setIsPlay: (isPlay: boolean) => dispatch(musicControlSlice.actions.setIsPlaying(isPlay)),
     setProgress: (progress: number) => dispatch(musicControlSlice.actions.setProgress(progress)),
-    setAdjust: (adjust: boolean) => dispatch(musicControlSlice.actions.setAujsting(adjust)),
-    setMusicInfo: (music: string) => dispatch(musicControlSlice.actions.setMusicInfo(music))
+    setAdjust: (adjust: boolean) => dispatch(musicControlSlice.actions.setAujsting(adjust))
   })
 )(MusicControl)

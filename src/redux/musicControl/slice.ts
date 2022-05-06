@@ -1,5 +1,31 @@
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
+import Toast from '../../components/Toast'
 import musicInstance from '../../controller/musicPlayer'
+import { getSongLyric, getSongUrl } from '../../service/api/music'
+
+export const getSongInfoAndSet = createAsyncThunk(
+  'musicControl/getSongInfoAndSet',
+  async (song: any) => {
+    const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
+    const [lyric, url] = res.map((item: any) => item.value)
+    console.log(lyric, url)
+
+    if (lyric.code === 200 && url.code === 200) {
+      return {
+        song,
+        lyric: lyric.lrc.lyric,
+        url: url.data[0].url
+      }
+    } else {
+      Toast.error('获取歌曲信息失败')
+      return {
+        song,
+        lyric: '',
+        url: ''
+      }
+    }
+  }
+)
 
 export interface MusicControlState {
   isPlaying: boolean
@@ -27,12 +53,9 @@ const initialState: MusicControlState = {
   volume: 0.5,
   progress: 0,
   musicInfo: {
-    url: '',
-    name: '海阔天空',
-    singer: '',
-    album: '',
-    cover: '',
-    id: '347230'
+    musicDetail: {},
+    musicLyric: {},
+    comment: {}
   },
   canplay: false,
   //正在调整
@@ -77,6 +100,15 @@ export const musicControlSlice = createSlice({
     },
     setIsMute: (state, action: PayloadAction<boolean>) => {
       state.isMute = action.payload
+    }
+  },
+  extraReducers: {
+    [getSongInfoAndSet.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      console.log('getSongInfoAndSet', action.payload)
+
+      state.musicInfo.musicDetail = action.payload.song
+      state.musicInfo.musicLyric = action.payload.lrc
+      musicInstance.setUrl(action.payload.url)
     }
   }
 })

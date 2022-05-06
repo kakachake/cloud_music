@@ -1,5 +1,7 @@
 import { FunctionComponent, ReactElement } from 'react'
 import style from './HeaderButton.module.css'
+import styled from 'styled-components'
+
 interface HeaderButtonProps {
   icon: ReactElement
   onClick?: () => void
@@ -16,14 +18,17 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   direction = 'both',
   bg,
   bgHover,
-  border
+  border,
+  onClick
 }) => {
   return (
-    <div
+    <HeaderButtonWrap
+      onClick={() => onClick && onClick()}
+      bgHover={bgHover}
+      bg={bg}
       style={
         direction === 'right'
           ? {
-              background: bg,
               color: '#fff',
               border: 'none',
               paddingLeft: '5px',
@@ -34,15 +39,22 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
                 : {})
             }
           : direction === 'left'
-          ? { background: bg, color: '#fff', border: 'none', paddingRight: '5px' }
+          ? { color: '#fff', border: 'none', paddingRight: '5px' }
           : {}
       }
       className={`${style.headerButton} ${style['border-' + direction]}`}
     >
       <div className={style.icon}>{icon}</div>
       {content && <div className={style.content}>{content}</div>}
-    </div>
+    </HeaderButtonWrap>
   )
 }
 
 export default HeaderButton
+
+const HeaderButtonWrap = styled.div<any>`
+  background-color: ${(props) => props.bg || '#fff'};
+  &:hover {
+    background: ${(props) => (props.bgHover ? props.bgHover : '#f2f2f2')};
+  }
+`
