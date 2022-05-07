@@ -1,28 +1,46 @@
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import Toast from '../../components/Toast'
+import { getMusicById } from '../../controller/musicControl'
 import musicInstance from '../../controller/musicPlayer'
-import { getSongLyric, getSongUrl } from '../../service/api/music'
+import { getSongComment, getSongLyric, getSongUrl } from '../../service/api/music'
+import { musicListSlice } from '../musicList/slice'
+import store from '../store'
 
 export const getSongInfoAndSet = createAsyncThunk(
   'musicControl/getSongInfoAndSet',
   async (song: any) => {
-    const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
-    const [lyric, url] = res.map((item: any) => item.value)
-    console.log(lyric, url)
+    try {
+      const res = await Promise.allSettled([
+        getSongLyric(song.id),
+        getSongUrl(song.id),
+        getSongComment(song.id)
+      ])
+      const [lyric, url, comment] = res.map((item: any) => item.value)
+      console.log(lyric, url, comment)
 
-    if (lyric.code === 200 && url.code === 200) {
-      return {
-        song,
-        lyric: lyric.lrc.lyric,
-        url: url.data[0].url
+      if (lyric.code === 200 && url.code === 200) {
+        store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
+        return {
+          song,
+          lyric: lyric.lrc.lyric,
+          url: url.data[0].url,
+          comment
+        }
+      } else {
+        Toast.error('获取歌曲信息失败')
+        return {
+          song,
+          lyric: '',
+          url: ''
+        }
       }
-    } else {
+    } catch (error) {
       Toast.error('获取歌曲信息失败')
-      return {
-        song,
-        lyric: '',
-        url: ''
-      }
+      // return {
+      //   song,
+      //   lyric: '',
+      //   url: ''
+      // }
     }
   }
 )
@@ -36,7 +54,12 @@ export interface MusicControlState {
   duration: number
   progress: number
   volume: number
-  musicInfo: any
+  musicInfo: {
+    song: any
+    lyric: any
+    url: string
+    comment: any
+  }
   canplay: boolean
   isAdjusting: boolean
   bufferProgress: number
@@ -53,9 +76,10 @@ const initialState: MusicControlState = {
   volume: 0.5,
   progress: 0,
   musicInfo: {
-    musicDetail: {},
-    musicLyric: {},
-    comment: {}
+    song: {},
+    lyric: {},
+    comment: {},
+    url: ''
   },
   canplay: false,
   //正在调整
@@ -106,8 +130,9 @@ export const musicControlSlice = createSlice({
     [getSongInfoAndSet.fulfilled.type]: (state, action: PayloadAction<any>) => {
       console.log('getSongInfoAndSet', action.payload)
 
-      state.musicInfo.musicDetail = action.payload.song
-      state.musicInfo.musicLyric = action.payload.lrc
+      state.musicInfo.song = action.payload.song
+      state.musicInfo.lyric = action.payload.lyric
+      state.musicInfo.comment = action.payload.comment
       musicInstance.setUrl(action.payload.url)
     }
   }

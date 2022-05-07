@@ -84,6 +84,14 @@
   align-items: center;
 }
 
+.icon {
+  font-size: 48px;
+}
+
+.icon > svg {
+  width: 4em;
+}
+
 .right {
   display: flex;
   justify-content: center;

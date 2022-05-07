@@ -4,27 +4,29 @@ import logo from '../../../assets/img/logo.png'
 import { LeftOutlined, RightOutlined, SearchOutlined } from '@ant-design/icons'
 import createLogin from '../../../components/login'
 import { useSelector } from '../../../redux/hooks'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { IconFont } from '../../../assets/css/iconFont'
 const Header: FunctionComponent = () => {
   const handleLogin = () => {
     console.log('login')
     createLogin.create()
   }
+  const navigate = useNavigate()
   const userInfo = useSelector((state) => state.user.userInfo)
   return (
     <div className={style.header}>
       <div className={style.left}>
         <div className={style.logoWraper}>
-          <a href='/' className={style.logo}>
-            <img src={logo} alt='网易云音乐' />
-          </a>
+          <Link to='/' className={style.logo}>
+            <IconFont className={style.icon} type={`icon-wangyiyunyinlelogo-copy`} />
+          </Link>
         </div>
         <div className={style.navBar}>
           <div className={style.navBtn}>
-            <div onClick={() => history.back()} className={style.iconWrap}>
+            <div onClick={() => navigate(-1)} className={style.iconWrap}>
               <LeftOutlined />
             </div>
-            <div onClick={() => history.forward()} className={style.iconWrap}>
+            <div onClick={() => navigate(1)} className={style.iconWrap}>
               <RightOutlined />
             </div>
           </div>

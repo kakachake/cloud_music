@@ -3,10 +3,12 @@ import { musicControlSlice } from './musicControl/slice'
 import { musicListSlice } from './musicList/slice'
 import { userSlice } from './user/slice'
 import musicInstance from '../controller/musicPlayer'
+import { publicSlice } from './publicSlice/slice'
 const rootReducer = combineReducers({
   musicControl: musicControlSlice.reducer,
   musicList: musicListSlice.reducer,
-  user: userSlice.reducer
+  user: userSlice.reducer,
+  public: publicSlice.reducer
 })
 
 const store = configureStore({

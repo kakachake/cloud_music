@@ -17,12 +17,12 @@
   height: 100%;
   flex: 1;
   background-color: #fff;
+  overflow: hidden;
 }
 
 .play {
   height: 100%;
   flex: 0 0 580px;
-
   width: 580px;
   display: flex;
   margin: 0 40px;

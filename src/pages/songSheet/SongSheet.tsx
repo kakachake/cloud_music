@@ -12,6 +12,7 @@ import { CloudDownloadOutlined, HeartOutlined } from '@ant-design/icons'
 import store from '../../redux/store'
 import { musicListSlice } from '../../redux/musicList/slice'
 import { getSongInfoAndSet } from '../../redux/musicControl/slice'
+import { addMusic } from '../../controller/musicControl'
 
 interface SongSheetProps {}
 
@@ -88,15 +89,10 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
     }
   ]
   const onColDoubleClick = (data: any) => {
-    store.dispatch(musicListSlice.actions.addSongToPlayList(data))
-    store.dispatch(getSongInfoAndSet(data))
+    addMusic(data)
   }
   const handlePlayList = () => {
-    console.log(111)
-
     const { tracks } = songSheetInfo
-    console.log(tracks)
-
     store.dispatch(musicListSlice.actions.setList(tracks))
     store.dispatch(getSongInfoAndSet(tracks?.[0]))
   }

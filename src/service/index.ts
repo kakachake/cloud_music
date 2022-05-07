@@ -1,6 +1,7 @@
 import AxRequest from './request/index'
 import { BASE_URL } from './request/config'
 import store from '../redux/store'
+import Toast from '../components/Toast'
 
 const axRequest = new AxRequest({
   baseURL: BASE_URL,
@@ -23,6 +24,7 @@ const axRequest = new AxRequest({
     },
     responseErrorInterceptor: (error) => {
       console.log(error)
+      Toast.error(error.message)
     }
   }
 })

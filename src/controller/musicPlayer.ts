@@ -1,5 +1,6 @@
 import { musicControlSlice } from '../redux/musicControl/slice'
 import { Store } from '../redux/store'
+import { changeMusic } from './musicControl'
 export class AudioController {
   audio: HTMLAudioElement
   store: Store | undefined
@@ -47,6 +48,7 @@ export class AudioController {
 
     this.audio.addEventListener('ended', () => {
       //TODO 播放完成,调用musicListSLice播放下一首
+      changeMusic(1)
     })
   }
   setUrl(url: string) {
@@ -57,12 +59,11 @@ export class AudioController {
     this.audio
       .play()
       .then((e) => {
-        console.log(e)
         this.store!.dispatch(musicControlSlice.actions.setIsPlaying(true))
       })
       .catch((err) => {
         console.log(err)
-        alert('播放失败')
+
         this.store!.dispatch(musicControlSlice.actions.setIsPlaying(false))
       })
   }

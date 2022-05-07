@@ -20,15 +20,16 @@ interface TableProps {
   data: any[]
   showIdx?: boolean
   onColDoubleClick?: (data: any, idx: number) => void
+  hideHeader?: boolean
 }
 
 const MuTable: FunctionComponent<TableProps> = (props) => {
-  const { columns, data, showIdx, onColDoubleClick } = props
+  const { columns, data, showIdx, onColDoubleClick, hideHeader = false } = props
   return (
     <div className={style.muTable}>
       <table>
         <thead>
-          <tr className={`${style.muTableHeader}`}>
+          <tr style={hideHeader ? { display: 'none' } : {}} className={`${style.muTableHeader}`}>
             {showIdx === true && (
               <th style={{ textAlign: 'center' }}>
                 <div></div>
@@ -58,7 +59,7 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
                 )}
                 {columns.map((col) => {
                   return (
-                    <td key={col.title} style={{ textAlign: col.align }}>
+                    <td key={col.title} style={{ width: col.width, textAlign: col.align }}>
                       {col.render ? col.render(item, idx) : item[col.dataIndex]}
                     </td>
                   )

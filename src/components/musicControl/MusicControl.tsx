@@ -5,6 +5,7 @@ import { createFromIconfontCN } from '@ant-design/icons'
 import { parseSecondToTime } from '../../utils'
 import { connect } from 'react-redux'
 import store, { RootState } from '../../redux/store'
+import { changeMusic } from '../../controller/musicControl'
 import {
   getSongInfoAndSet,
   musicControlSlice,
@@ -82,24 +83,13 @@ class MusicControl extends React.Component<PropsType, StateType> {
       window.removeEventListener('mousemove', _mouseMoveHandler)
     })
   }
-  changeMusic = (direction: number) => {
-    const { list, current } = this.props
-    const newIndex = current + direction
-    if (newIndex < 0) {
-      return
-    }
-    if (newIndex > list.length - 1) {
-      return
-    }
-    store.dispatch(getSongInfoAndSet(list[newIndex]))
-    store.dispatch(musicListSlice.actions.setCurrent(newIndex))
-  }
+
   render() {
     return (
       <div className={style.musicControl}>
         <div className={style.top}>
           <IconFont
-            onClick={() => this.changeMusic(-1)}
+            onClick={() => changeMusic(-1)}
             className={style.icon}
             type='icon-play-previous'
           />
@@ -108,11 +98,7 @@ class MusicControl extends React.Component<PropsType, StateType> {
             onClick={this.handleTogglePlay}
             type={this.props.isPlaying ? 'icon-pause' : 'icon-play'}
           />
-          <IconFont
-            onClick={() => this.changeMusic(1)}
-            className={style.icon}
-            type='icon-play-next'
-          />
+          <IconFont onClick={() => changeMusic(1)} className={style.icon} type='icon-play-next' />
         </div>
         <div className={style.bottom}>
           <div className={style.curTime}>{parseSecondToTime(this.props.currentTime)}</div>

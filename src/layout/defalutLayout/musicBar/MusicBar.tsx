@@ -7,7 +7,9 @@ import VolumeControl from '../../../components/volumeControl/VolumeControl'
 import { IconFont } from '../../../assets/css/iconFont'
 import audioInstance from '../../../controller/musicPlayer'
 import { useSelector } from '../../../redux/hooks'
-import { RootState } from '../../../redux/store'
+import store, { RootState } from '../../../redux/store'
+import MusicBarLeft from './musicBarLeft/MusicBarLeft'
+import { publicSlice } from '../../../redux/publicSlice/slice'
 
 const MusicBar: FunctionComponent = () => {
   const isMute = useSelector((state: RootState) => state.musicControl.isMute)
@@ -16,9 +18,15 @@ const MusicBar: FunctionComponent = () => {
     audioInstance.toggleVolume()
   }
 
+  const handleOpenList = () => {
+    store.dispatch(publicSlice.actions.setCurSideOpen('playList'))
+  }
+
   return (
-    <div className={style.musicBar}>
-      <div className={style.musicInfo}>musicInfo</div>
+    <div id='musicBar' className={style.musicBar}>
+      <div className={style.musicInfo}>
+        <MusicBarLeft />
+      </div>
       <div className={style.play}>
         <MusicControl />
       </div>
@@ -33,7 +41,7 @@ const MusicBar: FunctionComponent = () => {
             <VolumeControl />
           </div>
         </div>
-        <IconFont className={style.icon} type={`icon-playlist`} />
+        <IconFont onClick={handleOpenList} className={style.icon} type={`icon-playlist`} />
       </div>
     </div>
   )
