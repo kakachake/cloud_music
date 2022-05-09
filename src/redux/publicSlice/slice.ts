@@ -7,10 +7,12 @@ type SideType = 'playList' | 'message' | ''
 
 interface PublicState {
   curSideOpen: SideType
+  songDetailOpen: boolean
 }
 
 const initialState: PublicState = {
-  curSideOpen: ''
+  curSideOpen: '',
+  songDetailOpen: false
 }
 
 export const publicSlice = createSlice({
@@ -23,6 +25,9 @@ export const publicSlice = createSlice({
       } else {
         state.curSideOpen = action.payload
       }
+    },
+    setSongDetailOpen(state, action: PayloadAction<boolean>) {
+      state.songDetailOpen = action.payload
     }
   }
 })

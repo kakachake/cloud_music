@@ -78,7 +78,7 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
               />
               <HeaderButton
                 icon={<ShareAltOutlined />}
-                content={`收藏(${formatNumber(listInfo.shareCount)})`}
+                content={`分享(${formatNumber(listInfo.shareCount)})`}
               />
               <HeaderButton icon={<DownloadOutlined />} content={`下载全部`} />
             </div>
@@ -102,7 +102,11 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
                     <div
                       className={isFold ? 'line2' : ''}
                       dangerouslySetInnerHTML={{
-                        __html: '简介：' + listInfo?.description?.replaceAll('\n', '<br/>')
+                        __html:
+                          '简介：' +
+                          (listInfo.description
+                            ? listInfo?.description?.replaceAll('\n', '<br/>')
+                            : '')
                       }}
                     ></div>
                     <div style={{ cursor: 'pointer' }} onClick={handleToggleFoldDesc}>

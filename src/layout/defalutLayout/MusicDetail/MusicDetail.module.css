@@ -1,0 +1,150 @@
+.musicDetail {
+  top: 0;
+
+  background-color: rgb(243, 243, 243);
+}
+
+.content {
+  height: calc(100% - var(--musicBarHeight));
+  overflow-y: scroll;
+}
+
+.musicDetailHeader {
+  height: var(--headerHeight);
+  background-color: rgb(243, 243, 243);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.musicDetailCutIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.musicDetailCutIcons .upBtn {
+  font-size: 22px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.songInfoArea {
+  height: 560px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin: 0 10%;
+  justify-content: space-around;
+}
+.songPicWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  margin-top: 30px;
+  margin-right: 20px;
+}
+.changZhen {
+  position: absolute;
+  top: 10px;
+  left: 115px;
+  width: 120px;
+  transform-origin: 10px 10px;
+  transition: all 0.5s;
+  z-index: 20;
+}
+.changPian {
+  margin-top: 80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background-color: #c4c3c6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: circle 30s linear infinite;
+  animation-play-state: paused;
+}
+.lrc {
+  margin-top: 80px;
+  width: 500px;
+}
+
+.changPianPlay .changZhen {
+  transform: rotate(25deg);
+}
+
+.changPianPlay .changPian {
+  animation: circle 30s linear infinite;
+}
+
+.changPianInner {
+  width: 260px;
+  height: 260px;
+  background-color: #1a1c1e;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.changPianInner .changPianPic {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.changPianInner .changPianPic img {
+  width: 200px;
+  height: 200px;
+}
+
+.changPianWen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.songBaseInfo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.songBaseInfo .songName {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 50px;
+}
+
+.songBaseInfo .ar {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgb(187, 187, 187);
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(23deg);
+  }
+  100% {
+    transform: rotate(27deg);
+  }
+}

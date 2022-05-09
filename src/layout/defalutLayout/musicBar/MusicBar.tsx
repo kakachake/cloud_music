@@ -17,7 +17,10 @@ const MusicBar: FunctionComponent = () => {
   const toggleVolume = () => {
     audioInstance.toggleVolume()
   }
-
+  const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
+  const toggleChange = () => {
+    store.dispatch(publicSlice.actions.setSongDetailOpen(!songDetailOpen))
+  }
   const handleOpenList = () => {
     store.dispatch(publicSlice.actions.setCurSideOpen('playList'))
   }

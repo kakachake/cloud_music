@@ -1,0 +1,85 @@
+.lrcContainer {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+.lrcWrap {
+  text-align: center;
+  height: 100%;
+  overflow-y: scroll;
+  height: 300px;
+  box-sizing: border-box;
+  position: relative;
+}
+.lrcActive {
+  font-weight: bold;
+  color: #000;
+  font-size: 16px;
+}
+
+.lrcContent {
+  padding: 150px 0;
+  font-size: 14px;
+  color: #5e5e5e;
+}
+
+.lrcItem {
+  height: 36px;
+  line-height: 36px;
+  transition: all 0.5s;
+}
+
+.centerLine {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  height: 100%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transition: all 0.5s;
+}
+
+.lineShow {
+  opacity: 1;
+}
+
+.leftLine {
+  margin-left: 40px;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  width: 20%;
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(164, 164, 164), rgba(255, 255, 255, 0));
+}
+
+.leftTime {
+  position: absolute;
+  top: 50%;
+  left: -37px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #202020;
+}
+
+.rightPlay {
+  position: absolute;
+  top: 50%;
+  z-index: 99;
+  right: -20px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #202020;
+  cursor: pointer;
+}
+
+.rightLine {
+  margin-right: 25px;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 20%;
+  background: linear-gradient(to left, rgb(0, 0, 0), rgb(164, 164, 164), rgba(255, 255, 255, 0));
+}

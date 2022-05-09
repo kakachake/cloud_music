@@ -66,3 +66,36 @@ export function onDoubleClick() {
     }, 300)
   }
 }
+
+export const parseLrc = (lrc: string) => {
+  const lrcList = lrc.split('\n')
+
+  const lrcArr: {
+    lrc: string
+    time: number
+  }[] = []
+
+  lrcList.forEach((item: string) => {
+    const lyricExp = /^\[(\d{2}):(\d{2}).(\d*)\](.*)/
+    const timeStr = item.match(lyricExp)
+    const content = item.replace(/\[\d{2}:\d{2}\.\d*\]/g, '')
+
+    if (timeStr) {
+      const minute = +timeStr[1]
+      const second = +timeStr[2]
+      const millisecond = +timeStr[3]
+      const totalTime = minute * 60 + second + millisecond / 1000
+      console.log(totalTime)
+
+      lrcArr.push({
+        lrc: content,
+        time: totalTime
+      })
+    }
+  })
+  lrcArr.push({
+    lrc: '',
+    time: lrcArr[lrcArr.length - 1].time
+  })
+  return lrcArr
+}

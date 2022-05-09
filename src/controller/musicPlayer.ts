@@ -83,8 +83,6 @@ export class AudioController {
     this.store!.dispatch(musicControlSlice.actions.setCurrentTime(time))
   }
   setVolume(volume: number) {
-    console.log(volume)
-
     if (volume === 0) {
       this.store?.dispatch(musicControlSlice.actions.setIsMute(true))
     } else {

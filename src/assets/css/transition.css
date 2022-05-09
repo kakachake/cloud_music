@@ -1,0 +1,35 @@
+.musicDetail-enter {
+  width: 100%;
+  height: calc(100% - var(--musicBarHeight));
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  opacity: 0;
+  transform: translateY(100%);
+}
+.musicDetail-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s;
+}
+.musicDetail-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.musicDetail-exit-active {
+  width: 100%;
+  height: calc(100% - var(--musicBarHeight));
+  position: fixed;
+  top: 0;
+  transform: translateY(100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.musicDetail-enter-done {
+  width: 100%;
+  height: calc(100% - var(--musicBarHeight));
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  opacity: 1;
+}

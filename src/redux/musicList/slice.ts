@@ -24,6 +24,10 @@ export const musicListSlice = createSlice({
     addSongToPlayList: (state, action: PayloadAction<any>) => {
       state.list.splice(state.current, 0, action.payload)
       state.current++
+    },
+    clearList: (state) => {
+      state.list = []
+      state.current = -1
     }
   }
 })

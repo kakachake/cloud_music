@@ -1,25 +1,31 @@
-import { HeartOutlined } from '@ant-design/icons'
+import {
+  DownloadOutlined,
+  DownOutlined,
+  HeartOutlined,
+  ShareAltOutlined,
+  StarOutlined,
+  UpOutlined
+} from '@ant-design/icons'
 import { FunctionComponent, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../../redux/store'
+import { publicSlice } from '../../../../redux/publicSlice/slice'
+import store, { RootState } from '../../../../redux/store'
 import style from './MusicBarLeft.module.css'
 interface MusicBarLeftProps {}
 
 const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
-  const [isOpenDetail, setIsOpenDetail] = useState(false)
+  const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
   const toggleChange = () => {
-    console.log('toggleChange')
-    setIsOpenDetail(!isOpenDetail)
+    store.dispatch(publicSlice.actions.setSongDetailOpen(!songDetailOpen))
   }
   const songInfo = useSelector((state: RootState) => state.musicControl.musicInfo.song)
-  console.log(songInfo)
 
   return (
     <div>
       {songInfo.name && (
         <div
           style={{
-            transform: `${isOpenDetail ? 'translateY(-100%)' : 'translateY(0)'}`
+            transform: `${songDetailOpen ? 'translateY(-100%)' : 'translateY(0)'}`
           }}
           className={style.musicBarLeft}
         >
@@ -27,6 +33,7 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
           <div onClick={toggleChange} className={style.musicInfo}>
             <div className={style.musicPic}>
               <img src={songInfo?.al?.picUrl} alt='' />
+              <UpOutlined className={style.musicPicHover} />
             </div>
             <div className={style.songInfo}>
               <div className={`line1 ${style.songInfoNameWrap}`}>
@@ -43,8 +50,24 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
             </div>
           </div>
           {/* 点击后显示下面信息 */}
-          <div onClick={toggleChange} className={style.musicDetailCut}>
-            musicDetailCut
+          <div className={style.musicDetailCut}>
+            <div onClick={toggleChange} className={style.upBtn}>
+              <DownOutlined />
+            </div>
+            <div className={style.musicDetailCutIcons}>
+              <div className={style.musicDetailCutIconItem}>
+                <HeartOutlined />
+              </div>
+              <div className={style.musicDetailCutIconItem}>
+                <StarOutlined />
+              </div>
+              <div className={style.musicDetailCutIconItem}>
+                <DownloadOutlined />
+              </div>
+              <div className={style.musicDetailCutIconItem}>
+                <ShareAltOutlined />
+              </div>
+            </div>
           </div>
         </div>
       )}

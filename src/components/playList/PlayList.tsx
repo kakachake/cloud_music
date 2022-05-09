@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react'
+import { clearPlayList } from '../../controller/musicControl'
 import { useSelector } from '../../redux/hooks'
 import { getSongInfoAndSet } from '../../redux/musicControl/slice'
 import store from '../../redux/store'
@@ -58,6 +59,10 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
     }
   ]
 
+  const handleClearList = () => {
+    clearPlayList()
+  }
+
   return (
     <div className={style.playListWrap}>
       <div className={style.playListHeader}>
@@ -65,7 +70,9 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
         <div className={style.playListInfo}>
           <div className={style.playListCount}>总{list.length}首</div>
           <div className={style.playListHandles}>
-            <div className={style.clearList}>清空列表</div>
+            <div className={style.clearList} onClick={handleClearList}>
+              清空列表
+            </div>
           </div>
         </div>
       </div>

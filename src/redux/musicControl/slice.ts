@@ -124,6 +124,18 @@ export const musicControlSlice = createSlice({
     },
     setIsMute: (state, action: PayloadAction<boolean>) => {
       state.isMute = action.payload
+    },
+    clearMusicInfo: (state) => {
+      state.musicInfo = {
+        song: {},
+        lyric: {},
+        comment: {},
+        url: ''
+      }
+      state.progress = 0
+      state.currentTime = 0
+      state.duration = 0
+      state.bufferProgress = 0
     }
   },
   extraReducers: {
