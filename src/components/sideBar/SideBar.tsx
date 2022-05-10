@@ -1,46 +1,26 @@
-import React from 'react'
+import React, { Children, FunctionComponent } from 'react'
+import { useLocation } from 'react-router-dom'
 import style from './SideBar.module.css'
-import { linkItems } from './config'
-interface SideBarProps {}
-
-interface SideBarState {
-  activeId: number
+interface SideBarProps {
+  children: React.ReactElement<any, any>[] | React.ReactElement<any, any>
+  activeId?: number | string
+  route?: boolean
 }
 
-class SideBar extends React.Component<SideBarProps, SideBarState> {
-  constructor(props: SideBarProps) {
-    super(props)
-    this.state = {
-      activeId: 1
-    }
+const SideBar: FunctionComponent<SideBarProps> = (props) => {
+  const { route = false } = props
+  let activeId = props.activeId
+  let children = props.children
+  activeId = route ? useLocation().pathname : activeId
+  if (!Array.isArray(children)) {
+    children = [children]
   }
-  handleLinkClick = (item: any, index: number) => {
-    this.setState({
-      activeId: item.id
+  children = children?.map((o, i) => {
+    return React.cloneElement(o, {
+      activeId
     })
-  }
-  render() {
-    return (
-      <div className={style.sideBar}>
-        {/* 顶部链接按钮 */}
-        <div className={style.linkItem}>
-          {linkItems.map((item, index) => {
-            return (
-              <div
-                onClick={() => this.handleLinkClick(item, index)}
-                className={`${style.sideBarItem} ${
-                  this.state.activeId === item.id ? style.active : ''
-                }`}
-                key={index}
-              >
-                <a href={item.href}>{item.name}</a>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    )
-  }
+  })
+  return <div className={style.sideBar}>{children}</div>
 }
 
 export default SideBar

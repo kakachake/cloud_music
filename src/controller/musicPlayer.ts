@@ -1,6 +1,7 @@
 import { musicControlSlice } from '../redux/musicControl/slice'
 import { Store } from '../redux/store'
 import { changeMusic } from './musicControl'
+
 export class AudioController {
   audio: HTMLAudioElement
   store: Store | undefined

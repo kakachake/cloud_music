@@ -83,3 +83,20 @@
   width: 20%;
   background: linear-gradient(to left, rgb(0, 0, 0), rgb(164, 164, 164), rgba(255, 255, 255, 0));
 }
+
+.timeOffsetWrap {
+  position: absolute;
+  z-index: 999;
+  right: -25px;
+}
+
+.timeOffsetWrap > div {
+  width: 20px;
+  height: 20px;
+  background-color: #d2cece;
+  line-height: 20px;
+  margin-bottom: 5px;
+  text-align: center;
+  color: #afacab;
+  border-radius: 5px;
+}

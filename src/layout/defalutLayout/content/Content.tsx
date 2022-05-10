@@ -7,12 +7,27 @@ import Suggest from '../../../pages/home/suggest/Suggest'
 import SongSheet from '../../../pages/songSheet/SongSheet'
 import PlayList from '../../../components/playList/PlayList'
 import { useSelector } from '../../../redux/hooks'
+import { linkItems } from './config'
+import SideBarItem from '../../../components/sideBar/sideBarItem/SideBarItem'
+import SideBarGroup from '../../../components/sideBar/sideBarGroup/SideBarGroup'
 const Content: FunctionComponent = () => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
   return (
     <div className={style.content}>
       <div className={style.siderBar}>
-        <SideBar />
+        <SideBar route>
+          {linkItems.map((item, index) => {
+            return item.children ? (
+              <SideBarGroup title={item.name}>
+                {item?.children.map((item, index) => {
+                  return <SideBarItem key={item.href} name={item.name} href={item.href} />
+                })}
+              </SideBarGroup>
+            ) : (
+              <SideBarItem key={item.href} name={item.name} href={item.href} id={item.id} />
+            )
+          })}
+        </SideBar>
       </div>
       <div className={style.mainPage}>
         <Routes>

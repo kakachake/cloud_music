@@ -68,6 +68,8 @@ export function onDoubleClick() {
 }
 
 export const parseLrc = (lrc: string) => {
+  console.log(parseLrc)
+
   const lrcList = lrc.split('\n')
 
   const lrcArr: {
@@ -85,7 +87,6 @@ export const parseLrc = (lrc: string) => {
       const second = +timeStr[2]
       const millisecond = +timeStr[3]
       const totalTime = minute * 60 + second + millisecond / 1000
-      console.log(totalTime)
 
       lrcArr.push({
         lrc: content,

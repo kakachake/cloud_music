@@ -1,5 +1,5 @@
 import { DownOutlined, ShareAltOutlined } from '@ant-design/icons'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { publicSlice } from '../../../redux/publicSlice/slice'
 import store, { RootState } from '../../../redux/store'
 import style from './MusicDetail.module.css'
@@ -8,14 +8,22 @@ import styled from 'styled-components'
 import { useSelector } from '../../../redux/hooks'
 import Lyric from '../../../components/lyric/Lyric'
 import { parseLrc } from '../../../utils'
+import Changpian from '../../../components/changpian/Changpian'
 interface MusicDetailProps {}
 
 const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
   const handleClose = () => {
     store.dispatch(publicSlice.actions.setSongDetailOpen(false))
   }
+
+  const currentTime = useSelector((state: RootState) => state.musicControl.currentTime)
   const isPlaying = useSelector((state: RootState) => state.musicControl.isPlaying)
   const { song, lyric, comment } = useSelector((state) => state.musicControl.musicInfo)
+  const [parsedLrc, setParseLrc] = useState<any[]>([])
+  useEffect(() => {
+    setParseLrc(parseLrc(lyric))
+  }, [lyric])
+
   return (
     <div className={style.musicDetail}>
       <div className={style.musicDetailHeader}>
@@ -33,26 +41,11 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
               {song.ar.map((item: any) => item.name).join('/')} - {song.al.name}
             </div>
           </div>
-          <div className={`${style.songPicWrap} ${isPlaying ? style.changPianPlay : ''}`}>
-            <div className={style.changZhen}>
-              <img src={changzhen} alt='' />
-            </div>
-            <div className={`${style.changPian} `}>
-              <div className={style.changPianWen}>
-                <ChangPianWen idx={1} />
-                <ChangPianWen idx={2} />
-                <ChangPianWen idx={3} />
-                <ChangPianWen idx={4} />
-              </div>
-              <div className={style.changPianInner}>
-                <div className={style.changPianPic}>
-                  <img src={song?.al?.picUrl} alt='' />
-                </div>
-              </div>
-            </div>
+          <div className={`${style.songPicWrap} `}>
+            <Changpian isPlaying={isPlaying} songPicUrl={song?.al?.picUrl} />
           </div>
           <div className={style.lrc}>
-            <Lyric lrc={parseLrc(lyric)} />
+            <Lyric lrc={parsedLrc} currentTime={currentTime} />
           </div>
         </div>
       </div>
@@ -61,15 +54,3 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
 }
 
 export default MusicDetail
-
-const ChangPianWen = styled.div<{ idx: number }>`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: ${(props) => `${240 - 10 * props.idx}px`};
-  height: ${(props) => `${240 - 10 * props.idx}px`};
-
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid #292a2c;
-`
