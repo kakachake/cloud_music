@@ -77,7 +77,7 @@ const initialState: MusicControlState = {
   progress: 0,
   musicInfo: {
     song: {},
-    lyric: {},
+    lyric: '',
     comment: {},
     url: ''
   },
@@ -128,7 +128,7 @@ export const musicControlSlice = createSlice({
     clearMusicInfo: (state) => {
       state.musicInfo = {
         song: {},
-        lyric: {},
+        lyric: '',
         comment: {},
         url: ''
       }
@@ -141,7 +141,6 @@ export const musicControlSlice = createSlice({
   extraReducers: {
     [getSongInfoAndSet.fulfilled.type]: (state, action: PayloadAction<any>) => {
       console.log('getSongInfoAndSet', action.payload)
-
       state.musicInfo.song = action.payload.song
       state.musicInfo.lyric = action.payload.lyric
       state.musicInfo.comment = action.payload.comment

@@ -21,7 +21,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
   const { song, lyric, comment } = useSelector((state) => state.musicControl.musicInfo)
   const [parsedLrc, setParseLrc] = useState<any[]>([])
   useEffect(() => {
-    setParseLrc(parseLrc(lyric))
+    lyric != '' && setParseLrc(parseLrc(lyric))
   }, [lyric])
 
   return (
@@ -36,9 +36,9 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
       <div className={style.content}>
         <div className={style.songInfoArea}>
           <div className={style.songBaseInfo}>
-            <div className={`${style.songName} line1`}>{song.name}</div>
+            <div className={`${style.songName} line1`}>{song?.name}</div>
             <div className={`${style.ar} line1`}>
-              {song.ar.map((item: any) => item.name).join('/')} - {song.al.name}
+              {song?.ar?.map((item: any) => item.name).join('/')} - {song?.al?.name}
             </div>
           </div>
           <div className={`${style.songPicWrap} `}>

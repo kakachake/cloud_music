@@ -27,8 +27,9 @@ export const getMusicById = (id: string) => {
 }
 
 export const clearPlayList = () => {
+  store.dispatch(publicSlice.actions.setSongDetailOpen(false))
   store.dispatch(musicListSlice.actions.clearList())
   store.dispatch(musicControlSlice.actions.clearMusicInfo())
-  store.dispatch(publicSlice.actions.setSongDetailOpen(false))
+
   audioInstance.setUrl('')
 }

@@ -16,7 +16,6 @@ const SideBarItem: FunctionComponent<SideBarItemProps> = (props) => {
       href && navigate(href)
     }
   }
-  console.log(activeId)
 
   return (
     <div onClick={handleClick}>

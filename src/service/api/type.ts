@@ -6,8 +6,9 @@ export interface SongSheetsType {
   picUrl: string
   canDislike: boolean
   trackNumberUpdateTime: number
-  playCount: number
   trackCount: number
   highQuality: boolean
   alg: string
+  playCount?: number
+  playcount?: number
 }

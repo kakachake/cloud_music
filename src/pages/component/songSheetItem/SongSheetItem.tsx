@@ -21,7 +21,7 @@ const SongSheetItem: FunctionComponent<SongSheetItemProps> = ({ songSheetInfo })
         <div className={style.content}>
           <div className={style.playCount}>
             <PlayCircleOutlined className={style.playIcon} />
-            {formatNumber(songSheetInfo.playCount)}
+            {formatNumber(songSheetInfo.playCount || songSheetInfo.playcount || 0)}
           </div>
           <div className={style.hoverWrap}>
             <PlayCircleOutlined className={style.playIcon} />

@@ -68,7 +68,10 @@ export function onDoubleClick() {
 }
 
 export const parseLrc = (lrc: string) => {
-  console.log(parseLrc)
+  if (!lrc) {
+    return []
+  }
+  console.log(lrc)
 
   const lrcList = lrc.split('\n')
 

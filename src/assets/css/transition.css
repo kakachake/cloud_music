@@ -6,6 +6,7 @@
   background-color: #fff;
   opacity: 0;
   transform: translateY(100%);
+  z-index: 999;
 }
 .musicDetail-enter-active {
   opacity: 1;
@@ -15,6 +16,7 @@
 .musicDetail-exit {
   opacity: 1;
   transform: translateY(0);
+  z-index: 999;
 }
 .musicDetail-exit-active {
   width: 100%;
@@ -32,4 +34,5 @@
   top: 0;
   background-color: #fff;
   opacity: 1;
+  z-index: 999;
 }

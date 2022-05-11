@@ -18,7 +18,7 @@ const Content: FunctionComponent = () => {
         <SideBar route>
           {linkItems.map((item, index) => {
             return item.children ? (
-              <SideBarGroup title={item.name}>
+              <SideBarGroup title={item.name} key={index}>
                 {item?.children.map((item, index) => {
                   return <SideBarItem key={item.href} name={item.name} href={item.href} />
                 })}
