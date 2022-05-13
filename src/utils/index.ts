@@ -71,7 +71,6 @@ export const parseLrc = (lrc: string) => {
   if (!lrc) {
     return []
   }
-  console.log(lrc)
 
   const lrcList = lrc.split('\n')
 
@@ -97,9 +96,6 @@ export const parseLrc = (lrc: string) => {
       })
     }
   })
-  lrcArr.push({
-    lrc: '',
-    time: lrcArr[lrcArr.length - 1].time
-  })
+
   return lrcArr
 }

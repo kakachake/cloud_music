@@ -1,21 +1,31 @@
 .musicDetail {
   top: 0;
-  background-color: rgb(243, 243, 243);
+  /* overflow-y: auto; */
+  background-color: #fff;
 }
 
 .content {
-  height: calc(100% - var(--musicBarHeight));
-  overflow-y: scroll;
+  margin-top: var(--headerHeight);
+  height: calc(100% - var(--headerHeight));
+  overflow-y: auto;
 }
 
 .musicDetailHeader {
+  position: fixed;
+  left: 0;
+  right: 0;
   height: var(--headerHeight);
-  background-color: rgb(243, 243, 243);
+
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0 20px;
+  z-index: 30;
+  /* overflow: hidden; */
+}
+
+.musicDetailHeader .headerBg {
 }
 .musicDetailCutIcons {
   display: flex;
@@ -23,14 +33,37 @@
   align-items: center;
 }
 .musicDetailCutIcons .upBtn {
+  position: absolute;
+  left: 20px;
   font-size: 22px;
   padding: 5px;
   cursor: pointer;
   transition: all 0.3s;
 }
+.musicDetailCutIcons .headerSongInfo {
+  opacity: 0;
+  text-align: center;
+  transition: all 0.5s;
+  transform: translate3d(0, 100%, 0);
+}
+.musicDetailCutIcons .headerSongInfo .songName {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+}
+.musicDetailCutIcons .headerSongInfo .ar {
+  font-size: 14px;
+  font-weight: 300;
+  color: #878883;
+}
+
+.musicDetailCutIcons .headerSongInfoShow {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
 
 .songInfoArea {
-  height: 400px;
+  height: 450px;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -75,6 +108,11 @@
   color: rgb(187, 187, 187);
 }
 
+.comment {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(23deg);
@@ -82,4 +120,11 @@
   100% {
     transform: rotate(27deg);
   }
+}
+
+.commentTitle {
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
 }

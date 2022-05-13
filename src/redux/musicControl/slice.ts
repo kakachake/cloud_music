@@ -10,21 +10,16 @@ export const getSongInfoAndSet = createAsyncThunk(
   'musicControl/getSongInfoAndSet',
   async (song: any) => {
     try {
-      const res = await Promise.allSettled([
-        getSongLyric(song.id),
-        getSongUrl(song.id),
-        getSongComment(song.id)
-      ])
-      const [lyric, url, comment] = res.map((item: any) => item.value)
-      console.log(lyric, url, comment)
+      const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
+      const [lyric, url] = res.map((item: any) => item.value)
+      console.log(lyric, url)
 
       if (lyric.code === 200 && url.code === 200) {
         store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
         return {
           song,
           lyric: lyric.lrc.lyric,
-          url: url.data[0].url,
-          comment
+          url: url.data[0].url
         }
       } else {
         Toast.error('获取歌曲信息失败')
@@ -58,7 +53,6 @@ export interface MusicControlState {
     song: any
     lyric: any
     url: string
-    comment: any
   }
   canplay: boolean
   isAdjusting: boolean
@@ -78,7 +72,6 @@ const initialState: MusicControlState = {
   musicInfo: {
     song: {},
     lyric: '',
-    comment: {},
     url: ''
   },
   canplay: false,
@@ -129,7 +122,7 @@ export const musicControlSlice = createSlice({
       state.musicInfo = {
         song: {},
         lyric: '',
-        comment: {},
+
         url: ''
       }
       state.progress = 0
@@ -143,7 +136,7 @@ export const musicControlSlice = createSlice({
       console.log('getSongInfoAndSet', action.payload)
       state.musicInfo.song = action.payload.song
       state.musicInfo.lyric = action.payload.lyric
-      state.musicInfo.comment = action.payload.comment
+
       musicInstance.setUrl(action.payload.url)
     }
   }

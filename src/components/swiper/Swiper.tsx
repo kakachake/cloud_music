@@ -13,9 +13,9 @@ const Swiper: FunctionComponent<SwiperProps> = (props) => {
   let children = (Array.isArray(child) ? child : [child]) as React.ReactElement<any, any>[]
   useEffect(() => {
     if (children.length) {
-      // timerRef.current = setInterval(() => {
-      //   handleChangeIndex(1)
-      // }, 3000)
+      timerRef.current = setInterval(() => {
+        handleChangeIndex(1)
+      }, 3000)
     }
     return () => {
       if (timerRef.current) {
@@ -63,6 +63,20 @@ const Swiper: FunctionComponent<SwiperProps> = (props) => {
   }
   return (
     <div id='swiper' className={style.swiperWrap}>
+      <div className={style.dot}>
+        {/* 遍历生成div */}
+        {children.map((o, i) => {
+          return (
+            <div
+              key={i}
+              className={`${style.dotItem} ${i === curIndex ? style.active : ''}`}
+              onMouseEnter={() => {
+                setCurIndex(i)
+              }}
+            ></div>
+          )
+        })}
+      </div>
       <div className={style.swiper}>
         <div className={style.btn}>
           <div onClick={() => handleChangeIndex(-1)} className={style.left}>
@@ -72,6 +86,7 @@ const Swiper: FunctionComponent<SwiperProps> = (props) => {
             <RightOutlined />
           </div>
         </div>
+
         {children}
       </div>
     </div>

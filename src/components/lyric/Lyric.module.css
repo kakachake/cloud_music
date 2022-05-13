@@ -2,6 +2,7 @@
   width: 100%;
   height: 300px;
   position: relative;
+  user-select: none;
 }
 
 .lrcWrap {
@@ -49,7 +50,9 @@
   margin-left: 40px;
   height: 1px;
   position: absolute;
+  z-index: 99;
   top: 50%;
+  transform: translateY(-50%);
   width: 20%;
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(164, 164, 164), rgba(255, 255, 255, 0));
 }
@@ -78,7 +81,9 @@
   margin-right: 25px;
   height: 1px;
   position: absolute;
+  transform: translateY(-50%);
   top: 50%;
+  z-index: 99;
   right: 0;
   width: 20%;
   background: linear-gradient(to left, rgb(0, 0, 0), rgb(164, 164, 164), rgba(255, 255, 255, 0));

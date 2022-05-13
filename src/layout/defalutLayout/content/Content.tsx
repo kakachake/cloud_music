@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import style from './Content.module.css'
 import SideBar from '../../../components/sideBar/SideBar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -7,20 +7,65 @@ import Suggest from '../../../pages/home/suggest/Suggest'
 import SongSheet from '../../../pages/songSheet/SongSheet'
 import PlayList from '../../../components/playList/PlayList'
 import { useSelector } from '../../../redux/hooks'
-import { linkItems } from './config'
+import { linkItems, LinkItemTypes } from './config'
 import SideBarItem from '../../../components/sideBar/sideBarItem/SideBarItem'
 import SideBarGroup from '../../../components/sideBar/sideBarGroup/SideBarGroup'
-const Content: FunctionComponent = () => {
+import { FC } from 'react'
+import { IconFont } from '../../../assets/css/iconFont'
+import { HeartOutlined } from '@ant-design/icons'
+
+const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
+  const [sideBarItems, setSideBarItems] = useState<LinkItemTypes[]>([])
+  const userPlayList = useSelector((state: any) => state.user.userPlayList)
+  const userLikeList = useSelector((state: any) => state.user.userLikeList)
+  useEffect(() => {
+    const _sideBarItems: LinkItemTypes[] = []
+    _sideBarItems.push(...linkItems)
+    if (userPlayList.length) {
+      _sideBarItems.push({
+        name: '我的歌单',
+        children: userPlayList.map((item: any, idx: number) => {
+          return {
+            id: item.id,
+            name: item.name,
+            href: `/songSheet/${item.id}`,
+            icon: idx === 0 ? <HeartOutlined /> : <IconFont type={`icon-playlist`} />
+          }
+        })
+      })
+    }
+    if (userLikeList.length) {
+      _sideBarItems.push({
+        name: '我的收藏',
+        children: userLikeList.map((item: any) => {
+          return {
+            id: item.id,
+            name: item.name,
+            href: `/songSheet/${item.id}`,
+            icon: <IconFont type={`icon-playlist`} />
+          }
+        })
+      })
+    }
+    setSideBarItems(_sideBarItems)
+  }, [userPlayList, userLikeList])
   return (
     <div className={style.content}>
       <div className={style.siderBar}>
         <SideBar route>
-          {linkItems.map((item, index) => {
+          {sideBarItems.map((item, index) => {
             return item.children ? (
               <SideBarGroup title={item.name} key={index}>
                 {item?.children.map((item, index) => {
-                  return <SideBarItem key={item.href} name={item.name} href={item.href} />
+                  return (
+                    <SideBarItem
+                      icon={item.icon || null}
+                      key={item.href}
+                      name={item.name}
+                      href={item.href}
+                    />
+                  )
                 })}
               </SideBarGroup>
             ) : (
@@ -29,6 +74,7 @@ const Content: FunctionComponent = () => {
           })}
         </SideBar>
       </div>
+
       <div className={style.mainPage}>
         <Routes>
           <Route path='/' element={<Home />}>

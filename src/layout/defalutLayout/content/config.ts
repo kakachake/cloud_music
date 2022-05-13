@@ -1,8 +1,10 @@
-interface LinkItemTypes {
+import { ReactNode } from 'react'
+
+export interface LinkItemTypes {
   name: string
   href?: string
   id?: number
-
+  icon?: ReactNode
   children?: LinkItemTypes[]
 }
 

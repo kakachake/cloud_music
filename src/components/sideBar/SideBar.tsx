@@ -1,4 +1,4 @@
-import React, { Children, FunctionComponent } from 'react'
+import React, { Children, FC, FunctionComponent } from 'react'
 import { useLocation } from 'react-router-dom'
 import style from './SideBar.module.css'
 interface SideBarProps {
@@ -7,7 +7,7 @@ interface SideBarProps {
   route?: boolean
 }
 
-const SideBar: FunctionComponent<SideBarProps> = (props) => {
+const SideBar: FC<SideBarProps> = (props) => {
   const { route = false } = props
   let activeId = props.activeId
   let children = props.children

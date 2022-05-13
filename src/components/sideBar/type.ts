@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface SideBarItemType {
   name: string
   href?: string
@@ -5,4 +7,5 @@ export interface SideBarItemType {
   onClick?: (e?: any) => void
   activeId?: number | string
   active?: boolean
+  icon?: ReactNode
 }

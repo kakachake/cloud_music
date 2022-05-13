@@ -26,10 +26,12 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime }) =
   useEffect(() => {
     for (let i = 0; i < parsedLrc.length; i++) {
       if (currentTime + timeOffset < parsedLrc[i].time) {
-        setCurLrcIdx(i - 1 >= 0 ? i - 1 : 0)
+        const curIdx = i - 1 >= 0 ? i - 1 : 0
+        setCurLrcIdx(curIdx)
+
         //设置scroll
         if (lrcWrapEl && !stopScroll) {
-          lrcWrapEl.scrollTo({ top: i * 36 - 18, behavior: 'smooth' })
+          lrcWrapEl.scrollTo({ top: (curIdx + 1) * 36 - 18, behavior: 'smooth' })
         }
         break
       }
@@ -42,7 +44,11 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime }) =
     const lrcWrap = document.getElementById('lrcWrap')
 
     const scrollTop = lrcWrap!.scrollTop
-    const idx = +((scrollTop + 18) / 36).toFixed(0)
+    let idx = +((scrollTop + 18) / 36).toFixed(0)
+    if (idx >= parsedLrc.length) {
+      idx = parsedLrc.length - 1
+    }
+
     setScrollIdx(idx - 1)
   }
   const handleToTime = () => {

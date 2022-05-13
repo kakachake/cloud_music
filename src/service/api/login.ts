@@ -8,7 +8,9 @@ enum LoginAPI {
   //检测二维码状态
   CHECK_QRCODE_STATUS = '/login/qr/check',
   //检测登录状态
-  CHECK_LOGIN_STATUS = '/login/status'
+  CHECK_LOGIN_STATUS = '/login/status',
+  //获取用户歌单
+  GET_USER_PLAYLIST = '/user/playlist'
 }
 
 //获取二维码key
@@ -48,5 +50,15 @@ export function checkQRCodeStatus(key: string) {
 export function checkLoginStatus() {
   return axRequest.get({
     url: LoginAPI.CHECK_LOGIN_STATUS
+  })
+}
+
+//获取用户歌单
+export function getUserPlayList(uid: string) {
+  return axRequest.get({
+    url: LoginAPI.GET_USER_PLAYLIST,
+    params: {
+      uid
+    }
   })
 }

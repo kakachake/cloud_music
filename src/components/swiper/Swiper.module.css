@@ -59,3 +59,32 @@
   opacity: 1;
   left: 10px;
 }
+
+.dot {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 0.5s;
+}
+
+.dotItem {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #e6e6e6;
+  margin: 0 5px;
+}
+
+.active {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ec4141;
+  margin: 0 5px;
+}

@@ -67,11 +67,12 @@ export function getSongUrl(id: number | string) {
 }
 
 //获取歌曲评论
-export function getSongComment(id: number | string) {
+export function getSongComment(id: number | string, page: number) {
   return axRequest.get({
     url: MUSIC_API.GET_SONG_COMMENT,
     params: {
-      id
+      id,
+      offset: (page - 1) * 20
     }
   })
 }

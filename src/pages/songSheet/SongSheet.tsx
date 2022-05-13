@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { getPlaylistDetail } from '../../service/api/music'
 import { formatNumber, formatTime, pad, parseSecondToTime } from '../../utils'
 import PlayListHeader, { PLAY_LIST_TYPE } from '../component/PlayListHeader/PlayListHeader'
@@ -21,6 +21,13 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
   const { songSheetInfo, tabList } = useSongSheet(id!)
   const [activeIndex, setActiveIndex] = useState<string>('playList')
   const handleChangeTab = (id: string) => setActiveIndex(id)
+
+  const location = useLocation()
+  useEffect(() => {
+    if (location.pathname.includes('/songSheet')) {
+      setActiveIndex('playList')
+    }
+  }, [location])
 
   const columns: TableColumnType[] = [
     {

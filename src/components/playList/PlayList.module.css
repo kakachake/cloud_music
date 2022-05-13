@@ -7,10 +7,10 @@
     -7.9px 0px 7.1px rgba(0, 0, 0, 0.043), 19px 0px 17px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   box-sizing: border-box;
+  padding: 10px;
 }
 
 .playListHeader {
-  padding: 10px;
   box-sizing: border-box;
 }
 

@@ -22,14 +22,21 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
         return <div className={style.tableHandle}></div>
       },
       align: 'center',
-      width: '30px'
+      width: '20px'
     },
     {
       title: '歌曲',
       dataIndex: 'name',
       key: 'name',
       render: (data: any, idx: number) => {
-        return <span className={`line1 ${current === idx ? style.active : ''}`}>{data.name}</span>
+        return (
+          <span
+            style={{ width: '200px' }}
+            className={`line1 ${current === idx ? style.active : ''}`}
+          >
+            {data.name}
+          </span>
+        )
       },
 
       align: 'left'

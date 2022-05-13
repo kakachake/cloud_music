@@ -9,8 +9,18 @@
   --musicBarBackgroundColor: #fff;
   --sideBarWidth: 200px;
   --defaultPadding: 20px 30px;
+  --linkColor: #618ab7;
+  --linkHoverColor: #0b58b0;
 }
 
+.link {
+  color: var(--linkColor);
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--linkHoverColor);
+}
 .dark {
   --color: #000;
 }

@@ -34,7 +34,7 @@ const SwiperItemWrap = styled.div`
   display: inline-block;
   position: absolute;
   z-index: 1;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
   border-radius: 10px;
   overflow: hidden;
   img {

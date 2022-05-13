@@ -7,7 +7,7 @@ interface SideBarItemProps extends SideBarItemType {
 }
 
 const SideBarItem: FunctionComponent<SideBarItemProps> = (props) => {
-  const { children, id, href, onClick, name, activeId } = props
+  const { children, id, href, onClick, name, activeId, icon } = props
   const navigate = useNavigate()
   const handleClick = () => {
     if (onClick) {
@@ -24,7 +24,8 @@ const SideBarItem: FunctionComponent<SideBarItemProps> = (props) => {
           activeId === id || activeId == href ? style.active : ''
         }`}
       >
-        <div>{name}</div>
+        <div className={style.icon}>{icon}</div>
+        <div className='line1'>{name}</div>
       </div>
     </div>
   )

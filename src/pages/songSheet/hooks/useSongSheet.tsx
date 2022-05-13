@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { getPlaylistDetail } from '../../../service/api/music'
 import { formatNumber } from '../../../utils'
 
 export const useSongSheet = (id: string) => {
+  const location = useLocation()
   const [songSheetInfo, setSongSheetInfo] = useState<any>({})
   const [tabList, setTabList] = useState<any[]>([])
   useEffect(() => {
@@ -23,6 +25,6 @@ export const useSongSheet = (id: string) => {
         }
       ])
     })
-  }, [])
+  }, [location])
   return { songSheetInfo, tabList }
 }
