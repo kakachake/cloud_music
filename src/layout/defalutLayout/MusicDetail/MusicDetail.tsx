@@ -12,6 +12,7 @@ import Comment from '../../../components/comment/Comment'
 import { getSongComment } from '../../../service/api/music'
 import styled from 'styled-components'
 import Pagination from '../../../components/pagination/Pagination'
+import CommentTabPage from '../../../pages/component/commentTabPage/CommentTabPage'
 interface MusicDetailProps {}
 
 const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
@@ -22,35 +23,16 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
   const currentTime = useSelector((state: RootState) => state.musicControl.currentTime)
   const isPlaying = useSelector((state: RootState) => state.musicControl.isPlaying)
   const { song, lyric } = useSelector((state) => state.musicControl.musicInfo)
-  const [commentList, setCommentList] = useState<any[]>([])
-  const [hotCommentList, setHotCommentList] = useState<any[]>([])
-  const [commentCount, setCommentCount] = useState<number>(0)
+
   const [parsedLrc, setParseLrc] = useState<any[]>([])
   const [songHeaderInfoShow, setsongHeaderInfoShow] = useState(false)
-  const [pageCurrent, setPageCurrent] = useState(1)
-  useEffect(() => {
-    lyric != '' && setParseLrc(parseLrc(lyric))
-  }, [lyric])
+
+  // useEffect(() => {}, [lyric])
   const musicDetailEl = document.getElementById('musicDetail')
   useEffect(() => {
+    lyric != '' && setParseLrc(parseLrc(lyric))
     musicDetailEl?.scrollTo({ top: 0, behavior: 'smooth' })
-    if (song.id) {
-      getSongComment(song.id, pageCurrent).then((res) => {
-        setCommentList(res.comments)
-        setHotCommentList(res.hotComments)
-        setCommentCount(res.total)
-      })
-    }
-
-    setPageCurrent(1)
   }, [song])
-
-  useEffect(() => {
-    musicDetailEl?.scrollTo({ top: 450, behavior: 'smooth' })
-    getSongComment(song.id, pageCurrent).then((res) => {
-      setCommentList(res.comments)
-    })
-  }, [pageCurrent])
 
   //监听元素是否移出可视区域
   useEffect(() => {
@@ -70,8 +52,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
     }
   }, [])
   const changePage = (i: number) => {
-    console.log(i)
-    setPageCurrent(i)
+    musicDetailEl?.scrollTo({ top: 450, behavior: 'smooth' })
   }
   return (
     <div className={style.musicDetail}>
@@ -93,6 +74,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
           </div>
         </div>
       </div>
+
       <div id='musicDetail' className={style.content}>
         <div className={style.songInfoArea}>
           <div className={style.songBaseInfo} id='songBaseInfo'>
@@ -109,17 +91,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
           </div>
         </div>
         <div className={style.comment}>
-          <div className={style.commentTitle}>热门评论 ({commentCount})</div>
-          <Comment commentList={hotCommentList} />
-          <div className={style.commentTitle}>全部评论 ({commentCount})</div>
-          <Comment commentList={commentList} />
-          <div className={style.pagination}>
-            <Pagination
-              onChangeCurrentPage={changePage}
-              total={Math.ceil(commentCount / 20)}
-              pageCurrent={pageCurrent}
-            />
-          </div>
+          <CommentTabPage onPageChange={changePage} id={song?.id} type='Song' />
         </div>
       </div>
     </div>

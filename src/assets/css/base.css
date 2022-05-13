@@ -44,3 +44,8 @@
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
+.baseContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}

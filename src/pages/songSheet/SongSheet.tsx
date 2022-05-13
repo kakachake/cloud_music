@@ -13,12 +13,14 @@ import store from '../../redux/store'
 import { musicListSlice } from '../../redux/musicList/slice'
 import { getSongInfoAndSet } from '../../redux/musicControl/slice'
 import { addMusic } from '../../controller/musicControl'
-
+import CommentTabPage from '../component/commentTabPage/CommentTabPage'
+import { useComment } from '../../hooks/useComment'
 interface SongSheetProps {}
 
 const SongSheet: FunctionComponent<SongSheetProps> = () => {
   const { id } = useParams()
   const { songSheetInfo, tabList } = useSongSheet(id!)
+
   const [activeIndex, setActiveIndex] = useState<string>('playList')
   const handleChangeTab = (id: string) => setActiveIndex(id)
 
@@ -127,7 +129,11 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
             data={songSheetInfo?.tracks}
           />
         )}
-        {activeIndex === 'comment' && <div>评论</div>}
+        {activeIndex === 'comment' && (
+          <div>
+            <CommentTabPage id={id!} type='PlayList' />
+          </div>
+        )}
         {activeIndex === 'favoriter' && <div>收藏者</div>}
       </div>
     </div>

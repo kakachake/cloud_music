@@ -116,14 +116,12 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-}
-
-.loginItem a {
   color: var(--color);
 }
 
 .loginItem .avatar {
   height: 100%;
+
   padding: 5px;
   box-sizing: border-box;
   border-radius: 50%;

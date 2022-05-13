@@ -13,7 +13,9 @@ enum MUSIC_API {
   //获取歌曲Url
   GET_SONG_URL = '/song/url',
   //获取歌曲评论
-  GET_SONG_COMMENT = '/comment/music'
+  GET_SONG_COMMENT = '/comment/music',
+  //获取歌单评论
+  GET_PLAYLIST_COMMENT = '/comment/playlist'
 }
 
 //获取歌单详情
@@ -70,6 +72,17 @@ export function getSongUrl(id: number | string) {
 export function getSongComment(id: number | string, page: number) {
   return axRequest.get({
     url: MUSIC_API.GET_SONG_COMMENT,
+    params: {
+      id,
+      offset: (page - 1) * 20
+    }
+  })
+}
+
+//获取歌单评论
+export function getPlaylistComment(id: number | string, page: number) {
+  return axRequest.get({
+    url: MUSIC_API.GET_PLAYLIST_COMMENT,
     params: {
       id,
       offset: (page - 1) * 20

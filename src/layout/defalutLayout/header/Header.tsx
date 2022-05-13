@@ -45,12 +45,10 @@ const Header: FunctionComponent = () => {
       </div>
       <div className={style.right}>
         {userInfo ? (
-          <div className={style.loginItem}>
-            <Link className={style.loginItem} to='/'>
-              <img className={style.avatar} src={userInfo.avatarUrl} alt='' />
-              {userInfo.nickname}
-            </Link>
-          </div>
+          <Link className={style.loginItem} to='/'>
+            <img className={style.avatar} src={userInfo.avatarUrl} alt='' />
+            <div>{userInfo.nickname}</div>
+          </Link>
         ) : (
           <div onClick={handleLogin} className={style.loginItem}>
             未登录

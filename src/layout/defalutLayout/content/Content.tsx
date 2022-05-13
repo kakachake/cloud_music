@@ -13,6 +13,7 @@ import SideBarGroup from '../../../components/sideBar/sideBarGroup/SideBarGroup'
 import { FC } from 'react'
 import { IconFont } from '../../../assets/css/iconFont'
 import { HeartOutlined } from '@ant-design/icons'
+import PersonalFm from '../../../pages/personalFm/PersonalFm'
 
 const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
@@ -81,6 +82,7 @@ const Content: FC = (props) => {
             <Route path='' element={<Suggest />} />
             <Route path='/playList' element={<Suggest />} />
           </Route>
+          <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>
         </Routes>
       </div>

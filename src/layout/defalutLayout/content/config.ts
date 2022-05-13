@@ -23,6 +23,10 @@ export const linkItems: LinkItemTypes[] = [
       {
         name: '视频',
         href: '/video'
+      },
+      {
+        name: '私人FM',
+        href: '/personalfm'
       }
     ]
   },
