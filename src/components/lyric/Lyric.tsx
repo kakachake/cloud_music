@@ -1,5 +1,5 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { IconFont } from '../../assets/css/iconFont'
@@ -15,14 +15,16 @@ interface LyricProps {
     time: number
   }[]
   currentTime: number
+  _uid: string
 }
 
-const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime }) => {
+const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime, _uid }) => {
   const [curLrcIdx, setCurLrcIdx] = useState(0)
-  const lrcWrapEl = document.getElementById('lrcWrap')
+  const lrcWrapEl = document.getElementById('lrcWrap' + _uid)
   const [stopScroll, setStopScroll] = useState(false)
   const [scrollIdx, setScrollIdx] = useState(0)
   const [timeOffset, setTimeOffset] = useState(0)
+
   useEffect(() => {
     for (let i = 0; i < parsedLrc.length; i++) {
       if (currentTime + timeOffset < parsedLrc[i].time) {
@@ -41,9 +43,9 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime }) =
     setTimeOffset(0)
   }, [parsedLrc])
   const wheelEvent = (e: any) => {
-    const lrcWrap = document.getElementById('lrcWrap')
+    console.log(lrcWrapEl)
 
-    const scrollTop = lrcWrap!.scrollTop
+    const scrollTop = lrcWrapEl!.scrollTop
     let idx = +((scrollTop + 18) / 36).toFixed(0)
     if (idx >= parsedLrc.length) {
       idx = parsedLrc.length - 1
@@ -89,7 +91,7 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime }) =
           </div>
         </div>
       </div>
-      <div id='lrcWrap' className={style.lrcWrap} onScroll={wheelEvent}>
+      <div id={'lrcWrap' + _uid} className={style.lrcWrap} onScroll={wheelEvent}>
         <div className={style.lrcContent}>
           {parsedLrc.map((item, idx) => {
             return (

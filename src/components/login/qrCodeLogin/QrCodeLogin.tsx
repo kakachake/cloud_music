@@ -82,6 +82,7 @@ const QrCodeLogin: FunctionComponent<QrCodeLoginProps> = ({ handleClose }) => {
           Toast.success('登陆成功')
           store.dispatch(getUserInfo())
           handleClose()
+          location.reload()
         }
       })
     }, 2000)

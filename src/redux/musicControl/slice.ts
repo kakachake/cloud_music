@@ -1,5 +1,6 @@
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import Toast from '../../components/Toast'
+import { useListControl } from '../../controller/listController'
 import { getMusicById } from '../../controller/musicControl'
 import musicInstance from '../../controller/musicPlayer'
 import { getSongComment, getSongLyric, getSongUrl } from '../../service/api/music'
@@ -15,7 +16,9 @@ export const getSongInfoAndSet = createAsyncThunk(
       console.log(lyric, url)
 
       if (lyric.code === 200 && url.code === 200) {
-        store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
+        // const listControl = useListControl()
+        // listControl.setCurrent(song.id)
+        // store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
         return {
           song,
           lyric: lyric.lrc.lyric,

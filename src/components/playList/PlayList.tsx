@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { clearPlayList } from '../../controller/musicControl'
+import { addMusic, clearPlayList } from '../../controller/musicControl'
 import { useSelector } from '../../redux/hooks'
 import { getSongInfoAndSet } from '../../redux/musicControl/slice'
 import store from '../../redux/store'
@@ -11,7 +11,7 @@ interface PlayListProps {}
 const PlayList: FunctionComponent<PlayListProps> = () => {
   const { list, current } = useSelector((state) => state.musicList)
   const onColDoubleClick = (data: any) => {
-    store.dispatch(getSongInfoAndSet(data))
+    addMusic(data)
   }
   const columns: TableColumnType[] = [
     {

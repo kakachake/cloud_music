@@ -19,7 +19,7 @@ const SongImgChangeSwriper: FC<SongImgChangeSwriperProps> = (props) => {
     if (curIndex === 0) {
       return
     }
-    setCurIndex(curIndex - 1)
+    setCurIndex(-1)
   }
   return (
     <div className={style.imgWrap}>

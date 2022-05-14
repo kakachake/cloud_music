@@ -3,32 +3,65 @@ import { getSongInfoAndSet, musicControlSlice } from '../redux/musicControl/slic
 import { musicListSlice } from '../redux/musicList/slice'
 import { publicSlice } from '../redux/publicSlice/slice'
 import store from '../redux/store'
+import { getSongDetail } from '../service/api/music'
+import { debounce, throttle } from '../utils'
+import { useListControl } from './listController'
 import audioInstance from './musicPlayer'
-export const changeMusic = (direction: number) => {
-  const { list, current } = store.getState().musicList
+
+export const changeMusic = debounce((direction: number) => {
+  const listControl = useListControl()
+  const { list, current } = listControl.getList()
+
   const newIndex = (list.length + current + direction) % list.length
-  store.dispatch(getSongInfoAndSet(list[newIndex]))
+  listControl.curListType != 'fmList' && store.dispatch(getSongInfoAndSet(list[newIndex]))
+  listControl.curListType === 'fmList' && getSongBaseInfoAndSet(list[newIndex].id)
+  console.log(list[newIndex])
+
+  listControl.setCurrent(newIndex)
+}, 500)
+
+export const getSongBaseInfoAndSet = (id: number) => {
+  console.log(id)
+
+  getSongDetail(id).then((res) => {
+    const song = res.songs?.[0]
+    console.log(song)
+    song && addMusic(song)
+  })
+}
+
+export const setMusicList = (payload: any[], type: 'musicList' | 'fmList') => {
+  const listControl = useListControl()
+  listControl.setList(payload, type)
+
+  changeMusic(0)
 }
 
 export const addMusic = (data: any) => {
+  const listControl = useListControl()
+
   const { music, idx } = getMusicById(data.id)
   if (idx == -1) {
-    store.dispatch(musicListSlice.actions.addSongToPlayList(data))
+    listControl.addSongToPlayList(data)
     store.dispatch(getSongInfoAndSet(data))
   } else {
-    store.dispatch(getSongInfoAndSet(music))
+    store.dispatch(getSongInfoAndSet(data))
+    listControl.setCurrent(idx)
   }
 }
 
 export const getMusicById = (id: string) => {
-  const { list } = store.getState().musicList
+  const listControl = useListControl()
+  const { list } = listControl.getList()
+
   const idx = list.findIndex((item: any) => item.id === id)
   return { music: list[idx], idx }
 }
 
 export const clearPlayList = () => {
+  const listControl = useListControl()
   store.dispatch(publicSlice.actions.setSongDetailOpen(false))
-  store.dispatch(musicListSlice.actions.clearList())
+  listControl.clearList()
   store.dispatch(musicControlSlice.actions.clearMusicInfo())
 
   audioInstance.setUrl('')

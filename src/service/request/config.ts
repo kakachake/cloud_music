@@ -2,7 +2,7 @@
 //通过环境变量来切换环境
 const BASE_URL =
   process.env.NODE_ENV === 'development'
-    ? 'https://netease-cloud-music-api-rho-liart.vercel.app/'
+    ? 'http://localhost:4000/'
     : 'https://netease-cloud-music-api-rho-liart.vercel.app/'
 
 const TIME_OUT = 5000

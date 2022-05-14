@@ -4,9 +4,11 @@ import { musicListSlice } from './musicList/slice'
 import { userSlice } from './user/slice'
 import musicInstance from '../controller/musicPlayer'
 import { publicSlice } from './publicSlice/slice'
+import { fmListSlice } from './fmList/slice'
 const rootReducer = combineReducers({
   musicControl: musicControlSlice.reducer,
   musicList: musicListSlice.reducer,
+  fmList: fmListSlice.reducer,
   user: userSlice.reducer,
   public: publicSlice.reducer
 })

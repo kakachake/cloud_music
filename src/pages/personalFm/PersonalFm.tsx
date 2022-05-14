@@ -5,11 +5,15 @@ import { getPersonalFm } from '../../service/api/reqLoginApi/songSheets'
 import { AlbumType } from '../../type/album'
 import SongImgChangeSwiper from '../component/songImgChangeSwriper/SongImgChangeSwiper'
 import style from './PersonalFm.module.css'
-import { addMusic } from '../../controller/musicControl'
+import { changeMusic, setMusicList } from '../../controller/musicControl'
 import { useSelector } from '../../redux/hooks'
 import Lyric from '../../components/lyric/Lyric'
 import { parseLrc } from '../../utils'
-import { RootState } from '../../redux/store'
+import store, { RootState } from '../../redux/store'
+import CommentTabPage from '../component/commentTabPage/CommentTabPage'
+import { fmListSlice } from '../../redux/fmList/slice'
+import { publicSlice } from '../../redux/publicSlice/slice'
+import { useListControl } from '../../controller/listController'
 export interface PersonalFmItem {
   album: AlbumType
   name: string
@@ -19,41 +23,52 @@ export interface PersonalFmItem {
 interface PersonalFmProps {}
 
 const PersonalFm: FC<PersonalFmProps> = () => {
-  const [personalFmList, setPersonalFmList] = useState<PersonalFmItem[] | []>([])
-  const [curIndex, setCurIndex] = useState<number>(0)
+  const { list: personalFmList, current } = useSelector((state: RootState) => state.fmList)
+  // const [personalFmList, setPersonalFmList] = useState<PersonalFmItem[] | []>([])
+  // const [curIndex, setCurIndex] = useState<number>(0)
   const currentTime = useSelector((state: RootState) => state.musicControl.currentTime)
   const [parsedLrc, setParseLrc] = useState<any[]>([])
   const { song, lyric } = useSelector((state) => state.musicControl.musicInfo)
   useEffect(() => {
-    getPersonalFm().then((res) => {
-      setPersonalFmList(res.data)
-    })
-    console.log(personalFmList)
-  }, [])
-  useEffect(() => {
-    if (personalFmList.length) {
-      getSongDetail(personalFmList?.[curIndex]?.id).then((res) => {
-        const song = res.songs?.[0]
-        song && addMusic(song)
+    store.dispatch(publicSlice.actions.setCurListType('fmList'))
+    const listControl = useListControl()
+    const { current } = listControl.getList()
+    if (current === -1) {
+      getPersonalFm().then((res) => {
+        // setPersonalFmList(res.data)
+        setMusicList(res.data, 'fmList')
+        // store.dispatch(fmListSlice.actions.setList(res.data))
       })
     }
-  }, [personalFmList, curIndex])
+  }, [])
+  useEffect(() => {
+    console.log(111)
+
+    checkNeedFeachFm(current + 1)
+  }, [personalFmList, current])
   useEffect(() => {
     lyric != '' && setParseLrc(parseLrc(lyric))
   }, [song])
   const handleChangIdx = () => {
-    if (curIndex === personalFmList.length - 1) {
+    if (current === personalFmList.length - 1) {
       return
     }
-    setCurIndex(curIndex + 1)
-    checkNeedFeachFm(curIndex + 1)
+
+    setCurIndex(1)
+  }
+  const setCurIndex = (idx: number) => {
+    changeMusic(idx)
+    // store.dispatch(fmListSlice.actions.setCurrent(idx))
   }
   const checkNeedFeachFm = (idx: number) => {
     if (idx === personalFmList.length - 1) {
       getPersonalFm().then((res) => {
-        setPersonalFmList([...personalFmList, ...res.data])
+        store.dispatch(fmListSlice.actions.setList(res.data))
       })
     }
+  }
+  const changePage = (idx: number) => {
+    console.log(idx)
   }
   return (
     <div className={`baseContainer ${style.personFmWrap}`}>
@@ -62,7 +77,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
           <div className={style.songImgChangeSwriper}>
             <SongImgChangeSwiper
               songList={personalFmList}
-              curIndex={curIndex}
+              curIndex={current}
               setCurIndex={setCurIndex}
             />
           </div>
@@ -93,9 +108,12 @@ const PersonalFm: FC<PersonalFmProps> = () => {
             </div>
           </div>
           <div className={style.lrc}>
-            <Lyric lrc={parsedLrc} currentTime={currentTime} />
+            <Lyric lrc={parsedLrc} currentTime={currentTime} _uid={'fmPage'} />
           </div>
         </div>
+      </div>
+      <div>
+        <CommentTabPage onPageChange={changePage} id={song?.id} type='Song' />
       </div>
     </div>
   )

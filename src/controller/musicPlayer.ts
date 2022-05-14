@@ -54,6 +54,8 @@ export class AudioController {
   }
   setUrl(url: string) {
     this.audio.src = url
+    console.log('setUrl')
+
     this.play()
   }
   play() {

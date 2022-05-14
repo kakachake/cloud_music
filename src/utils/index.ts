@@ -99,3 +99,29 @@ export const parseLrc = (lrc: string) => {
 
   return lrcArr
 }
+
+//节流
+export function throttle(fn: (...args: any) => void, delay: number) {
+  let timer: any = null
+  return function (this: any, ...args: any[]) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}
+
+//防抖
+export function debounce(fn: (...args: any) => void, delay: number) {
+  let timer: any = null
+  return function (this: any, ...args: any[]) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}

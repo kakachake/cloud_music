@@ -87,7 +87,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
             <Changpian isPlaying={isPlaying} songPicUrl={song?.al?.picUrl} />
           </div>
           <div className={style.lrc}>
-            <Lyric lrc={parsedLrc} currentTime={currentTime} />
+            <Lyric lrc={parsedLrc} currentTime={currentTime} _uid='detailPage' />
           </div>
         </div>
         <div className={style.comment}>

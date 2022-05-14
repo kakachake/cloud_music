@@ -12,7 +12,7 @@ import { CloudDownloadOutlined, HeartOutlined } from '@ant-design/icons'
 import store from '../../redux/store'
 import { musicListSlice } from '../../redux/musicList/slice'
 import { getSongInfoAndSet } from '../../redux/musicControl/slice'
-import { addMusic } from '../../controller/musicControl'
+import { addMusic, setMusicList } from '../../controller/musicControl'
 import CommentTabPage from '../component/commentTabPage/CommentTabPage'
 import { useComment } from '../../hooks/useComment'
 interface SongSheetProps {}
@@ -102,8 +102,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
   }
   const handlePlayList = () => {
     const { tracks } = songSheetInfo
-    store.dispatch(musicListSlice.actions.setList(tracks))
-    store.dispatch(getSongInfoAndSet(tracks?.[0]))
+    setMusicList(tracks, 'musicList')
   }
   return (
     <div className={style.songSheet}>
