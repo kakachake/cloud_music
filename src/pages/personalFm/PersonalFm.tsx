@@ -24,16 +24,17 @@ interface PersonalFmProps {}
 
 const PersonalFm: FC<PersonalFmProps> = () => {
   const { list: personalFmList, current } = useSelector((state: RootState) => state.fmList)
+  const curListType = useSelector((state) => state.public.curListType)
   // const [personalFmList, setPersonalFmList] = useState<PersonalFmItem[] | []>([])
   // const [curIndex, setCurIndex] = useState<number>(0)
   const currentTime = useSelector((state: RootState) => state.musicControl.currentTime)
   const [parsedLrc, setParseLrc] = useState<any[]>([])
   const { song, lyric } = useSelector((state) => state.musicControl.musicInfo)
   useEffect(() => {
-    store.dispatch(publicSlice.actions.setCurListType('fmList'))
     const listControl = useListControl()
     const { current } = listControl.getList()
-    if (current === -1) {
+    if (current === -1 || curListType !== 'fmList') {
+      store.dispatch(publicSlice.actions.setCurListType('fmList'))
       getPersonalFm().then((res) => {
         // setPersonalFmList(res.data)
         setMusicList(res.data, 'fmList')
@@ -41,9 +42,8 @@ const PersonalFm: FC<PersonalFmProps> = () => {
       })
     }
   }, [])
-  useEffect(() => {
-    console.log(111)
 
+  useEffect(() => {
     checkNeedFeachFm(current + 1)
   }, [personalFmList, current])
   useEffect(() => {
