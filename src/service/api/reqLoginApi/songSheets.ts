@@ -5,7 +5,9 @@ enum SONG_SHEETS_API {
   //获取每日推荐歌单
   GET_DAILY_RECOMMEND = '/recommend/resource',
   //获取私人FM
-  GET_PERSONAL_FM = '/personal_fm'
+  GET_PERSONAL_FM = '/personal_fm',
+  //获取喜欢列表
+  GET_LIKE_LIST = '/likelist'
 }
 
 //获取每日推荐歌单
@@ -19,5 +21,15 @@ export function getDailyRecommend() {
 export function getPersonalFm() {
   return axRequest.get({
     url: SONG_SHEETS_API.GET_PERSONAL_FM
+  })
+}
+
+//获取喜欢列表
+export function getLikeList(uid: string | number) {
+  return axRequest.get({
+    url: SONG_SHEETS_API.GET_LIKE_LIST,
+    params: {
+      uid
+    }
   })
 }

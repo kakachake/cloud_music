@@ -139,7 +139,7 @@ export const musicControlSlice = createSlice({
       console.log('getSongInfoAndSet', action.payload)
       state.musicInfo.song = action.payload.song
       state.musicInfo.lyric = action.payload.lyric
-
+      state.musicInfo.url = action.payload.url
       musicInstance.setUrl(action.payload.url)
     }
   }

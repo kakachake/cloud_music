@@ -11,6 +11,7 @@
   --defaultPadding: 20px 30px;
   --linkColor: #618ab7;
   --linkHoverColor: #0b58b0;
+  --backgroundHoverColor: #d73535;
 }
 
 .link {
@@ -48,4 +49,20 @@
 .baseContainer {
   max-width: 1000px;
   margin: 0 auto;
+}
+
+.defaultClickIcon {
+  color: #bcbcbc;
+  line-height: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
+.defaultClickIcon:hover {
+  color: #484848;
+}
+.liked {
+  color: var(--backgroundColor);
+}
+.liked:hover {
+  color: var(--backgroundHoverColor);
 }

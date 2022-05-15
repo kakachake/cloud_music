@@ -8,8 +8,12 @@ import {
 } from '@ant-design/icons'
 import { FunctionComponent, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { IconFont } from '../../../../assets/css/iconFont'
+import { useIsLiked } from '../../../../hooks/useLikeList'
 import { publicSlice } from '../../../../redux/publicSlice/slice'
 import store, { RootState } from '../../../../redux/store'
+import { downLoadMusic } from '../../../../service/api/music'
+import { handleToggleLike } from '../../../../service/utils'
 import style from './MusicBarLeft.module.css'
 interface MusicBarLeftProps {}
 
@@ -19,7 +23,7 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
     store.dispatch(publicSlice.actions.setSongDetailOpen(!songDetailOpen))
   }
   const songInfo = useSelector((state: RootState) => state.musicControl.musicInfo.song)
-
+  const isLiked = useIsLiked()
   return (
     <div>
       {songInfo.name && (
@@ -30,8 +34,8 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
           className={style.musicBarLeft}
         >
           {/* 默认显示歌曲信息 */}
-          <div onClick={toggleChange} className={style.musicInfo}>
-            <div className={style.musicPic}>
+          <div className={style.musicInfo}>
+            <div onClick={toggleChange} className={style.musicPic}>
               <img src={songInfo?.al?.picUrl} alt='' />
               <UpOutlined className={style.musicPicHover} />
             </div>
@@ -39,7 +43,11 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
               <div className={`line1 ${style.songInfoNameWrap}`}>
                 <div className={`line1 ${style.songInfoName}`}>{songInfo.name + ' '}</div>
                 <div className={style.songInfoHandle}>
-                  <HeartOutlined />
+                  <IconFont
+                    type={isLiked(songInfo.id) ? 'icon-aixin_shixin' : 'icon-aixin'}
+                    className={isLiked(songInfo.id) ? 'liked' : 'defaultLike'}
+                    onClick={() => handleToggleLike(songInfo.id, isLiked(songInfo.id))}
+                  />
                 </div>
               </div>
               <div>
@@ -61,7 +69,12 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
               <div className={style.musicDetailCutIconItem}>
                 <StarOutlined />
               </div>
-              <div className={style.musicDetailCutIconItem}>
+              <div
+                onClick={() => {
+                  downLoadMusic(songInfo.id, songInfo.name)
+                }}
+                className={style.musicDetailCutIconItem}
+              >
                 <DownloadOutlined />
               </div>
               <div className={style.musicDetailCutIconItem}>

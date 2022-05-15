@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import { getPlaylistDetail } from '../../service/api/music'
+import { downLoadMusic, getPlaylistDetail } from '../../service/api/music'
 import { formatNumber, formatTime, pad, parseSecondToTime } from '../../utils'
 import PlayListHeader, { PLAY_LIST_TYPE } from '../component/PlayListHeader/PlayListHeader'
 import TabBar from '../component/tabBar/TabBar'
@@ -9,12 +9,14 @@ import style from './SongSheet.module.css'
 import MuTable, { TableColumnType } from '../../components/muTable/MuTable'
 import { useSongSheet } from './hooks/useSongSheet'
 import { CloudDownloadOutlined, HeartOutlined } from '@ant-design/icons'
-import store from '../../redux/store'
-import { musicListSlice } from '../../redux/musicList/slice'
-import { getSongInfoAndSet } from '../../redux/musicControl/slice'
+
 import { addMusic, setMusicList } from '../../controller/musicControl'
 import CommentTabPage from '../component/commentTabPage/CommentTabPage'
-import { useComment } from '../../hooks/useComment'
+import { IconFont } from '../../assets/css/iconFont'
+import { likeMusic } from '../../service/api/reqLoginApi/loginMusicHandle'
+import { handleToggleLike } from '../../service/utils'
+import { useIsLiked } from '../../hooks/useLikeList'
+
 interface SongSheetProps {}
 
 const SongSheet: FunctionComponent<SongSheetProps> = () => {
@@ -30,17 +32,9 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       setActiveIndex('playList')
     }
   }, [location])
+  const isLiked = useIsLiked()
 
   const columns: TableColumnType[] = [
-    {
-      title: '序号',
-      dataIndex: 'index',
-      key: 'index',
-      render: (data: any, idx: number) => {
-        return <div className={style.tableHandle}>{pad(idx)}</div>
-      },
-      align: 'center'
-    },
     {
       title: '操作',
       dataIndex: 'name',
@@ -48,8 +42,21 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       render: (data: any, idx: number) => {
         return (
           <div className={style.tableHandle}>
-            <HeartOutlined />
-            <CloudDownloadOutlined />
+            <IconFont
+              type={isLiked(data.id) ? 'icon-aixin_shixin' : 'icon-aixin'}
+              className={isLiked(data.id) ? 'liked' : 'defaultClickIcon'}
+              onClick={() => handleToggleLike(data.id, isLiked(data.id))}
+            />
+
+            <CloudDownloadOutlined
+              onClick={() => {
+                downLoadMusic(
+                  data.id,
+                  data.name + '-' + data.ar.map((item: any) => item.name).join('/')
+                )
+              }}
+              className={'defaultClickIcon'}
+            />
           </div>
         )
       },
@@ -63,7 +70,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       render: (data: any) => {
         return <span className={`line1`}>{data.name}</span>
       },
-      width: (8 / 24) * 100 + '%',
+      width: (9 / 24) * 100 + '%',
       align: 'left'
     },
     {
@@ -126,6 +133,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
             onColDoubleClick={onColDoubleClick}
             columns={columns}
             data={songSheetInfo?.tracks}
+            showIdx
           />
         )}
         {activeIndex === 'comment' && (

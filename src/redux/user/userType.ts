@@ -1,5 +1,5 @@
 export interface UserInfoType {
-  userId: number
+  userId: number | string
   userType: number
   nickname: string
   avatarImgId: number

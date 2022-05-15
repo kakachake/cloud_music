@@ -9,11 +9,8 @@
 }
 .tableHandle > * {
   padding: 0 5px;
-  color: #bcbcbc;
+
   line-height: 100%;
   font-size: 16px;
   cursor: pointer;
-}
-.tableHandle > * :hover {
-  color: #484848;
 }

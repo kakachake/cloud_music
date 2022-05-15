@@ -31,8 +31,8 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
         <thead>
           <tr style={hideHeader ? { display: 'none' } : {}} className={`${style.muTableHeader}`}>
             {showIdx === true && (
-              <th style={{ textAlign: 'center' }}>
-                <div></div>
+              <th>
+                <div style={{ width: '40px', textAlign: 'center' }}>序号</div>
               </th>
             )}
             {columns.map((item) => {
@@ -54,7 +54,7 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
               >
                 {showIdx === true && (
                   <td>
-                    <div style={{ width: 30, textAlign: 'center' }}>{pad(idx)}</div>
+                    <div style={{ width: '40px', textAlign: 'center' }}>{pad(idx + 1)}</div>
                   </td>
                 )}
                 {columns.map((col) => {

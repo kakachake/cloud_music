@@ -1,3 +1,4 @@
+import Toast from '../../components/Toast'
 import axRequest from '../index'
 
 enum MUSIC_API {
@@ -15,7 +16,9 @@ enum MUSIC_API {
   //获取歌曲评论
   GET_SONG_COMMENT = '/comment/music',
   //获取歌单评论
-  GET_PLAYLIST_COMMENT = '/comment/playlist'
+  GET_PLAYLIST_COMMENT = '/comment/playlist',
+  //下载歌曲
+  DOWNLOAD_SONG = '/song/download/url'
 }
 
 //获取歌单详情
@@ -88,4 +91,40 @@ export function getPlaylistComment(id: number | string, page: number) {
       offset: (page - 1) * 20
     }
   })
+}
+
+//下载歌曲
+export function downLoadMusic(id: string | number, fileName: string) {
+  return axRequest
+    .get({
+      url: MUSIC_API.DOWNLOAD_SONG,
+      params: {
+        id
+      }
+    })
+    .then((res) => {
+      const url = res.data.url
+      console.log(url)
+
+      Toast.success('正在下载')
+      return axRequest.get({ url, responseType: 'blob' })
+    })
+    .then((res) => {
+      const blob = res
+      const binaryData = []
+      binaryData.push(blob)
+      const href = window.URL.createObjectURL(new Blob(binaryData))
+      console.log(href)
+      const a = document.createElement('a')
+      a.href = href
+      a.download = fileName + '.mp3'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      Toast.success('下载成功')
+    })
+    .catch((err) => {
+      console.log(err)
+      Toast.error('下载失败,请稍后重试!')
+    })
 }
