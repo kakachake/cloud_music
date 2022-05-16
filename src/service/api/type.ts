@@ -11,4 +11,5 @@ export interface SongSheetsType {
   alg: string
   playCount?: number
   playcount?: number
+  coverImgUrl?: string
 }

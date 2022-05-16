@@ -17,7 +17,7 @@ const SongSheetItem: FunctionComponent<SongSheetItemProps> = ({ songSheetInfo })
   return (
     <div onClick={handleToSongSheet} className={style.songSheetItem}>
       <div className={style.contentWrap}>
-        <img src={songSheetInfo.picUrl ?? playListImg} alt='' />
+        <img src={(songSheetInfo.picUrl || songSheetInfo.coverImgUrl) ?? playListImg} alt='' />
         <div className={style.content}>
           <div className={style.playCount}>
             <PlayCircleOutlined className={style.playIcon} />
@@ -28,7 +28,7 @@ const SongSheetItem: FunctionComponent<SongSheetItemProps> = ({ songSheetInfo })
           </div>
         </div>
       </div>
-      <div className={style.songSheetName}>{songSheetInfo.name}</div>
+      <div className={`${style.songSheetName} line2`}>{songSheetInfo.name}</div>
     </div>
   )
 }

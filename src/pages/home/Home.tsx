@@ -14,7 +14,8 @@ const Home: FunctionComponent<HomeProps> = () => {
     },
     {
       title: '歌单',
-      path: '/playList'
+      path: '/songSheets/default/华语',
+      regPath: /^\/songSheets/
     }
   ])
   return (
@@ -22,7 +23,7 @@ const Home: FunctionComponent<HomeProps> = () => {
       <TabBar route={true}>
         {tabList.map((item, index) => {
           return (
-            <TabBarItem key={index} path={item.path}>
+            <TabBarItem key={index} path={item.path} regPath={item.regPath}>
               {item.title}
             </TabBarItem>
           )

@@ -9,6 +9,7 @@ import {
 import { FunctionComponent, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { IconFont } from '../../../../assets/css/iconFont'
+import Like from '../../../../components/like/Like'
 import { useIsLiked } from '../../../../hooks/useLikeList'
 import { publicSlice } from '../../../../redux/publicSlice/slice'
 import store, { RootState } from '../../../../redux/store'
@@ -43,11 +44,7 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
               <div className={`line1 ${style.songInfoNameWrap}`}>
                 <div className={`line1 ${style.songInfoName}`}>{songInfo.name + ' '}</div>
                 <div className={style.songInfoHandle}>
-                  <IconFont
-                    type={isLiked(songInfo.id) ? 'icon-aixin_shixin' : 'icon-aixin'}
-                    className={isLiked(songInfo.id) ? 'liked' : 'defaultLike'}
-                    onClick={() => handleToggleLike(songInfo.id, isLiked(songInfo.id))}
-                  />
+                  <Like id={songInfo.id} />
                 </div>
               </div>
               <div>
@@ -64,7 +61,7 @@ const MusicBarLeft: FunctionComponent<MusicBarLeftProps> = () => {
             </div>
             <div className={style.musicDetailCutIcons}>
               <div className={style.musicDetailCutIconItem}>
-                <HeartOutlined />
+                <Like id={songInfo.id} />
               </div>
               <div className={style.musicDetailCutIconItem}>
                 <StarOutlined />

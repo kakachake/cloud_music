@@ -6,14 +6,14 @@ import Comment from '../../../components/comment/Comment'
 import style from './Comment.module.css'
 import Pagination from '../../../components/pagination/Pagination'
 interface CommentTabPageProps {
-  id: string | number
+  songId: string | number
   type: 'Song' | 'PlayList' | 'Album'
   onPageChange?: (page: number) => void
 }
 
 const CommentTabPage: FC<CommentTabPageProps> = (props) => {
-  const { id, type, onPageChange } = props
-  const { comments, hotComments, curPage, setCurPage, total } = useComment(id, type)
+  const { songId, type, onPageChange } = props
+  const { comments, hotComments, curPage, setCurPage, total } = useComment(songId, type)
   useEffect(() => {
     onPageChange && onPageChange(curPage)
   }, [curPage])

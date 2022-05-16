@@ -7,17 +7,37 @@ interface TabBarItemProps {
   active?: boolean
   id?: string | number
   onClick?: () => void
+  regPath?: RegExp
+  tabBarItemClassName?: string
+  tabBarItemActiveClassName?: string
 }
 
 const TabBarItem: FunctionComponent<TabBarItemProps> = (props) => {
-  const { children, path = '', active = false, onClick } = props
+  const {
+    children,
+    path = '',
+    active = false,
+    onClick,
+    tabBarItemClassName,
+    tabBarItemActiveClassName
+  } = props
   const navigate = useNavigate()
   const handleToPath = () => {
+    console.log(path)
     path && navigate(path)
     onClick && onClick()
   }
   return (
-    <div onClick={handleToPath} className={`${style.tabBarItem} ${active ? style.active : ''}`}>
+    <div
+      onClick={handleToPath}
+      className={`${tabBarItemClassName} ${style.tabBarItem} ${
+        active
+          ? tabBarItemActiveClassName
+            ? `${tabBarItemActiveClassName}`
+            : ` ${style.active}`
+          : ''
+      }`}
+    >
       {children}
     </div>
   )

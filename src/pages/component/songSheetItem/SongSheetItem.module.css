@@ -4,11 +4,7 @@
   height: 0;
   padding-bottom: calc(20% + 24px);
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   background-color: #fff;
-
   margin: 0 0 20px 0;
 }
 
@@ -50,6 +46,7 @@
 .songSheetName {
   line-height: 24px;
   height: 48px;
+  padding: 5px;
 }
 
 .hoverWrap {

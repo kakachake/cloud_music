@@ -127,3 +127,13 @@ export function debounce(fn: (...args: any) => void, delay: number) {
     }, delay)
   }
 }
+
+export function mainContentScroll(to: number) {
+  const mainContent = document.querySelector('#mainContent')
+  if (mainContent) {
+    mainContent.scroll({
+      top: to,
+      behavior: 'smooth'
+    })
+  }
+}

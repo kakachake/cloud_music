@@ -13,10 +13,13 @@ const TabBar: FunctionComponent<TabBarProps> = (props) => {
   let activeIndex = props.activeIndex
   let children = props.children
   activeIndex = route ? useLocation().pathname : activeIndex
+  console.log(activeIndex)
 
   children = children?.map((o, i) => {
     return React.cloneElement(o, {
-      active: route ? activeIndex === o.props.path : activeIndex === o.props.id
+      active: route
+        ? activeIndex === o.props.path || o.props.regPath?.test(activeIndex)
+        : activeIndex === o.props.id
     })
   })
   return <div className={style.tabBar}>{children}</div>

@@ -14,6 +14,7 @@ import CommentTabPage from '../component/commentTabPage/CommentTabPage'
 import { fmListSlice } from '../../redux/fmList/slice'
 import { publicSlice } from '../../redux/publicSlice/slice'
 import { useListControl } from '../../controller/listController'
+import Like from '../../components/like/Like'
 export interface PersonalFmItem {
   album: AlbumType
   name: string
@@ -69,9 +70,13 @@ const PersonalFm: FC<PersonalFmProps> = () => {
   }
   const changePage = (idx: number) => {
     console.log(idx)
+    const mainContentEl = document.querySelector('#mainContent')
+    const commentAreaTop = document.getElementById('commentArea')?.offsetTop
+
+    mainContentEl?.scrollTo({ top: commentAreaTop, behavior: 'smooth' })
   }
   return (
-    <div className={`baseContainer ${style.personFmWrap}`}>
+    <div id='fmContainer' className={`baseContainer ${style.personFmWrap}`}>
       <div className={style.songArea}>
         <div className={style.songAreaLeft}>
           <div className={style.songImgChangeSwriper}>
@@ -83,7 +88,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
           </div>
           <div className={style.songImgHandle}>
             <div className={style.handleItem}>
-              <HeartOutlined />
+              <Like id={song.id} />
             </div>
             <div className={style.handleItem}>
               <DeleteOutlined />
@@ -112,8 +117,8 @@ const PersonalFm: FC<PersonalFmProps> = () => {
           </div>
         </div>
       </div>
-      <div>
-        <CommentTabPage onPageChange={changePage} id={song?.id} type='Song' />
+      <div id='commentArea'>
+        <CommentTabPage onPageChange={changePage} songId={song?.id} type='Song' />
       </div>
     </div>
   )

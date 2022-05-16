@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import style from './Content.module.css'
 import SideBar from '../../../components/sideBar/SideBar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Home from '../../../pages/home/Home'
 import Suggest from '../../../pages/home/suggest/Suggest'
 import SongSheet from '../../../pages/songSheet/SongSheet'
@@ -14,6 +14,7 @@ import { FC } from 'react'
 import { IconFont } from '../../../assets/css/iconFont'
 import { HeartOutlined } from '@ant-design/icons'
 import PersonalFm from '../../../pages/personalFm/PersonalFm'
+import SongSheets from '../../../pages/songSheets/SongSheets'
 
 const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
@@ -51,6 +52,7 @@ const Content: FC = (props) => {
     }
     setSideBarItems(_sideBarItems)
   }, [userPlayList, userLikeList])
+
   return (
     <div className={style.content}>
       <div className={style.siderBar}>
@@ -76,11 +78,14 @@ const Content: FC = (props) => {
         </SideBar>
       </div>
 
-      <div className={style.mainPage}>
+      <div id='mainContent' className={style.mainPage}>
         <Routes>
           <Route path='/' element={<Home />}>
             <Route path='' element={<Suggest />} />
-            <Route path='/playList' element={<Suggest />} />
+            <Route path='/songSheets' element={<Navigate to='/songSheets/default/' />}></Route>
+            <Route path='/songSheets/default/' element={<SongSheets />} />
+            <Route path='/songSheets/default/:type' element={<SongSheets />} />
+            <Route path='/songSheets/boutique/:type' element={<PlayList />} />
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>

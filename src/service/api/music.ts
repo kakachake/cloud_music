@@ -18,7 +18,13 @@ enum MUSIC_API {
   //获取歌单评论
   GET_PLAYLIST_COMMENT = '/comment/playlist',
   //下载歌曲
-  DOWNLOAD_SONG = '/song/download/url'
+  DOWNLOAD_SONG = '/song/download/url',
+  //热门歌单分类
+  GET_HOT_SONG_SHEETS_CATEGORY = '/playlist/hot',
+  //获取精品歌单列表
+  GET_HIGHQUALITY_SONG_SHEETS = '/top/playlist/highquality',
+  //获取歌单（网友精选）
+  GET_HOT_SONG_SHEETS = '/top/playlist'
 }
 
 //获取歌单详情
@@ -127,4 +133,35 @@ export function downLoadMusic(id: string | number, fileName: string) {
       console.log(err)
       Toast.error('下载失败,请稍后重试!')
     })
+}
+
+//获取热门歌单分类
+export function getHotSongSheetsCategory() {
+  return axRequest.get({
+    url: MUSIC_API.GET_HOT_SONG_SHEETS_CATEGORY
+  })
+}
+
+//获取精品歌单分类
+export function getHighQualitySongSheets({ limit = 20, before = 0, cat = '华语' }) {
+  return axRequest.get({
+    url: MUSIC_API.GET_HIGHQUALITY_SONG_SHEETS,
+    params: {
+      limit,
+      before,
+      cat
+    }
+  })
+}
+
+//获取歌单（网友精选）
+export function getHotSongSheets({ limit = 20, offset = 0, cat = '华语' }) {
+  return axRequest.get({
+    url: MUSIC_API.GET_HOT_SONG_SHEETS,
+    params: {
+      limit,
+      offset,
+      cat
+    }
+  })
 }

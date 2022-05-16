@@ -91,7 +91,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
           </div>
         </div>
         <div className={style.comment}>
-          <CommentTabPage onPageChange={changePage} id={song?.id} type='Song' />
+          <CommentTabPage onPageChange={changePage} songId={song?.id} type='Song' />
         </div>
       </div>
     </div>

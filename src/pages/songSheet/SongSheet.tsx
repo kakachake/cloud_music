@@ -16,6 +16,7 @@ import { IconFont } from '../../assets/css/iconFont'
 import { likeMusic } from '../../service/api/reqLoginApi/loginMusicHandle'
 import { handleToggleLike } from '../../service/utils'
 import { useIsLiked } from '../../hooks/useLikeList'
+import Like from '../../components/like/Like'
 
 interface SongSheetProps {}
 
@@ -42,11 +43,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       render: (data: any, idx: number) => {
         return (
           <div className={style.tableHandle}>
-            <IconFont
-              type={isLiked(data.id) ? 'icon-aixin_shixin' : 'icon-aixin'}
-              className={isLiked(data.id) ? 'liked' : 'defaultClickIcon'}
-              onClick={() => handleToggleLike(data.id, isLiked(data.id))}
-            />
+            <Like id={data.id} />
 
             <CloudDownloadOutlined
               onClick={() => {
@@ -138,7 +135,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
         )}
         {activeIndex === 'comment' && (
           <div>
-            <CommentTabPage id={id!} type='PlayList' />
+            <CommentTabPage songId={id!} type='PlayList' />
           </div>
         )}
         {activeIndex === 'favoriter' && <div>收藏者</div>}
