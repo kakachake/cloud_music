@@ -74,14 +74,14 @@
   justify-content: center;
   border-radius: 10px;
   margin-right: 10px;
-  font-size: 14px !important;
+  font-size: 12px !important;
   cursor: pointer;
   padding: 0px 5px;
   color: #373737;
 }
 
 .tabBarItemActive {
-  font-size: 14px;
+  font-size: 12px;
 
   background-color: #fdf5f5;
   color: #ec4141;

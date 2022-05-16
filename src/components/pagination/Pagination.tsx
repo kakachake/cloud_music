@@ -39,7 +39,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         </div>
       )
     }
-    if (current + 3 < total - 1) {
+    if (current + 3 < total - 1 && total > 9) {
       _pagerList.push(<div className={style.paginationItem}>…</div>)
     }
     setPagerList(_pagerList)
@@ -63,14 +63,16 @@ const Pagination: FC<PaginationProps> = (props) => {
         1
       </div>
       {pagerList}
-      <div
-        onClick={() => {
-          changeCurrentPage(total)
-        }}
-        className={`${style.paginationItem} ${total === current ? style.active : ''}`}
-      >
-        {total}
-      </div>
+      {total > 8 && (
+        <div
+          onClick={() => {
+            changeCurrentPage(total)
+          }}
+          className={`${style.paginationItem} ${total === current ? style.active : ''}`}
+        >
+          {total}
+        </div>
+      )}
       <div
         onClick={() => {
           changeCurrentPage(current + 1)
