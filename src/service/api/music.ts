@@ -143,7 +143,7 @@ export function getHotSongSheetsCategory() {
 }
 
 //获取精品歌单分类
-export function getHighQualitySongSheets({ limit = 20, before = 0, cat = '华语' }) {
+export function getHighQualitySongSheets({ limit = 20, before = '', cat = '华语' }) {
   return axRequest.get({
     url: MUSIC_API.GET_HIGHQUALITY_SONG_SHEETS,
     params: {

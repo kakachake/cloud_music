@@ -137,3 +137,16 @@ export function mainContentScroll(to: number) {
     })
   }
 }
+
+export function isScrollBottom(el: Element) {
+  // 是否滚动到了底部
+  const clientHeight = el.clientHeight
+  const scrollTop = el.scrollTop
+  const scrollHeight = el.scrollHeight
+
+  if (scrollHeight - scrollTop - clientHeight < 1) {
+    return true
+  } else {
+    return false
+  }
+}

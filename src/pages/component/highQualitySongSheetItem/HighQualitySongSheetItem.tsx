@@ -5,6 +5,7 @@ import playListImg from '../../../assets/img/playListImg.png'
 import { PlayCircleOutlined } from '@ant-design/icons'
 import { formatNumber } from '../../../utils'
 import { useNavigate } from 'react-router-dom'
+import highSheetImg from '../../../assets/img/highSheet.png'
 interface HighQualitySongSheetItemProps {
   songSheetInfo: HighQualitySongSheetType
 }
@@ -17,6 +18,7 @@ const HighQualitySongSheetItem: FC<HighQualitySongSheetItemProps> = (props) => {
   return (
     <div onClick={handleToSongSheet} className={style.sheetWrap}>
       <div className={style.imgWrap}>
+        <img src={highSheetImg} className={style.highSheetImg} alt='' />
         <img src={(songSheetInfo.coverImgUrl || songSheetInfo.coverImgUrl) ?? playListImg} alt='' />
         <div className={style.content}>
           <div className={style.playCount}>
