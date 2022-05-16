@@ -4,14 +4,18 @@ import style from './HighQualitySongSheetItem.module.css'
 import playListImg from '../../../assets/img/playListImg.png'
 import { PlayCircleOutlined } from '@ant-design/icons'
 import { formatNumber } from '../../../utils'
+import { useNavigate } from 'react-router-dom'
 interface HighQualitySongSheetItemProps {
   songSheetInfo: HighQualitySongSheetType
 }
-
 const HighQualitySongSheetItem: FC<HighQualitySongSheetItemProps> = (props) => {
   const { songSheetInfo } = props
+  const navigate = useNavigate()
+  const handleToSongSheet = () => {
+    navigate(`/songSheet/${songSheetInfo.id}`)
+  }
   return (
-    <div className={style.sheetWrap}>
+    <div onClick={handleToSongSheet} className={style.sheetWrap}>
       <div className={style.imgWrap}>
         <img src={(songSheetInfo.coverImgUrl || songSheetInfo.coverImgUrl) ?? playListImg} alt='' />
         <div className={style.content}>
