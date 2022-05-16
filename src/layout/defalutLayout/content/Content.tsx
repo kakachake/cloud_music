@@ -15,6 +15,7 @@ import { IconFont } from '../../../assets/css/iconFont'
 import { HeartOutlined } from '@ant-design/icons'
 import PersonalFm from '../../../pages/personalFm/PersonalFm'
 import SongSheets from '../../../pages/songSheets/SongSheets'
+import HighQuality from '../../../pages/HighQuality/HighQuality'
 
 const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
@@ -85,7 +86,7 @@ const Content: FC = (props) => {
             <Route path='/songSheets' element={<Navigate to='/songSheets/default/' />}></Route>
             <Route path='/songSheets/default/' element={<SongSheets />} />
             <Route path='/songSheets/default/:type' element={<SongSheets />} />
-            <Route path='/songSheets/boutique/:type' element={<PlayList />} />
+            <Route path='/songSheets/highquality/:type' element={<HighQuality />} />
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>

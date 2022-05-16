@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { FC, useCallback, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetSongSheet } from './hooks/useGetSongSheet'
 import { useSongsheetsCategory } from './hooks/usePlayListHot'
 import style from './SongSheets.module.css'
@@ -14,12 +14,15 @@ const SongSheets: FC<SongSheetsProps> = () => {
   const { songSheetsCategory } = useSongsheetsCategory()
 
   const { highquality, playList, playListTotal, curPage, setCurPage } = useGetSongSheet()
-  console.log(highquality)
-
+  const { type } = useParams()
+  const navigate = useNavigate()
+  const handleToHighQualityPage = useCallback(() => {
+    navigate(`/songSheets/highQuality/${type}`)
+  }, [type])
   return (
-    <div className={style.songSheetsWrap}>
+    <div className={`${style.songSheetsWrap} container1000`}>
       {highquality && (
-        <div className={style.headerWrap}>
+        <div onClick={handleToHighQualityPage} className={style.headerWrap}>
           <div className={style.leftImg}>
             <img src={highquality?.coverImgUrl} alt='' />
           </div>

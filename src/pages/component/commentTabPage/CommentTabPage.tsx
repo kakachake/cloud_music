@@ -14,9 +14,7 @@ interface CommentTabPageProps {
 const CommentTabPage: FC<CommentTabPageProps> = (props) => {
   const { songId, type, onPageChange } = props
   const { comments, hotComments, curPage, setCurPage, total } = useComment(songId, type)
-  useEffect(() => {
-    onPageChange && onPageChange(curPage)
-  }, [curPage])
+
   return (
     <div className={style.comment}>
       <div className={style.commentTitle}>热门评论 ({total})</div>
@@ -25,7 +23,10 @@ const CommentTabPage: FC<CommentTabPageProps> = (props) => {
       <Comment commentList={comments} />
       <div className={style.pagination}>
         <Pagination
-          onChangeCurrentPage={setCurPage}
+          onChangeCurrentPage={(cur) => {
+            setCurPage(cur)
+            onPageChange && onPageChange(cur)
+          }}
           total={Math.ceil(total / 20)}
           pageCurrent={curPage}
         />

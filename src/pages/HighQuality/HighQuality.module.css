@@ -1,0 +1,8 @@
+.listWrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.listWrap > div {
+  margin: 10px;
+}

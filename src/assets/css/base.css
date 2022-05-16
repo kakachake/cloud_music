@@ -66,3 +66,8 @@
 .liked:hover {
   color: var(--backgroundHoverColor);
 }
+
+.container1000 {
+  width: 1000px;
+  margin: 0 auto;
+}
