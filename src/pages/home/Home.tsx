@@ -16,6 +16,10 @@ const Home: FunctionComponent<HomeProps> = () => {
       title: '歌单',
       path: '/songSheets/default/华语',
       regPath: /^\/songSheets/
+    },
+    {
+      title: '排行榜',
+      path: '/rank'
     }
   ])
   return (

@@ -16,6 +16,7 @@ import { HeartOutlined } from '@ant-design/icons'
 import PersonalFm from '../../../pages/personalFm/PersonalFm'
 import SongSheets from '../../../pages/songSheets/SongSheets'
 import HighQuality from '../../../pages/HighQuality/HighQuality'
+import Rank from '../../../pages/home/rank/Rank'
 
 const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
@@ -87,6 +88,7 @@ const Content: FC = (props) => {
             <Route path='/songSheets/default/' element={<SongSheets />} />
             <Route path='/songSheets/default/:type' element={<SongSheets />} />
             <Route path='/songSheets/highquality/:type' element={<HighQuality />} />
+            <Route path='/rank' element={<Rank />} />
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>

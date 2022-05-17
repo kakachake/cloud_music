@@ -28,7 +28,7 @@ enum MUSIC_API {
 }
 
 //获取歌单详情
-export function getPlaylistDetail(id: string) {
+export function getPlaylistDetail(id: string | number) {
   return axRequest.get({
     url: MUSIC_API.GET_PLAYLIST_DETAIL,
     params: {

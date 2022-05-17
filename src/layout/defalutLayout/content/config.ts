@@ -16,14 +16,14 @@ export const linkItems: LinkItemTypes[] = [
         name: '发现音乐',
         href: '/'
       },
-      {
-        name: '播客',
-        href: '/play'
-      },
-      {
-        name: '视频',
-        href: '/video'
-      },
+      // {
+      //   name: '播客',
+      //   href: '/play'
+      // },
+      // {
+      //   name: '视频',
+      //   href: '/video'
+      // },
       {
         name: '私人FM',
         href: '/personalfm'

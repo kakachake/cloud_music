@@ -5,8 +5,9 @@ import { formatNumber } from '../../../utils'
 import style from './SongSheetItem.module.css'
 import { useNavigate } from 'react-router-dom'
 import playListImg from '../../../assets/img/playListImg.png'
+import { ToplistType } from '../../../type/topListItem'
 interface SongSheetItemProps {
-  songSheetInfo: SongSheetsType
+  songSheetInfo: Partial<SongSheetsType & ToplistType>
 }
 
 const SongSheetItem: FunctionComponent<SongSheetItemProps> = ({ songSheetInfo }) => {

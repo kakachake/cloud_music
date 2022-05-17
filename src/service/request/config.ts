@@ -3,7 +3,7 @@
 const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://101.43.155.53:9001/'
-    : 'https://netease-cloud-music-api-rho-liart.vercel.app/'
+    : 'http://101.43.155.53:9001/'
 
 const TIME_OUT = 5000
 
