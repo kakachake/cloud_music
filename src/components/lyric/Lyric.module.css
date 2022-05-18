@@ -1,6 +1,26 @@
+.white {
+  --defalutColor: rgba(255, 255, 255, 0.547);
+  --activeColor: #fff;
+}
+.black {
+  --activeColor: #000;
+  --defalutColor: #5e5e5e;
+}
+
+.default{
+  --fontSize: 14px;
+  --activeFontSize:16px
+  --height: 36px;
+}
+
+.bigSize {
+  --fontSize: 28px;
+  --height: 50px;
+}
+
 .lrcContainer {
   width: 100%;
-  height: 300px;
+
   position: relative;
   user-select: none;
 }
@@ -9,20 +29,19 @@
   text-align: center;
   height: 100%;
   overflow-y: scroll;
-  height: 300px;
   box-sizing: border-box;
   position: relative;
 }
 .lrcActive {
-  font-weight: bold;
-  color: #000;
-  font-size: 16px;
+  /* font-weight: bold; */
+  color: var(--activeColor);
+  font-size: 20px;
 }
 
 .lrcContent {
   padding: 150px 0;
   font-size: 14px;
-  color: #5e5e5e;
+  color: var(--defalutColor);
 }
 
 .lrcItem {

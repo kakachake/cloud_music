@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
 }
-.musicDetailCutIcons .upBtn {
+.upBtn {
   position: absolute;
   left: 20px;
   font-size: 22px;
@@ -40,7 +40,24 @@
   cursor: pointer;
   transition: all 0.3s;
 }
+
+.leftBar {
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.leftBarIcon {
+  font-size: 22px;
+  padding: 5px;
+  cursor: pointer;
+}
+
 .musicDetailCutIcons .headerSongInfo {
+  max-width: 500px;
   opacity: 0;
   text-align: center;
   transition: all 0.5s;

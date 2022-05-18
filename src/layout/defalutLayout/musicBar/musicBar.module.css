@@ -10,14 +10,19 @@
   min-width: 1024px;
   padding: 0 20px;
   box-sizing: border-box;
-  background-color: var(--musicBarBackgroundColor);
+  /* background-color: var(--musicBarBackgroundColor); */
   z-index: 9999;
+  left: 0;
+}
+
+.white {
+  --iconColor: #fff;
 }
 
 .musicInfo {
   height: 100%;
   flex: 1;
-  background-color: #fff;
+  /* background-color: #fff; */
   overflow: hidden;
 }
 

@@ -86,9 +86,11 @@
   padding: 5px;
   cursor: pointer;
   transition: all 0.3s;
+  border-radius: 5px;
+  color: var(--iconColor);
 }
 .musicBarLeft .upBtn:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(245, 245, 245, 0.305);
 }
 
 .musicBarLeft .musicDetailCutIcons {
@@ -101,11 +103,12 @@
 .musicDetailCutIconItem {
   padding: 8px;
   margin: 0 5px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(148, 148, 148, 0.444);
   border-radius: 50%;
   cursor: pointer;
+  color: var(--iconColor);
 }
 
 .musicDetailCutIconItem:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(245, 245, 245, 0.157);
 }

@@ -1,5 +1,3 @@
-import React, { Component, DOMElement } from 'react'
-import ReactDom from 'react-dom'
 import Login from './Login'
 import { createRoot, Root } from 'react-dom/client'
 function createLogin(el: any) {

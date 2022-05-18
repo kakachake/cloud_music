@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333333;
+  color: var(--iconColor);
   font-size: 20px;
   margin-bottom: 5px;
 }
@@ -28,12 +28,12 @@
 
 .playIcon {
   padding: 5px;
-  background: #f4f4f4;
+  background: rgba(148, 148, 148, 0.325);
   border-radius: 50%;
 }
 
 .playIcon:hover {
-  background: #e5e5e5;
+  background: rgba(148, 148, 148, 0.49);
   color: #333333;
 }
 

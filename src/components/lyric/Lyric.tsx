@@ -9,6 +9,7 @@ import store, { RootState } from '../../redux/store'
 import { parseLrc, parseSecondToTime } from '../../utils'
 import Toast from '../Toast'
 import style from './Lyric.module.css'
+
 interface LyricProps {
   lrc: {
     lrc: string
@@ -16,9 +17,23 @@ interface LyricProps {
   }[]
   currentTime: number
   _uid: string
+  mode?: 'white' | 'black'
+  itemHeight?: number
+  itemFontSize?: number
+  showControl?: boolean
+  height?: number
 }
 
-const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime, _uid }) => {
+const Lyric: FunctionComponent<LyricProps> = ({
+  lrc: parsedLrc,
+  currentTime,
+  _uid,
+  mode,
+  itemHeight = 36,
+  itemFontSize,
+  showControl = true,
+  height = 300
+}) => {
   const [curLrcIdx, setCurLrcIdx] = useState(0)
   const lrcWrapEl = document.getElementById('lrcWrap' + _uid)
   const [stopScroll, setStopScroll] = useState(false)
@@ -33,7 +48,10 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime, _ui
 
         //设置scroll
         if (lrcWrapEl && !stopScroll) {
-          lrcWrapEl.scrollTo({ top: (curIdx + 1) * 36 - 18, behavior: 'smooth' })
+          lrcWrapEl.scrollTo({
+            top: (curIdx + 1) * itemHeight - itemHeight / 2,
+            behavior: 'smooth'
+          })
         }
         break
       }
@@ -43,10 +61,8 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime, _ui
     setTimeOffset(0)
   }, [parsedLrc])
   const wheelEvent = (e: any) => {
-    console.log(lrcWrapEl)
-
     const scrollTop = lrcWrapEl!.scrollTop
-    let idx = +((scrollTop + 18) / 36).toFixed(0)
+    let idx = +((scrollTop + itemHeight / 2) / itemHeight).toFixed(0)
     if (idx >= parsedLrc.length) {
       idx = parsedLrc.length - 1
     }
@@ -67,46 +83,73 @@ const Lyric: FunctionComponent<LyricProps> = ({ lrc: parsedLrc, currentTime, _ui
     <div
       onMouseEnter={() => setStopScroll(true)}
       onMouseLeave={() => setStopScroll(false)}
-      className={style.lrcContainer}
+      className={`${style.lrcContainer} ${mode === 'white' ? style.white : style.black}`}
     >
-      <div className={style.timeOffsetWrap}>
-        <div onClick={() => handleChangeOffset(-0.5)} className={style.lrcTimeUp}>
-          <UpOutlined />
-        </div>
-        <div onClick={() => handleChangeOffset(0.5)} className={style.lrcTimeDown}>
-          <DownOutlined />
-        </div>
-      </div>
-      <div className={`${style.centerLine} ${stopScroll ? style.lineShow : ''}`}>
-        <div className={style.leftLine}>
-          <div className={style.leftTime}>{parseSecondToTime(parsedLrc?.[scrollIdx]?.time)}</div>
-        </div>
-        <div className={style.rightLine}>
-          <div className={style.rightPlay}>
-            <IconFont
-              className={`${style.playIcon} ${style.icon}`}
-              onClick={() => handleToTime()}
-              type={'icon-play'}
-            />
+      {showControl ? (
+        <div className={style.timeOffsetWrap}>
+          <div onClick={() => handleChangeOffset(-0.5)} className={style.lrcTimeUp}>
+            <UpOutlined />
+          </div>
+          <div onClick={() => handleChangeOffset(0.5)} className={style.lrcTimeDown}>
+            <DownOutlined />
           </div>
         </div>
-      </div>
-      <div id={'lrcWrap' + _uid} className={style.lrcWrap} onScroll={wheelEvent}>
-        <div className={style.lrcContent}>
+      ) : (
+        ''
+      )}
+      {showControl ? (
+        <div className={`${style.centerLine} ${stopScroll ? style.lineShow : ''}`}>
+          <div className={style.leftLine}>
+            <div className={style.leftTime}>{parseSecondToTime(parsedLrc?.[scrollIdx]?.time)}</div>
+          </div>
+          <div className={style.rightLine}>
+            <div className={style.rightPlay}>
+              <IconFont
+                className={`${style.playIcon} ${style.icon}`}
+                onClick={() => handleToTime()}
+                type={'icon-play'}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
+      <LrcWrap
+        height={height}
+        id={'lrcWrap' + _uid}
+        className={style.lrcWrap}
+        onScroll={wheelEvent}
+      >
+        <LrcContent padding={height / 2} className={style.lrcContent}>
           {parsedLrc.map((item, idx) => {
             return (
               <div
                 key={idx}
+                style={{
+                  ...(itemHeight ? { height: itemHeight + 'px' } : {}),
+                  ...(itemFontSize ? { fontSize: itemFontSize + 'px' } : {}),
+                  ...(idx === curLrcIdx && itemFontSize
+                    ? { fontSize: itemFontSize + 10 + 'px' }
+                    : {})
+                }}
                 className={`${idx === curLrcIdx ? style.lrcActive : ''} ${style.lrcItem} line1`}
               >
                 {item.lrc}
               </div>
             )
           })}
-        </div>
-      </div>
+        </LrcContent>
+      </LrcWrap>
     </div>
   )
 }
 
 export default Lyric
+
+const LrcWrap = styled.div<{ height: number }>`
+  height: ${(props) => props.height + 'px'};
+`
+const LrcContent = styled.div<{ padding: number }>`
+  padding: ${(props) => props.padding + 'px'} 0;
+`

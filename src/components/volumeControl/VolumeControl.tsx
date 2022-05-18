@@ -6,6 +6,7 @@ import style from './VolumeControl.module.css'
 import audioInstance from '../../controller/musicPlayer'
 interface VolumeControlProps extends MusicControlState {
   setVolume: (adjust: number) => void
+  id?: string
 }
 
 interface VolumeControlState {}
@@ -25,8 +26,8 @@ class VolumeControl extends React.Component<VolumeControlProps, VolumeControlSta
     audioInstance.setVolume(percent)
   }
   handleMouseDownDot = (e: React.MouseEvent<HTMLDivElement>) => {
-    const barEl = document.getElementById('volumeBar')
-    const curBarEl = document.getElementById('curVolumeBar')
+    const barEl = document.getElementById('volumeBar' + this.props.id)
+    const curBarEl = document.getElementById('curVolumeBar' + this.props.id)
     this.setBarPercent(e, barEl!, curBarEl!, 'column', (percent: number) => {
       this.setVolume(percent)
     })
@@ -59,10 +60,14 @@ class VolumeControl extends React.Component<VolumeControlProps, VolumeControlSta
   render() {
     return (
       <div className={style.volumeControl}>
-        <div id='volumeBar' onClick={this.handlePgClick} className={style.progress}>
+        <div
+          id={'volumeBar' + this.props.id}
+          onClick={this.handlePgClick}
+          className={style.progress}
+        >
           <div className={style.progressBar}>
             <div
-              id='curVolumeBar'
+              id={'curVolumeBar' + this.props.id}
               style={{ height: `${this.props.isMute === true ? 0 : this.props.volume * 100}%` }}
               className={style.curBar}
             >

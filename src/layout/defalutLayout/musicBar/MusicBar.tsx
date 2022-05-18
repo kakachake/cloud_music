@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import style from './musicBar.module.css'
 import MusicControl from '../../../components/musicControl/MusicControl'
 
@@ -10,8 +10,13 @@ import { useSelector } from '../../../redux/hooks'
 import store, { RootState } from '../../../redux/store'
 import MusicBarLeft from './musicBarLeft/MusicBarLeft'
 import { publicSlice } from '../../../redux/publicSlice/slice'
+interface MusicBarProps {
+  mode?: 'white' | 'dark'
+  showBorder?: boolean
+  id?: string
+}
 
-const MusicBar: FunctionComponent = () => {
+const MusicBar: FC<MusicBarProps> = ({ showBorder = true, mode = 'dark', id }) => {
   const isMute = useSelector((state: RootState) => state.musicControl.isMute)
 
   const toggleVolume = () => {
@@ -26,7 +31,11 @@ const MusicBar: FunctionComponent = () => {
   }
 
   return (
-    <div id='musicBar' className={style.musicBar}>
+    <div
+      id='musicBar'
+      style={showBorder ? {} : { border: 'none' }}
+      className={`${style.musicBar} ${mode === 'white' ? style.white : ''}`}
+    >
       <div className={style.musicInfo}>
         <MusicBarLeft />
       </div>
@@ -41,7 +50,7 @@ const MusicBar: FunctionComponent = () => {
             type={`${isMute ? 'icon-sound-off' : 'icon-sound-on'}`}
           />
           <div className={style.volumeControl}>
-            <VolumeControl />
+            <VolumeControl id={id} />
           </div>
         </div>
         <IconFont onClick={handleOpenList} className={style.icon} type={`icon-playlist`} />

@@ -1,4 +1,4 @@
-import { DownOutlined, ShareAltOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, DownOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { publicSlice } from '../../../redux/publicSlice/slice'
 import store, { RootState } from '../../../redux/store'
@@ -13,6 +13,7 @@ import { getSongComment } from '../../../service/api/music'
 import styled from 'styled-components'
 import Pagination from '../../../components/pagination/Pagination'
 import CommentTabPage from '../../../pages/component/commentTabPage/CommentTabPage'
+import fullScreen from '../fullScreen/index'
 interface MusicDetailProps {}
 
 const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
@@ -58,10 +59,10 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
     <div className={style.musicDetail}>
       <div className={style.musicDetailHeader}>
         <MusicDetailHeader className={style.headerBg} bgImg={song?.al?.picUrl} />
+        <div onClick={handleClose} className={style.upBtn}>
+          <DownOutlined />
+        </div>
         <div className={style.musicDetailCutIcons}>
-          <div onClick={handleClose} className={style.upBtn}>
-            <DownOutlined />
-          </div>
           <div
             className={`${style.headerSongInfo} ${
               songHeaderInfoShow ? style.headerSongInfoShow : ''
@@ -72,6 +73,10 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
               {song?.ar?.map((item: any) => item.name).join('/')} - {song?.al?.name}
             </div>
           </div>
+        </div>
+        <div onClick={fullScreen.create} className={style.leftBar}>
+          <ArrowsAltOutlined className={style.leftBarIcon} />
+          全屏纯享
         </div>
       </div>
 
