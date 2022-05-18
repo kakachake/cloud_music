@@ -33,7 +33,7 @@ const HighQualitySongSheetItem: FC<HighQualitySongSheetItemProps> = (props) => {
       <div className={style.sheetContent}>
         <div className={`${style.sheetName} line1`}>{songSheetInfo.name}</div>
         <div className={style.creator}>by {songSheetInfo.creator.nickname}</div>
-        <div className={style.copywriter}>{songSheetInfo.copywriter}</div>
+        <div className={`${style.copywriter} line1`}>{songSheetInfo.copywriter}</div>
       </div>
     </div>
   )

@@ -33,7 +33,8 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "commit": "npx cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "npm run build && git add . && npm run commit && git push"
   },
   "eslintConfig": {
     "extends": [

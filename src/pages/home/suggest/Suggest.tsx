@@ -45,7 +45,7 @@ const Suggest: FunctionComponent<SuggestProps> = () => {
         })}
       </Swiper>
       <LinkTab title='推荐歌单' to='/' />
-      <div className={style.suggestContent}>
+      <div className={`sheetWrap`}>
         {songSheets.map((item) => (
           <SongSheetItem songSheetInfo={item} key={item.id} />
         ))}

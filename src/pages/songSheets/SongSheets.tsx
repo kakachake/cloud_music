@@ -52,7 +52,7 @@ const SongSheets: FC<SongSheetsProps> = () => {
           </TabBar>
         </div>
       </div>
-      <div className={style.songSheetWrap}>
+      <div className={`sheetWrap`}>
         {playList.map((item) => (
           <SongSheetItem songSheetInfo={item} key={item.id} />
         ))}
