@@ -56,12 +56,12 @@ const SongSheets: FC<SongSheetsProps> = () => {
         {playList.map((item) => (
           <SongSheetItem songSheetInfo={item} key={item.id} />
         ))}
-        <Pagination
-          onChangeCurrentPage={setCurPage}
-          total={Math.ceil(playListTotal / 20)}
-          pageCurrent={curPage}
-        />
       </div>
+      <Pagination
+        onChangeCurrentPage={setCurPage}
+        total={Math.ceil(playListTotal / 20)}
+        pageCurrent={curPage}
+      />
     </div>
   )
 }

@@ -34,7 +34,8 @@
     "eject": "react-scripts eject",
     "commit": "npx cz",
     "prepare": "husky install",
-    "deploy": "npm run build && git add . && npm run commit && git push"
+    "deploy": "npm run build && git add . && npm run commit && git push && npm run dockerPublish",
+    "dockerPublish": "docker build -t cloud_music . && docker tag cloud_music registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest && docker push registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest"
   },
   "eslintConfig": {
     "extends": [
