@@ -1,5 +1,5 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FunctionComponent } from 'react'
 import style from './Swiper.module.css'
 interface SwiperProps {
@@ -23,7 +23,19 @@ const Swiper: FunctionComponent<SwiperProps> = (props) => {
       }
     }
   }, [curIndex, children])
-  const swiperWidth = document.getElementById('swiper')?.clientWidth || 0
+  const [swiperWidth, setSwiperWidth] = useState(
+    document.getElementById('swiper')?.clientWidth || 0
+  )
+  const onResize = useCallback(() => {
+    setSwiperWidth(document.getElementById('swiper')?.clientWidth || 0)
+  }, [])
+  useEffect(() => {
+    setSwiperWidth(document.getElementById('swiper')?.clientWidth || 0)
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [onResize])
   children = children?.map((o, i) => {
     return React.cloneElement(o, {
       index: i,
@@ -46,7 +58,7 @@ const Swiper: FunctionComponent<SwiperProps> = (props) => {
           : {}),
         ...(i === (curIndex + children.length + 1) % children.length
           ? {
-              left: '460px',
+              left: swiperWidth - 540 + 'px',
               zIndex: 2,
               transform: ' rotate3d(0,1,0,-2deg)',
               transformOrigin: 'right center'

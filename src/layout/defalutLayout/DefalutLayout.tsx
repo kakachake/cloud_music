@@ -9,6 +9,7 @@ import MusicDetail from './MusicDetail/MusicDetail'
 import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import style from './Default.module.css'
+import HandTrack from '../../components/handtrack/HandTrack'
 const DefaultLayout: FunctionComponent = () => {
   const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
   return (
@@ -19,6 +20,7 @@ const DefaultLayout: FunctionComponent = () => {
       <CSSTransition in={songDetailOpen} timeout={300} classNames='musicDetail' unmountOnExit>
         <MusicDetail />
       </CSSTransition>
+      <HandTrack />
     </div>
   )
 }

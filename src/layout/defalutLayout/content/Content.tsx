@@ -17,6 +17,7 @@ import PersonalFm from '../../../pages/personalFm/PersonalFm'
 import SongSheets from '../../../pages/songSheets/SongSheets'
 import HighQuality from '../../../pages/HighQuality/HighQuality'
 import Rank from '../../../pages/home/rank/Rank'
+import Search from '../../../pages/search/Search'
 
 const Content: FC = (props) => {
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
@@ -92,6 +93,7 @@ const Content: FC = (props) => {
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>
+          <Route path='/search/:keyword' element={<Search />}></Route>
         </Routes>
       </div>
       <div id='rightSideBar' className={style.rightSideContent}>

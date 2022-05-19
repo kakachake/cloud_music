@@ -19,7 +19,7 @@ const FullScreen: FC<FullScreenProps> = () => {
   const currentTime = useSelector((state) => state.musicControl.currentTime)
   const isPlaying = useSelector((state) => state.musicControl.isPlaying)
   const { song, lyric } = useSelector((state) => state.musicControl.musicInfo)
-  const [mode, setMode] = useState<Mode>(Mode.lyric)
+  const [mode, setMode] = useState<Mode>(Mode.defalut)
 
   const [parsedLrc, setParseLrc] = useState<any[]>([])
 

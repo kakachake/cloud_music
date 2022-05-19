@@ -1,3 +1,4 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { FC, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { HighQualitySongSheetType } from '../../type/highQualitySongSheet'
@@ -41,7 +42,12 @@ const HighQuality: FC<HighQualityProps> = () => {
             <HighQualitySongSheetItem key={item.id} songSheetInfo={item} />
           ))}
       </div>
-      {hasMore && <div className={style.loading}>加载中...</div>}
+      {hasMore && (
+        <div className={style.loading}>
+          <LoadingOutlined />
+          加载中...
+        </div>
+      )}
     </div>
   )
 }

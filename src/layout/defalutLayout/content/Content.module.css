@@ -4,7 +4,7 @@
   display: flex;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 950px) {
   .siderBar {
     display: none;
   }

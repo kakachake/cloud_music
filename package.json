@@ -1,7 +1,11 @@
 {
   "name": "cloud_music",
   "version": "0.1.0",
+  "authors": "kakachake",
+  "description": "一个仿网易云音乐的客户端/网页版",
   "private": true,
+  "main": "main.js",
+  "homepage": "./",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@craco/craco": "^6.4.3",
@@ -16,6 +20,8 @@
     "antd": "^4.20.1",
     "babel-eslint": "^10.1.0",
     "dayjs": "^1.11.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "handtrackjs": "^0.1.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.1",
@@ -28,14 +34,18 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "commit": "npx cz",
+    "electron-start": "electron .",
     "prepare": "husky install",
-    "deploy": "npm run build && git add . && npm run commit && git push && npm run dockerPublish",
-    "dockerPublish": "docker build -t cloud_music . && docker tag cloud_music registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest && docker push registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest"
+    "deploy": "npm run build && npm run dockerPublish",
+    "dockerPublish": "docker build -t cloud_music . && docker tag cloud_music registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest && docker push registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +68,11 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@types/react-transition-group": "^4.4.4",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
@@ -66,6 +81,7 @@
     "commitizen": "^4.2.4",
     "craco-less": "^2.0.0",
     "cz-conventional-changelog": "^3.3.0",
+    "electron": "^18.2.3",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -73,6 +89,7 @@
     "husky": "^7.0.0",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "path-browserify": "^1.0.1",
     "postcss": "^8.4.13",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
@@ -84,6 +101,31 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    },
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "cloud_music"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
     }
   }
 }
