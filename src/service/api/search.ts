@@ -5,7 +5,7 @@ enum SEARCH_API {
   //获取热搜
   GET_HOT_SEARCH = '/search/hot/detail',
   //搜索
-  GET_SEARCH_RESULT = '/search'
+  GET_SEARCH_RESULT = '/cloudsearch'
 }
 
 //获取热搜

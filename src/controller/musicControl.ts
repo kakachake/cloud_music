@@ -14,9 +14,9 @@ export const changeMusic = debounce((direction: number) => {
 
   const newIndex = (list.length + current + direction) % list.length
   listControl.curListType != 'fmList' && store.dispatch(getSongInfoAndSet(list[newIndex]))
+  //fmlist需要特殊处理
   listControl.curListType === 'fmList' && getSongBaseInfoAndSet(list[newIndex].id)
-  console.log(list[newIndex])
-
+  // store.dispatch(getSongInfoAndSet(list[newIndex]))
   listControl.setCurrent(newIndex)
 }, 500)
 
@@ -37,13 +37,17 @@ export const setMusicList = (payload: any[], type: 'musicList' | 'fmList') => {
   changeMusic(0)
 }
 
-export const addMusic = (data: any) => {
+export const addMusic = async (data: any) => {
   const listControl = useListControl()
 
   const { music, idx } = getMusicById(data.id)
   if (idx == -1) {
-    listControl.addSongToPlayList(data)
-    store.dispatch(getSongInfoAndSet(data))
+    // const res = await getSongDetail(data.id)
+    // const song = res.songs?.[0]
+    // if (song === undefined) return
+    const song = data
+    listControl.addSongToPlayList(song)
+    store.dispatch(getSongInfoAndSet(song))
   } else {
     store.dispatch(getSongInfoAndSet(data))
     listControl.setCurrent(idx)

@@ -21,6 +21,11 @@
   cursor: pointer;
 }
 
+.disable {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
 .paginationItem:hover {
   background-color: #f5f5f5;
   color: #000;

@@ -5,6 +5,7 @@ import { getSearchResult, SEARCH_TYPE } from '../../service/api/search'
 import TabBar from '../component/tabBar/TabBar'
 import TabBarItem from '../component/tabBar/TabBarItem'
 import style from './Search.module.css'
+import SongTabPage from './songTabPage/SongTabPage'
 interface SearchProps {}
 
 const Search: FC<SearchProps> = () => {
@@ -38,8 +39,7 @@ const Search: FC<SearchProps> = () => {
   }
   return (
     <div className={style.searchWrap}>
-      {keyword}
-      {type}
+      <div className={style.searchKeyword}>搜索 {keyword}</div>
       <TabBar activeIndex={type}>
         {tabList.map((item, index) => {
           return (
@@ -49,7 +49,21 @@ const Search: FC<SearchProps> = () => {
           )
         })}
       </TabBar>
-      {loading ? <div>loading</div> : <div>{JSON.stringify(searchResult)}</div>}
+
+      {loading ? (
+        <div>loading</div>
+      ) : (
+        <div>
+          {type === SEARCH_TYPE.SONG && (
+            <SongTabPage
+              setCurPage={setCurPage}
+              dataList={searchResult}
+              curPage={curPage}
+              totalPage={totalPage}
+            ></SongTabPage>
+          )}
+        </div>
+      )}
     </div>
   )
 }

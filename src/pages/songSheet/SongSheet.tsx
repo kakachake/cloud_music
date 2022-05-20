@@ -129,7 +129,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
           <MuTable
             onColDoubleClick={onColDoubleClick}
             columns={columns}
-            data={songSheetInfo?.tracks}
+            data={songSheetInfo?.tracks || []}
             showIdx
           />
         )}

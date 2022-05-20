@@ -21,10 +21,18 @@ const Pagination: FC<PaginationProps> = (props) => {
     onChangeCurrentPage && onChangeCurrentPage(i)
   }
   useEffect(() => {
-    const startIdx = current - 3 > 1 ? (current + 3 < total ? current - 3 : total - 6) : 2
-    const endIdx = current + 3 < total ? (current - 3 > 1 ? current + 3 : 8) : total - 1
+    const startIdx =
+      current - 3 > 1 ? (current + 3 <= total ? current - 3 : total - 6 > 1 ? total - 6 : 2) : 2
+    const endIdx =
+      current + 3 < total
+        ? current - 3 > 1
+          ? current + 3
+          : 7 + startIdx - 1 > total
+          ? total - 1
+          : 7 + startIdx - 1
+        : total - 1
     const _pagerList = []
-    if (current - 3 > 2) {
+    if (startIdx > 2) {
       _pagerList.push(<div className={style.paginationItem}>…</div>)
     }
     for (let i = startIdx; i <= endIdx; i++) {
@@ -39,7 +47,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         </div>
       )
     }
-    if (current + 3 < total - 1 && total > 9) {
+    if (endIdx < total - 1) {
       _pagerList.push(<div className={style.paginationItem}>…</div>)
     }
     setPagerList(_pagerList)
@@ -48,9 +56,9 @@ const Pagination: FC<PaginationProps> = (props) => {
     <div className={style.paginaionWrap}>
       <div
         onClick={() => {
-          changeCurrentPage(current - 1)
+          if (current > 1) changeCurrentPage(current - 1)
         }}
-        className={style.paginationItem}
+        className={`${style.paginationItem} ${current > 1 ? '' : style.disable}`}
       >
         <LeftOutlined />
       </div>
@@ -63,7 +71,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         1
       </div>
       {pagerList}
-      {total > 8 && (
+      {total > 1 && (
         <div
           onClick={() => {
             changeCurrentPage(total)
@@ -75,9 +83,9 @@ const Pagination: FC<PaginationProps> = (props) => {
       )}
       <div
         onClick={() => {
-          changeCurrentPage(current + 1)
+          if (current < total) changeCurrentPage(current + 1)
         }}
-        className={style.paginationItem}
+        className={`${style.paginationItem} ${current < total ? '' : style.disable}`}
       >
         <RightOutlined />
       </div>

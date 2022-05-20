@@ -2,14 +2,14 @@ import { FunctionComponent } from 'react'
 import { pad } from '../../utils'
 import style from './MuTable.module.css'
 
-export interface TableColumnType {
+export interface TableColumnType<DataType = any> {
   // 列名
   title: string
   //列数据在数据项中对应的路径，支持通过数组查询嵌套路径
   dataIndex: string
   //React 需要的 key，如果已经设置了唯一的 dataIndex，可以忽略这个属性
   key?: string
-  render?: (data: any, idx: number) => JSX.Element
+  render?: (data: DataType, idx: number) => JSX.Element
   width?: number | string
   align?: 'left' | 'center' | 'right'
   sorter?: (a: any, b: any) => number
@@ -25,6 +25,11 @@ interface TableProps {
 
 const MuTable: FunctionComponent<TableProps> = (props) => {
   const { columns, data, showIdx, onColDoubleClick, hideHeader = false } = props
+  console.log(data)
+
+  if (!data || (data && !data.length)) {
+    return <div className={style.empty}>暂无数据</div>
+  }
   return (
     <div className={style.muTable}>
       <table>
