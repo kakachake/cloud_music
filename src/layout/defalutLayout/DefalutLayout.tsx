@@ -20,7 +20,7 @@ const DefaultLayout: FunctionComponent = () => {
       <CSSTransition in={songDetailOpen} timeout={300} classNames='musicDetail' unmountOnExit>
         <MusicDetail />
       </CSSTransition>
-      <HandTrack />
+      {/* <HandTrack /> */}
     </div>
   )
 }

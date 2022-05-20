@@ -5,6 +5,7 @@ const { ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+const isDev = require('electron-is-dev')
 // const icon = require('./src/assets/icon')
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
@@ -34,18 +35,20 @@ function createWindow() {
       slashes: true
     }))
   */
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, 'build/index.html'),
-      protocol: 'file:',
-      slashes: true
-    })
-  )
+  // mainWindow.loadURL(
+  //   url.format({
+  //     pathname: path.join(__dirname, 'build/index.html'),
+  //     protocol: 'file:',
+  //     slashes: true
+  //   })
+  // )
   // 加载应用----适用于 react 项目
-  // mainWindow.loadURL('http://localhost:3000/')
+  mainWindow.loadURL(
+    isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
+  )
 
   // 打开开发者工具，默认不打开
-  mainWindow.webContents.openDevTools()
+  isDev && mainWindow.webContents.openDevTools()
 
   // 关闭window时触发下列事件.
   mainWindow.on('closed', function () {

@@ -2,9 +2,10 @@
   "name": "cloud_music",
   "version": "0.1.0",
   "authors": "kakachake",
+  "author": "kakachake",
   "description": "一个仿网易云音乐的客户端/网页版",
   "private": true,
-  "main": "main.js",
+  "main": "public/electron.js",
   "homepage": "./",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -19,7 +20,9 @@
     "@types/react-dom": "^18.0.3",
     "antd": "^4.20.1",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^7.2.0",
     "dayjs": "^1.11.1",
+    "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "handtrackjs": "^0.1.5",
     "react": "^18.1.0",
@@ -43,6 +46,9 @@
     "prepare": "husky install",
     "deploy": "npm run build && npm run dockerPublish",
     "dockerPublish": "docker build -t cloud_music . && docker tag cloud_music registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest && docker push registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest",
+    "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "pack": "electron-builder",
+    "electron-dev": "concurrently \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
@@ -80,8 +86,11 @@
     "axios": "^0.27.2",
     "commitizen": "^4.2.4",
     "craco-less": "^2.0.0",
+    "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "electron": "^18.2.3",
+    "electron-builder": "^23.0.3",
+    "electron-icon-builder": "^2.0.1",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -96,7 +105,8 @@
     "postcss-preset-env": "^7.5.0",
     "prettier-eslint": "^14.0.2",
     "redux-devtools": "^3.7.0",
-    "typescript-plugin-css-modules": "^3.4.0"
+    "typescript-plugin-css-modules": "^3.4.0",
+    "wait-on": "^6.0.1"
   },
   "config": {
     "commitizen": {
@@ -126,6 +136,28 @@
           "config": {}
         }
       ]
+    }
+  },
+  "build": {
+    "appId": "com.electron.cloud_music",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "language": "2052",
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "packElevateHelper": false
+    },
+    "files": [
+      "build/**/*",
+      "main.js",
+      "public/preload.js",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
     }
   }
 }
