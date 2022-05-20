@@ -36,8 +36,6 @@ class AxRequest {
           resolve(res)
         })
         .catch((error) => {
-          console.dir(error)
-
           reject(error)
         })
     })

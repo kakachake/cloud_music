@@ -7,7 +7,6 @@ interface RankProps {}
 
 const Rank: FC<RankProps> = () => {
   const [topList, isLoading, detailTopList] = useTopList()
-  console.log(topList, detailTopList)
 
   return (
     <div className={`container1000`}>

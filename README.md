@@ -1,46 +1,95 @@
-# Getting Started with Create React App
+# React Netease Music
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React Netease Music——一个基于 React、TypeScript 的高仿网易云播放器。
 
-## Available Scripts
+## 项目体验地址
 
-In the project directory, you can run:
+[高仿网易云音乐播放器](http://101.43.155.53:8080/)
 
-### `npm start`
+## 功能列表
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] 登录目前仅支持扫码登录）
+- [x] 发现页
+  - [x] banner
+  - [x] 推荐歌单
+- [x] 全部歌单页
+  - [x] 歌单分类查询
+  - [x] 精品歌单
+- [x] 排行榜页
+- [x] 歌单详情页
+- [x] 音乐播放详情页
+  - [x] 歌曲评论
+  - [x] 歌词滚动
+  - [ ] 点赞/取消点赞歌曲评论
+  - [ ] 歌曲所在歌单
+  - [ ] 相似歌曲推荐
+- [x] 播放记录功能
+  - [x] 播放列表
+  - [ ] 历史记录
+- [x] 搜索功能
+  - [x] 热门搜索关键字
+  - [ ] 搜索建议
+  - [x] 搜索结果页
+- [x] 创建的歌单列表
+- [x] 收藏的歌单列表
+- [x] 全屏纯享
+- [x] 私人 FM
+- [ ] 所有歌手页
+- [ ] 歌手详情页
+- [ ] MV 相关的页面与功能
+- [ ] 创建/编辑/删除歌单
+- [ ] 私信/@我/评论等通知功能
+- [ ] 主题换肤
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+注意：部分歌曲可能由于版权问题无法播放喔。
 
-### `npm test`
+## 技术栈
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- TypeScript
+- axios
+- redux
+- postcss
+- antd-icon
+- style-components
+- prettier
+- CSS Modules
+- Webpack
+- Eslint 做代码检查
+- electron 打包客户端
+- husky 做 git hooks
+- commitlint 做 git commit hooks
+- commitizen 做 commit 规范
+- 项目没有使用额外的 ui 库等，目的是锻炼自己的编码能力
 
-### `npm run build`
+## 播放器的相关截图
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![01_个性推荐页](./screenshots/1.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![02_歌单页](./screenshots/2_歌单页.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![03_排行榜](./screenshots/3_排行榜.png)
 
-### `npm run eject`
+![04_私人FM](./screenshots/4_私人FM.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![05_歌曲详情](./screenshots/5_歌曲详情.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![06_全屏纯享](./screenshots/6_全屏纯享.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![06_全屏纯享](./screenshots/6_全屏纯享_2.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![06_全屏纯享](./screenshots/6_全屏纯享_3.png)
 
-## Learn More
+![07_搜索页](./screenshots/7_搜索页.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 项目启动
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm install
+//启动网页版
+npm run dev
+//启动客户端版
+npm run electron-start
+```
+
+- 最后在浏览器中访问：`http://localhost:8080`

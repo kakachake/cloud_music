@@ -8,8 +8,6 @@ const axRequest = new AxRequest({
   timeout: 10000,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log(config)
-
       const cookie = localStorage.getItem('cookie')
       config.params = config.params || {}
       if (cookie) {
@@ -23,7 +21,6 @@ const axRequest = new AxRequest({
       return res.data
     },
     responseErrorInterceptor: (error) => {
-      console.log(error)
       Toast.error(error.message)
     }
   }

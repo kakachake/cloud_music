@@ -24,7 +24,6 @@ const Suggest: FunctionComponent<SuggestProps> = () => {
     })
   }, [])
   const handleBannerClick = (item: any) => {
-    console.log(item)
     switch (item.targetType) {
       case 1:
         addMusic(item.song)

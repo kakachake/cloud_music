@@ -56,11 +56,8 @@ const QrCodeLogin: FunctionComponent<QrCodeLoginProps> = ({ handleClose }) => {
   }
 
   const checkStatus = (qrCodeKey: string) => {
-    console.log(timer)
-
     if (timer) {
       clearInterval(timer)
-      console.log('clear')
     }
     setQrState(QRCodeStatus.WAITING)
 
@@ -76,7 +73,7 @@ const QrCodeLogin: FunctionComponent<QrCodeLoginProps> = ({ handleClose }) => {
         if (res.code === 803) {
           // 这一步会返回cookie
           clearInterval(timer!)
-          console.log(res.cookie)
+
           setQrState(QRCodeStatus.SUCCESS)
           localStorage.setItem('cookie', res.cookie)
           Toast.success('登陆成功')

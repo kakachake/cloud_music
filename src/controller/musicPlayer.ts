@@ -54,7 +54,6 @@ export class AudioController {
   }
   setUrl(url: string) {
     this.audio.src = url
-    console.log('setUrl')
 
     this.play()
   }
@@ -65,8 +64,6 @@ export class AudioController {
         this.store!.dispatch(musicControlSlice.actions.setIsPlaying(true))
       })
       .catch((err) => {
-        console.log(err)
-
         this.store!.dispatch(musicControlSlice.actions.setIsPlaying(false))
       })
   }

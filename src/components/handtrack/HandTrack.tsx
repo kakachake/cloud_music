@@ -14,8 +14,6 @@ const HandTrack: FC<HandTrackProps> = () => {
   const isDetectRef = useRef(false)
   const model = useRef<any>(null)
   function runDetection() {
-    console.log(isDetectRef.current)
-
     model.current.detect(video).then((predictions: any) => {
       predictions.forEach((prediction: any) => {
         if (prediction.class === 1) {

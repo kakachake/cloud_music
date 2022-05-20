@@ -21,11 +21,9 @@ export const changeMusic = debounce((direction: number) => {
 }, 500)
 
 export const getSongBaseInfoAndSet = (id: number) => {
-  console.log(id)
-
   getSongDetail(id).then((res) => {
     const song = res.songs?.[0]
-    console.log(song)
+
     song && addMusic(song)
   })
 }

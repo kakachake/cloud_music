@@ -13,8 +13,6 @@ const createDispatchToast = () => {
 
   return {
     showToast: (message: string, type: string) => {
-      console.log('show')
-
       globalControl.add({
         message,
         type

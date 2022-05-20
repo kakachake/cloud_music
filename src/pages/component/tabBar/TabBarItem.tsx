@@ -23,7 +23,6 @@ const TabBarItem: FunctionComponent<TabBarItemProps> = (props) => {
   } = props
   const navigate = useNavigate()
   const handleToPath = () => {
-    console.log(path)
     path && navigate(path)
     onClick && onClick()
   }

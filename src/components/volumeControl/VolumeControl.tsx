@@ -14,7 +14,6 @@ interface VolumeControlState {}
 class VolumeControl extends React.Component<VolumeControlProps, VolumeControlState> {
   handlePgClick = (e: React.MouseEvent<HTMLDivElement>) => {
     //鼠标距离底部的距离
-    console.dir(e.currentTarget)
 
     const bottom = e.currentTarget.getBoundingClientRect().bottom - e.clientY
 

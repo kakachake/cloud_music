@@ -35,7 +35,7 @@ const formatRes = (
   setTotalPage: any
 ) => {
   const result = res.result
-  console.log(SEARCH_TYPE[type])
+
   const parseType = SEARCH_TYPE[type].toLowerCase()
   setSearchResult(result[parseType + 's'])
 

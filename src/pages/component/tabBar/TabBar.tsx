@@ -13,7 +13,6 @@ const TabBar: FunctionComponent<TabBarProps> = (props) => {
   let activeIndex = props.activeIndex
   let children = props.children
   activeIndex = route ? useLocation().pathname : activeIndex
-  console.log(activeIndex)
 
   children = children?.map((o, i) => {
     return React.cloneElement(o, {

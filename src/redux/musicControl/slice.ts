@@ -13,7 +13,6 @@ export const getSongInfoAndSet = createAsyncThunk(
     try {
       const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
       const [lyric, url] = res.map((item: any) => item.value)
-      console.log(lyric, url)
 
       if (lyric.code === 200 && url.code === 200) {
         // const listControl = useListControl()
@@ -136,7 +135,6 @@ export const musicControlSlice = createSlice({
   },
   extraReducers: {
     [getSongInfoAndSet.fulfilled.type]: (state, action: PayloadAction<any>) => {
-      console.log('getSongInfoAndSet', action.payload)
       state.musicInfo.song = action.payload.song
       state.musicInfo.lyric = action.payload.lyric
       state.musicInfo.url = action.payload.url

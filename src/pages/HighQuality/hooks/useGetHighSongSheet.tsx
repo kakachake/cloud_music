@@ -9,8 +9,6 @@ export const useGetHighSongSheet = () => {
   const [hasMore, setHasMore] = useState(true)
   const { type } = useParams()
   useEffect(() => {
-    console.log('useGetHighSongSheet')
-
     const cat = decodeURIComponent(type || '华语')
     const before = highQualityList[highQualityList.length - 1]?.updateTime ?? ''
     setIsLoading(true)

@@ -110,7 +110,6 @@ export function downLoadMusic(id: string | number, fileName: string) {
     })
     .then((res) => {
       const url = res.data.url
-      console.log(url)
 
       Toast.success('正在下载')
       return axRequest.get({ url, responseType: 'blob' })
@@ -120,7 +119,7 @@ export function downLoadMusic(id: string | number, fileName: string) {
       const binaryData = []
       binaryData.push(blob)
       const href = window.URL.createObjectURL(new Blob(binaryData))
-      console.log(href)
+
       const a = document.createElement('a')
       a.href = href
       a.download = fileName + '.mp3'
@@ -130,7 +129,6 @@ export function downLoadMusic(id: string | number, fileName: string) {
       Toast.success('下载成功')
     })
     .catch((err) => {
-      console.log(err)
       Toast.error('下载失败,请稍后重试!')
     })
 }

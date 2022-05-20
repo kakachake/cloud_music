@@ -4,8 +4,6 @@ import { getPlaylistComment, getPlaylistDetail } from '../../../service/api/musi
 import { formatNumber } from '../../../utils'
 
 export const useSongSheet = (id: string) => {
-  console.log(id)
-
   const location = useLocation()
   const [songSheetInfo, setSongSheetInfo] = useState<any>({})
   const [tabList, setTabList] = useState<any[]>([])

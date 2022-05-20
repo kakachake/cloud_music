@@ -16,7 +16,6 @@ const HighQuality: FC<HighQualityProps> = () => {
     const mainContent = document.querySelector('#mainContent')
     const isBottom = isScrollBottom(mainContent!)
     if (isBottom) {
-      console.log('set')
       addPage()
     }
   }
@@ -29,7 +28,6 @@ const HighQuality: FC<HighQualityProps> = () => {
     }
   }, [curPage, isLoading])
   const addPage = () => {
-    console.log('addPage')
     if (!isLoading && hasMore) {
       setCurPage(curPage + 1)
     }

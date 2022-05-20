@@ -69,7 +69,6 @@ const PersonalFm: FC<PersonalFmProps> = () => {
     }
   }
   const changePage = (idx: number) => {
-    console.log(idx)
     const mainContentEl = document.querySelector('#mainContent')
     const commentAreaTop = document.getElementById('commentArea')?.offsetTop
 

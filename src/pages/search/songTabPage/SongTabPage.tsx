@@ -21,13 +21,13 @@ interface SongTabPageProps {
 
 const SongTabPage: FC<SongTabPageProps> = (props) => {
   const { dataList, curPage, totalPage, setCurPage } = props
-  console.log(dataList)
+
   const columns: TableColumnType<SongType>[] = [
     {
       title: '操作',
       dataIndex: 'name',
       key: 'name',
-      render: (data: any, idx: number) => {
+      render: (data, idx: number) => {
         return (
           <div className={style.tableHandle}>
             <Like id={data.id} />
@@ -36,7 +36,7 @@ const SongTabPage: FC<SongTabPageProps> = (props) => {
               onClick={() => {
                 downLoadMusic(
                   data.id,
-                  data.name + '-' + data.ar.map((item: any) => item.name).join('/')
+                  data.name + '-' + data?.ar?.map((item: any) => item.name).join('/')
                 )
               }}
               className={'defaultClickIcon'}

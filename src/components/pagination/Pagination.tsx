@@ -33,7 +33,11 @@ const Pagination: FC<PaginationProps> = (props) => {
         : total - 1
     const _pagerList = []
     if (startIdx > 2) {
-      _pagerList.push(<div className={style.paginationItem}>…</div>)
+      _pagerList.push(
+        <div key={'left'} className={style.paginationItem}>
+          …
+        </div>
+      )
     }
     for (let i = startIdx; i <= endIdx; i++) {
       _pagerList.push(
@@ -42,13 +46,18 @@ const Pagination: FC<PaginationProps> = (props) => {
           onClick={() => {
             changeCurrentPage(i)
           }}
+          key={i}
         >
           {i}
         </div>
       )
     }
     if (endIdx < total - 1) {
-      _pagerList.push(<div className={style.paginationItem}>…</div>)
+      _pagerList.push(
+        <div key={'right'} className={style.paginationItem}>
+          …
+        </div>
+      )
     }
     setPagerList(_pagerList)
   }, [current, total])
@@ -66,6 +75,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         onClick={() => {
           changeCurrentPage(1)
         }}
+        key={1}
         className={`${style.paginationItem} ${1 === current ? style.active : ''}`}
       >
         1
@@ -76,6 +86,7 @@ const Pagination: FC<PaginationProps> = (props) => {
           onClick={() => {
             changeCurrentPage(total)
           }}
+          key={total}
           className={`${style.paginationItem} ${total === current ? style.active : ''}`}
         >
           {total}

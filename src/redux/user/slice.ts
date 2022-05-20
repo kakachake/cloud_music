@@ -19,8 +19,6 @@ export const getLList = createAsyncThunk('user/getLikeList', async (userId: stri
 })
 
 export const getPlayList = createAsyncThunk('user/getUserList', async (userId: string) => {
-  console.log(111)
-
   const { playlist } = await getUserPlayList(userId)
 
   return playlist

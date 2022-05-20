@@ -38,7 +38,6 @@ export const publicSlice = createSlice({
 })
 
 window.addEventListener('click', (e: any) => {
-  console.log(e.path)
   //查询是否点击到了侧边栏
   const sideBar = document.querySelector('#rightSideBar')
   const musicBar = document.querySelector('#musicBar')
