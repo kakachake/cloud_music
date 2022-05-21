@@ -11,6 +11,7 @@ export const getSongInfoAndSet = createAsyncThunk(
   'musicControl/getSongInfoAndSet',
   async (song: any) => {
     try {
+      store.dispatch(musicControlSlice.actions.clearMusicInfo())
       const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
       const [lyric, url] = res.map((item: any) => item.value)
 
@@ -18,6 +19,9 @@ export const getSongInfoAndSet = createAsyncThunk(
         // const listControl = useListControl()
         // listControl.setCurrent(song.id)
         // store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
+        if (url.data[0].url === null) {
+          Toast.error('歌曲暂无歌源')
+        }
         return {
           song,
           lyric: lyric.lrc.lyric,

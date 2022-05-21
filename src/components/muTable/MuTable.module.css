@@ -13,8 +13,6 @@
 }
 
 .muTableItem {
-  height: 30px;
-  line-height: 30px;
   font-size: 14px;
   user-select: none;
 }
@@ -25,4 +23,11 @@
 
 .muTableItem:hover {
   background-color: #f0f1f2;
+}
+
+.tableIndex {
+  height: 100%;
+  width: 50px;
+  text-align: center;
+  vertical-align: middle;
 }

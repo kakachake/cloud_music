@@ -12,6 +12,7 @@ export interface SongSheetType {
     avatarUrl: string
   }
   tracks: SongType[]
+  trackCount: number
   shareCount: number
   commentCount: number
   updateTime: number

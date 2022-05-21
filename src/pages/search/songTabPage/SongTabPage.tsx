@@ -13,14 +13,23 @@ import HeaderButton from '../../component/PlayListHeader/headerButton/HeaderButt
 import { SearchSongType } from '../type/searchSongType'
 import style from './SongTabPage.module.css'
 interface SongTabPageProps {
-  dataList: Partial<SongType>[]
-  curPage: number
-  totalPage: number
+  data?: {
+    dataList: Partial<SongType>[]
+    curPage: number
+    totalPage: number
+  }
   setCurPage: React.Dispatch<any>
 }
 
 const SongTabPage: FC<SongTabPageProps> = (props) => {
-  const { dataList, curPage, totalPage, setCurPage } = props
+  const {
+    data = {
+      dataList: [],
+      curPage: 0,
+      totalPage: 0
+    },
+    setCurPage
+  } = props
 
   const columns: TableColumnType<SongType>[] = [
     {
@@ -92,11 +101,11 @@ const SongTabPage: FC<SongTabPageProps> = (props) => {
     addMusic(data)
   }
   const handlePlayList = () => {
-    setMusicList(dataList, 'musicList')
+    setMusicList(data?.dataList || [], 'musicList')
   }
   return (
     <div>
-      <div className={style.tableHandle}>
+      <div className={style.headerHandle}>
         <div>
           <HeaderButton
             onClick={handlePlayList}
@@ -115,8 +124,19 @@ const SongTabPage: FC<SongTabPageProps> = (props) => {
           />
         </div>
       </div>
-      {<MuTable onColDoubleClick={onColDoubleClick} columns={columns} data={dataList} showIdx />}
-      <Pagination onChangeCurrentPage={setCurPage} total={10} pageCurrent={curPage} />
+      {
+        <MuTable
+          onColDoubleClick={onColDoubleClick}
+          columns={columns}
+          data={data?.dataList}
+          showIdx
+        />
+      }
+      <Pagination
+        onChangeCurrentPage={setCurPage}
+        total={data?.totalPage}
+        pageCurrent={data?.curPage}
+      />
     </div>
   )
 }

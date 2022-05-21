@@ -1,5 +1,7 @@
 .searchWrap {
   padding: var(--defaultPadding);
+  width: 100%;
+  box-sizing: border-box;
 }
 .searchKeyword {
   font-size: 24px;

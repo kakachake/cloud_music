@@ -1,17 +1,23 @@
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useSearch } from '../../hooks/useSearch'
 import { getSearchResult, SEARCH_TYPE } from '../../service/api/search'
 import TabBar from '../component/tabBar/TabBar'
 import TabBarItem from '../component/tabBar/TabBarItem'
+import ArtistTabPage from './artistTabPage/ArtistTabPage'
+import PlayListTabPage from './playListTabPage/PlayListTabPage'
 import style from './Search.module.css'
 import SongTabPage from './songTabPage/SongTabPage'
 interface SearchProps {}
 
 const Search: FC<SearchProps> = () => {
   const { keyword } = useParams()
-  const [type, setType] = useState<SEARCH_TYPE>(SEARCH_TYPE.SONG)
-  const { searchResult, curPage, totalPage, setCurPage, loading } = useSearch(type)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const curtype = (searchParams.get('type') as any) || SEARCH_TYPE.SONG
+
+  const [type, setType] = useState<SEARCH_TYPE>(+curtype)
+
+  const { searchResult, setCurPage, loading } = useSearch(type)
   const [tabList, setTabList] = useState([
     {
       title: '单曲',
@@ -35,6 +41,7 @@ const Search: FC<SearchProps> = () => {
     }
   ])
   const handleChangeTab = (id: SEARCH_TYPE) => {
+    setSearchParams('type=' + id.toString())
     setType(id)
   }
   return (
@@ -55,12 +62,16 @@ const Search: FC<SearchProps> = () => {
       ) : (
         <div>
           {type === SEARCH_TYPE.SONG && (
-            <SongTabPage
+            <SongTabPage setCurPage={setCurPage} data={searchResult?.songs}></SongTabPage>
+          )}
+          {type === SEARCH_TYPE.ARTIST && (
+            <ArtistTabPage setCurPage={setCurPage} data={searchResult?.artists}></ArtistTabPage>
+          )}
+          {type === SEARCH_TYPE.PLAYLIST && (
+            <PlayListTabPage
               setCurPage={setCurPage}
-              dataList={searchResult}
-              curPage={curPage}
-              totalPage={totalPage}
-            ></SongTabPage>
+              data={searchResult?.playlists}
+            ></PlayListTabPage>
           )}
         </div>
       )}

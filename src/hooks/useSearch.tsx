@@ -4,25 +4,39 @@ import { getSearchResult, SEARCH_TYPE } from '../service/api/search'
 
 export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
   const { keyword } = useParams()
-  const [searchResult, setSearchResult] = useState<any>({})
-  const [curPage, setCurPage] = useState(1)
-  const [totalPage, setTotalPage] = useState(0)
+  const [searchResult, setSearchResult] = useState<{
+    [key: string]: {
+      dataList: any[]
+      curPage: number
+      totalPage: number
+    }
+  }>()
+
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    getData()
+  }, [keyword, type])
+  const getData = (page?: number) => {
     setLoading(true)
+    const curPage = page || searchResult?.[SEARCH_TYPE[type].toLowerCase() + 's']?.curPage || 1
     getSearchResult(keyword || '', (curPage - 1) * limit, type)
       .then((res) => {
-        formatRes(res, type, limit, setSearchResult, setTotalPage)
+        formatRes(res, type, curPage, limit, searchResult, setSearchResult)
       })
       .finally(() => {
         setLoading(false)
       })
-  }, [keyword, type, curPage])
+  }
+  const setCurPage = (page: number) => {
+    const parseType = SEARCH_TYPE[type].toLowerCase()
+    if (searchResult && searchResult[parseType + 's']) {
+      getData(page)
+    }
+  }
   return {
     searchResult,
-    curPage,
-    totalPage,
     setCurPage,
+
     loading
   }
 }
@@ -30,14 +44,21 @@ export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
 const formatRes = (
   res: any,
   type: SEARCH_TYPE,
+  curPage: number,
   limit: number,
-  setSearchResult: any,
-  setTotalPage: any
+  searchResult: any,
+  setSearchResult: any
 ) => {
   const result = res.result
 
   const parseType = SEARCH_TYPE[type].toLowerCase()
-  setSearchResult(result[parseType + 's'])
-
-  setTotalPage(Math.ceil(result[parseType + 'Count'] / limit))
+  setSearchResult({
+    ...searchResult,
+    [parseType + 's']: {
+      ...[searchResult?.[parseType + 's']],
+      curPage: curPage,
+      dataList: result[parseType + 's'],
+      totalPage: Math.ceil(result[parseType + 'Count'] / limit)
+    }
+  })
 }

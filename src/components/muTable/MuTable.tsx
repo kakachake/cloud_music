@@ -1,12 +1,13 @@
 import { FunctionComponent } from 'react'
 import { pad } from '../../utils'
 import style from './MuTable.module.css'
+import styled from 'styled-components'
 
 export interface TableColumnType<DataType = any> {
   // 列名
   title: string
   //列数据在数据项中对应的路径，支持通过数组查询嵌套路径
-  dataIndex: string
+  dataIndex?: string
   //React 需要的 key，如果已经设置了唯一的 dataIndex，可以忽略这个属性
   key?: string
   render?: (data: DataType, idx: number) => JSX.Element
@@ -21,10 +22,11 @@ interface TableProps {
   showIdx?: boolean
   onColDoubleClick?: (data: any, idx: number) => void
   hideHeader?: boolean
+  height?: number
 }
 
 const MuTable: FunctionComponent<TableProps> = (props) => {
-  const { columns, data, showIdx, onColDoubleClick, hideHeader = false } = props
+  const { columns, data, showIdx, onColDoubleClick, hideHeader = false, height = 30 } = props
 
   if (!data || (data && !data.length)) {
     return <div className={style.empty}>暂无数据</div>
@@ -36,7 +38,7 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
           <tr style={hideHeader ? { display: 'none' } : {}} className={`${style.muTableHeader}`}>
             {showIdx === true && (
               <th>
-                <div style={{ width: '40px', textAlign: 'center' }}>序号</div>
+                <div className={style.tableIndex}>序号</div>
               </th>
             )}
             {columns.map((item) => {
@@ -51,24 +53,30 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
         <tbody>
           {data?.map((item, idx) => {
             return (
-              <tr
+              <MuTableItemTr
+                height={height}
                 onDoubleClick={() => onColDoubleClick && onColDoubleClick(item, idx)}
                 key={item.id}
                 className={`${style.muTableItem}`}
               >
                 {showIdx === true && (
-                  <td>
-                    <div style={{ width: '40px', textAlign: 'center' }}>{pad(idx + 1)}</div>
+                  <td className={style.tableIndex}>
+                    <div>{pad(idx + 1)}</div>
                   </td>
                 )}
                 {columns.map((col) => {
                   return (
-                    <td key={col.title} style={{ width: col.width, textAlign: col.align }}>
-                      {col.render ? col.render(item, idx) : item[col.dataIndex]}
-                    </td>
+                    <MuTableItemTd
+                      height={height}
+                      className={style.td}
+                      key={col.title}
+                      style={{ width: col.width, textAlign: col.align }}
+                    >
+                      {col.render ? col.render(item, idx) : item[col.dataIndex || '']}
+                    </MuTableItemTd>
                   )
                 })}
-              </tr>
+              </MuTableItemTr>
             )
           })}
         </tbody>
@@ -78,3 +86,18 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
 }
 
 export default MuTable
+
+const MuTableItemTr = styled.tr<{ height: number }>`
+  height: ${(props) => props.height + 'px'};
+  line-height: ${(props) => props.height + 'px'};
+  font-size: 14px;
+  user-select: none;
+  vertical-align: baseline;
+`
+const MuTableItemTd = styled.td<{ height: number }>`
+  height: ${(props) => props.height + 'px'};
+  line-height: ${(props) => props.height + 'px'};
+  font-size: 14px;
+  user-select: none;
+  vertical-align: baseline;
+`
