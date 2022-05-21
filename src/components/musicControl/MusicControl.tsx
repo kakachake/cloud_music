@@ -40,6 +40,8 @@ class MusicControl extends React.Component<PropsType, StateType> {
   }
 
   handleTogglePlay = () => {
+    console.log('toggle')
+
     audioInstance.togglePlay()
   }
   handlePgClick = (e: React.MouseEvent<HTMLDivElement>) => {

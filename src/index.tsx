@@ -6,17 +6,21 @@ import './assets/css/transition.css'
 import './assets/css/base.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import store from './redux/store'
+import store, { persistor } from './redux/store'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <HashRouter>
-      <App />
-    </HashRouter>
+    <PersistGate loading={<div>loading</div>} persistor={persistor}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </PersistGate>
   </Provider>
   // </React.StrictMode>
 )

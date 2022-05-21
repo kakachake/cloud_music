@@ -13,20 +13,24 @@ import {
 import createLogin from '../../../components/login'
 import { CSSTransition } from 'react-transition-group'
 import { useSelector } from '../../../redux/hooks'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { IconFont } from '../../../assets/css/iconFont'
 import store, { RootState } from '../../../redux/store'
 import { publicSlice } from '../../../redux/publicSlice/slice'
 import { getHotSearch } from '../../../service/api/search'
+
 let electron: any
 try {
   electron = window.require('electron')
 } catch (error) {}
 
 const Header: FunctionComponent = () => {
+  //TODO,获取不到
+  const { keyword } = useParams()
+
   const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
   const [hotSearch, setHotSearch] = useState([])
-  const [searchInput, setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState(keyword || '')
   const [showTip, setShowTip] = useState(false)
   const handleLogin = () => {
     console.log('login')

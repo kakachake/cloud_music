@@ -9,12 +9,12 @@ const slice = {
 }
 
 export const useListControl = () => {
-  let curListType = store.getState().public.curListType
+  let curListType = store.getState().public.curListType as 'fmList' | 'musicList'
   return {
-    setList: (payload: any[], type: 'fmList' | 'musicList') => {
-      store.dispatch(publicSlice.actions.setCurListType(type))
-      store.dispatch(slice[type].actions.setList(payload))
-      curListType = type
+    setList: (payload: any[], listType: 'fmList' | 'musicList') => {
+      store.dispatch(publicSlice.actions.setCurListType(listType))
+      store.dispatch(slice[listType].actions.setList(payload))
+      curListType = listType
     },
     setCurrent: (payload: number) => {
       store.dispatch(slice[curListType].actions.setCurrent(payload))

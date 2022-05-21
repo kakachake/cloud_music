@@ -14,11 +14,7 @@ export const getSongInfoAndSet = createAsyncThunk(
       store.dispatch(musicControlSlice.actions.clearMusicInfo())
       const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
       const [lyric, url] = res.map((item: any) => item.value)
-
       if (lyric.code === 200 && url.code === 200) {
-        // const listControl = useListControl()
-        // listControl.setCurrent(song.id)
-        // store.dispatch(musicListSlice.actions.setCurrent(getMusicById(song.id).idx))
         if (url.data[0].url === null) {
           Toast.error('歌曲暂无歌源')
         }
@@ -37,11 +33,6 @@ export const getSongInfoAndSet = createAsyncThunk(
       }
     } catch (error) {
       Toast.error('获取歌曲信息失败')
-      // return {
-      //   song,
-      //   lyric: '',
-      //   url: ''
-      // }
     }
   }
 )
