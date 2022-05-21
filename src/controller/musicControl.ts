@@ -31,7 +31,7 @@ export const getSongBaseInfoAndSet = (id: number) => {
 export const setMusicList = (payload: any[], type: 'musicList' | 'fmList') => {
   const listControl = useListControl()
   listControl.setList(payload, type)
-
+  store.dispatch(musicControlSlice.actions.setIsPlaying(true))
   changeMusic(0)
 }
 
