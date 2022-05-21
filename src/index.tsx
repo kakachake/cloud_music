@@ -11,8 +11,10 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import { LoadingOutlined } from '@ant-design/icons'
+import { beautifulConsole } from './utils/console'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+beautifulConsole('React Netease Music V1.0.0')
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
