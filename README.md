@@ -93,3 +93,5 @@ npm run electron-start
 ```
 
 - 最后在浏览器中访问：`http://localhost:8080`
+
+![Alt](https://repobeats.axiom.co/api/embed/2ecaaef4675072f1977375141dbd57148b602680.svg 'Repobeats analytics image')

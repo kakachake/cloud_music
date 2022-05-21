@@ -1,5 +1,6 @@
 .songSheet {
   padding: var(--defaultPadding);
+  min-width: 900px;
 }
 
 .songSheetContent {
