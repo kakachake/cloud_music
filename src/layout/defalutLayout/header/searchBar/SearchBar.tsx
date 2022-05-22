@@ -155,7 +155,7 @@ const SearchBar: FC<SearchBarProps> = () => {
                             <div
                               key={item.id}
                               onClick={() => handleSuggestClick(item, key)}
-                              className={style.suggestItem}
+                              className={`${style.suggestItem} line1`}
                             >
                               {item.name}
                             </div>

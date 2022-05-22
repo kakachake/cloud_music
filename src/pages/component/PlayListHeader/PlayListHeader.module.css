@@ -32,21 +32,23 @@
   font-size: 16px;
   font-weight: bold;
   line-height: 30px;
-  height: 30px;
+
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .listName {
   font-size: 24px;
   line-height: 30px;
-  height: 30px;
+
   font-weight: bold;
 }
 
 .listType {
+  flex: 0 0 auto;
   font-size: 14px;
   line-height: 24px;
-  height: 24px;
+
   border: 1px solid #ec4141;
   padding: 0px 4px;
   box-sizing: border-box;
