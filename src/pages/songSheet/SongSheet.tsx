@@ -17,12 +17,14 @@ import { likeMusic } from '../../service/api/reqLoginApi/loginMusicHandle'
 import { handleToggleLike } from '../../service/utils'
 import { useIsLiked } from '../../hooks/useLikeList'
 import Like from '../../components/like/Like'
+import { subPlayList } from '../../service/api/reqLoginApi/songSheets'
+import Toast from '../../components/Toast'
 
 interface SongSheetProps {}
 
 const SongSheet: FunctionComponent<SongSheetProps> = () => {
   const { id } = useParams()
-  const { songSheetInfo, tabList } = useSongSheet(id!)
+  const { songSheetInfo, tabList, handleGetPlaylistDetail } = useSongSheet(id!)
 
   const [activeIndex, setActiveIndex] = useState<string>('playList')
   const handleChangeTab = (id: string) => setActiveIndex(id)
@@ -108,12 +110,19 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
     const { tracks } = songSheetInfo
     setMusicList(tracks, 'musicList')
   }
+  const toggleSubscribe = () => {
+    subPlayList(songSheetInfo.id, songSheetInfo.subscribed ? 0 : 1).then(() => {
+      Toast.success(songSheetInfo.subscribed ? '取消收藏成功' : '收藏成功')
+      handleGetPlaylistDetail()
+    })
+  }
   return (
     <div className={style.songSheet}>
       <PlayListHeader
         handlePlayList={handlePlayList}
         listInfo={songSheetInfo}
         type={PLAY_LIST_TYPE.songSheet}
+        toggleSubscribe={toggleSubscribe}
       />
       <TabBar activeIndex={activeIndex}>
         {tabList.map((item, index) => {

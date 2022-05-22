@@ -5,7 +5,9 @@ enum SEARCH_API {
   //获取热搜
   GET_HOT_SEARCH = '/search/hot/detail',
   //搜索
-  GET_SEARCH_RESULT = '/cloudsearch'
+  GET_SEARCH_RESULT = '/cloudsearch',
+  //搜索建议
+  GET_SEARCH_SUGGEST = '/search/suggest'
 }
 
 //获取热搜
@@ -16,15 +18,15 @@ export function getHotSearch() {
 }
 
 export enum SEARCH_TYPE {
-  SONG = 1,
-  ALBUM = 10,
-  ARTIST = 100,
-  PLAYLIST = 1000,
-  USER = 1002,
-  MV = 1004,
-  VIDEO = 1006,
-  RADIO = 1009,
-  DJ = 1002
+  SONGS = 1,
+  ALBUMS = 10,
+  ARTISTS = 100,
+  PLAYLISTS = 1000,
+  USERS = 1002,
+  MVS = 1004,
+  VIDEOS = 1006,
+  RADIOS = 1009,
+  DJS = 1002
 }
 
 //搜索
@@ -38,6 +40,16 @@ export function getSearchResult(keywords: string, offset: number, type = 1, limi
       type,
       limit,
       offset
+    }
+  })
+}
+
+//搜索建议
+export function getSearchSuggest(keywords: string) {
+  return axRequest.get({
+    url: SEARCH_API.GET_SEARCH_SUGGEST,
+    params: {
+      keywords
     }
   })
 }

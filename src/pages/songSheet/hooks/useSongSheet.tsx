@@ -7,9 +7,7 @@ export const useSongSheet = (id: string) => {
   const location = useLocation()
   const [songSheetInfo, setSongSheetInfo] = useState<any>({})
   const [tabList, setTabList] = useState<any[]>([])
-  useEffect(() => {
-    // console.log(id)
-
+  const handleGetPlaylistDetail = () => {
     getPlaylistDetail(id!).then((res) => {
       setSongSheetInfo(res.playlist)
       setTabList([
@@ -27,6 +25,9 @@ export const useSongSheet = (id: string) => {
         }
       ])
     })
+  }
+  useEffect(() => {
+    handleGetPlaylistDetail()
   }, [id])
-  return { songSheetInfo, tabList }
+  return { songSheetInfo, tabList, handleGetPlaylistDetail }
 }

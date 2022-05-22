@@ -17,4 +17,7 @@ export interface SongSheetType {
   commentCount: number
   updateTime: number
   createTime: number
+  subscribedCount: number
+  subscribed: boolean
+  userId: string
 }

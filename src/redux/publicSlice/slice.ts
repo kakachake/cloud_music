@@ -9,12 +9,14 @@ interface PublicState {
   curSideOpen: SideType
   songDetailOpen: boolean
   curListType: 'musicList' | 'fmList'
+  searchHistory: string[]
 }
 
 const initialState: PublicState = {
   curSideOpen: '',
   songDetailOpen: false,
-  curListType: 'musicList'
+  curListType: 'musicList',
+  searchHistory: []
 }
 
 export const publicSlice = createSlice({
@@ -33,6 +35,12 @@ export const publicSlice = createSlice({
     },
     setCurListType(state, action: PayloadAction<'musicList' | 'fmList'>) {
       state.curListType = action.payload
+    },
+    setSearchHistory(state, action: PayloadAction<string>) {
+      if (state.searchHistory.includes(action.payload)) {
+        return
+      }
+      state.searchHistory = [action.payload, ...state.searchHistory]
     }
   }
 })

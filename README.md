@@ -48,7 +48,7 @@ React Netease Music——一个基于 React、TypeScript 的高仿网易云播�
 - React
 - TypeScript
 - axios
-- redux
+- redux,redux-tookit,redux-persist
 - postcss
 - antd-icon
 - style-components

@@ -16,6 +16,7 @@
 .headerButton > * {
   display: inline-block;
   margin-right: 5px;
+  vertical-align: middle;
 }
 .headerButton .icon {
   font-size: 16px;

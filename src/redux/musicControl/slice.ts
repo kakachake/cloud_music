@@ -9,7 +9,7 @@ import store from '../store'
 
 export const getSongInfoAndSet = createAsyncThunk(
   'musicControl/getSongInfoAndSet',
-  async (song: any) => {
+  async ({ song, needPlay = true }: { song: any; needPlay?: boolean }) => {
     try {
       store.dispatch(musicControlSlice.actions.clearMusicInfo())
       const res = await Promise.allSettled([getSongLyric(song.id), getSongUrl(song.id)])
@@ -21,7 +21,8 @@ export const getSongInfoAndSet = createAsyncThunk(
         return {
           song,
           lyric: lyric.lrc.lyric,
-          url: url.data[0].url
+          url: url.data[0].url,
+          needPlay
         }
       } else {
         Toast.error('获取歌曲信息失败')
@@ -134,6 +135,9 @@ export const musicControlSlice = createSlice({
       state.musicInfo.lyric = action.payload.lyric
       state.musicInfo.url = action.payload.url
       musicInstance.setUrl(action.payload.url)
+      if (action.payload.needPlay) {
+        musicInstance.play()
+      }
     }
   }
 })

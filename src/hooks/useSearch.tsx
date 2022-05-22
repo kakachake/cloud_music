@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { getSearchResult, SEARCH_TYPE } from '../service/api/search'
 
 export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
   const { keyword } = useParams()
+
   const [searchResult, setSearchResult] = useState<{
     [key: string]: {
       dataList: any[]
@@ -18,7 +19,7 @@ export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
   }, [keyword, type])
   const getData = (page?: number) => {
     setLoading(true)
-    const curPage = page || searchResult?.[SEARCH_TYPE[type].toLowerCase() + 's']?.curPage || 1
+    const curPage = page || searchResult?.[SEARCH_TYPE[type].toLowerCase()]?.curPage || 1
     getSearchResult(keyword || '', (curPage - 1) * limit, type)
       .then((res) => {
         formatRes(res, type, curPage, limit, searchResult, setSearchResult)
@@ -29,7 +30,7 @@ export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
   }
   const setCurPage = (page: number) => {
     const parseType = SEARCH_TYPE[type].toLowerCase()
-    if (searchResult && searchResult[parseType + 's']) {
+    if (searchResult && searchResult[parseType]) {
       getData(page)
     }
   }
@@ -54,10 +55,10 @@ const formatRes = (
   const parseType = SEARCH_TYPE[type].toLowerCase()
   setSearchResult({
     ...searchResult,
-    [parseType + 's']: {
-      ...[searchResult?.[parseType + 's']],
+    [parseType]: {
+      ...[searchResult?.[parseType]],
       curPage: curPage,
-      dataList: result[parseType + 's'],
+      dataList: result[parseType],
       totalPage: Math.ceil(result[parseType + 'Count'] / limit)
     }
   })

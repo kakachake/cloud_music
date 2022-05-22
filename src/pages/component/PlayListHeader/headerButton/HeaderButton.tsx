@@ -10,6 +10,7 @@ interface HeaderButtonProps {
   bg?: string
   bgHover?: string
   border?: 'left' | 'right' | 'both' | 'none'
+  disabled?: boolean
 }
 
 const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
@@ -19,15 +20,23 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   bg,
   bgHover,
   border,
-  onClick
+  onClick,
+  disabled
 }) => {
   return (
     <HeaderButtonWrap
-      onClick={() => onClick && onClick()}
+      onClick={() => !disabled && onClick && onClick()}
       bgHover={bgHover}
       bg={bg}
-      style={
-        direction === 'right'
+      style={{
+        ...(disabled
+          ? {
+              cursor: 'not-allowed',
+              borderColor: '#d8d8d8',
+              color: '#d8d8d8'
+            }
+          : {}),
+        ...(direction === 'right'
           ? {
               color: '#fff',
               border: 'none',
@@ -40,11 +49,12 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
             }
           : direction === 'left'
           ? { color: '#fff', border: 'none', paddingRight: '5px' }
-          : {}
-      }
+          : {})
+      }}
       className={`${style.headerButton} ${style['border-' + direction]}`}
     >
       <div className={style.icon}>{icon}</div>
+
       {content && <div className={style.content}>{content}</div>}
     </HeaderButtonWrap>
   )

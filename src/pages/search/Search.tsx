@@ -13,31 +13,33 @@ interface SearchProps {}
 const Search: FC<SearchProps> = () => {
   const { keyword } = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
-  const curtype = (searchParams.get('type') as any) || SEARCH_TYPE.SONG
+  const [type, setType] = useState<SEARCH_TYPE>(SEARCH_TYPE.SONGS)
 
-  const [type, setType] = useState<SEARCH_TYPE>(+curtype)
+  useEffect(() => {
+    setType(+(searchParams.get('type') || SEARCH_TYPE.SONGS))
+  }, [searchParams])
 
   const { searchResult, setCurPage, loading } = useSearch(type)
   const [tabList, setTabList] = useState([
     {
       title: '单曲',
-      id: SEARCH_TYPE.SONG
+      id: SEARCH_TYPE.SONGS
     },
     {
       title: '歌手',
-      id: SEARCH_TYPE.ARTIST
+      id: SEARCH_TYPE.ARTISTS
     },
     {
       title: '专辑',
-      id: SEARCH_TYPE.ALBUM
+      id: SEARCH_TYPE.ALBUMS
     },
     {
       title: '歌单',
-      id: SEARCH_TYPE.PLAYLIST
+      id: SEARCH_TYPE.PLAYLISTS
     },
     {
       title: '用户',
-      id: SEARCH_TYPE.USER
+      id: SEARCH_TYPE.USERS
     }
   ])
   const handleChangeTab = (id: SEARCH_TYPE) => {
@@ -61,13 +63,13 @@ const Search: FC<SearchProps> = () => {
         <div>loading</div>
       ) : (
         <div>
-          {type === SEARCH_TYPE.SONG && (
+          {type === SEARCH_TYPE.SONGS && (
             <SongTabPage setCurPage={setCurPage} data={searchResult?.songs}></SongTabPage>
           )}
-          {type === SEARCH_TYPE.ARTIST && (
+          {type === SEARCH_TYPE.ARTISTS && (
             <ArtistTabPage setCurPage={setCurPage} data={searchResult?.artists}></ArtistTabPage>
           )}
-          {type === SEARCH_TYPE.PLAYLIST && (
+          {type === SEARCH_TYPE.PLAYLISTS && (
             <PlayListTabPage
               setCurPage={setCurPage}
               data={searchResult?.playlists}

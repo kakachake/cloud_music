@@ -48,7 +48,7 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
       render: (data: any, idx: number) => {
         return (
           <span className={`line1 ${current === idx ? style.active : ''}`}>
-            {data.ar.map((item: any) => item.name).join('/')}
+            {data?.ar?.map((item: any) => item.name).join('/')}
           </span>
         )
       },

@@ -28,12 +28,18 @@ const SetTransform = createTransform(
   { whitelist: ['musicControl'] }
 )
 
+const publicPersistConfig = {
+  key: 'public',
+  storage,
+  whitelist: ['searchHistory']
+}
+
 const rootReducer = combineReducers({
   musicControl: musicControlSlice.reducer,
   musicList: musicListSlice.reducer,
   fmList: fmListSlice.reducer,
   user: userSlice.reducer,
-  public: publicSlice.reducer
+  public: persistReducer(publicPersistConfig, publicSlice.reducer)
 })
 
 // const store = configureStore({
@@ -57,7 +63,7 @@ const store = configureStore({
 
 //持久化
 const persistor = persistStore(store, {}, () => {
-  changeMusic(0)
+  changeMusic(0, false)
   musicInstance.init(store)
 })
 

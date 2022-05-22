@@ -8,18 +8,25 @@ import { debounce, throttle } from '../utils'
 import { useListControl } from './listController'
 import audioInstance from './musicPlayer'
 
-export const changeMusic = debounce((direction: number) => {
+//切换上下一首音乐
+export const changeMusic = debounce((direction: number, needPlay = true) => {
   const listControl = useListControl()
   const { list, current } = listControl.getList()
 
   const newIndex = (list.length + current + direction) % list.length
-  listControl.curListType != 'fmList' && store.dispatch(getSongInfoAndSet(list[newIndex]))
+  listControl.curListType != 'fmList' &&
+    store.dispatch(
+      getSongInfoAndSet({
+        song: list[newIndex],
+        needPlay
+      })
+    )
   //fmlist需要特殊处理
   listControl.curListType === 'fmList' && getSongBaseInfoAndSet(list[newIndex].id)
   // store.dispatch(getSongInfoAndSet(list[newIndex]))
-  listControl.setCurrent(newIndex)
 }, 500)
 
+//对于歌曲信息不完全的，使用这个函数先获取歌曲详情，再加入列表
 export const getSongBaseInfoAndSet = (id: number) => {
   getSongDetail(id).then((res) => {
     const song = res.songs?.[0]
@@ -31,23 +38,30 @@ export const getSongBaseInfoAndSet = (id: number) => {
 export const setMusicList = (payload: any[], type: 'musicList' | 'fmList') => {
   const listControl = useListControl()
   listControl.setList(payload, type)
-  store.dispatch(musicControlSlice.actions.setIsPlaying(true))
+
   changeMusic(0)
 }
 
-export const addMusic = async (data: any) => {
+//新增一首音乐
+export const addMusic = async (data: any, options = { needPlay: true, needFetch: false }) => {
   const listControl = useListControl()
 
   const { music, idx } = getMusicById(data.id)
   if (idx == -1) {
-    // const res = await getSongDetail(data.id)
-    // const song = res.songs?.[0]
-    // if (song === undefined) return
-    const song = data
-    listControl.addSongToPlayList(song)
-    store.dispatch(getSongInfoAndSet(song))
+    listControl.addSongToPlayList(data)
+    store.dispatch(
+      getSongInfoAndSet({
+        song: data,
+        needPlay: options.needPlay
+      })
+    )
   } else {
-    store.dispatch(getSongInfoAndSet(data))
+    store.dispatch(
+      getSongInfoAndSet({
+        song: data,
+        needPlay: options.needPlay
+      })
+    )
     listControl.setCurrent(idx)
   }
 }

@@ -9,6 +9,9 @@ import {
 } from '@ant-design/icons'
 import { FunctionComponent, useState } from 'react'
 import { Link } from 'react-router-dom'
+import store from '../../../redux/store'
+import { subPlayList } from '../../../service/api/reqLoginApi/songSheets'
+import { SongSheetType } from '../../../type/songSheet'
 import { formatNumber, formatTime } from '../../../utils'
 import HeaderButton from './headerButton/HeaderButton'
 import style from './PlayListHeader.module.css'
@@ -18,9 +21,10 @@ export enum PLAY_LIST_TYPE {
 }
 
 interface PlayListHeaderProps {
-  listInfo: any
+  listInfo: SongSheetType
   type: PLAY_LIST_TYPE
   handlePlayList?: () => void
+  toggleSubscribe?: () => void
 }
 const IconFont = createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_3370146_f9nlawuexbc.js'
@@ -28,8 +32,10 @@ const IconFont = createFromIconfontCN({
 const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
   listInfo,
   type,
-  handlePlayList
+  handlePlayList,
+  toggleSubscribe
 }) => {
+  const userId = store.getState().user.userInfo?.userId
   const [isFold, setIsFold] = useState(true)
   const handleToggleFoldDesc = () => {
     setIsFold(!isFold)
@@ -74,7 +80,13 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
               </div>
               <HeaderButton
                 icon={<StarOutlined />}
-                content={`收藏(${formatNumber(listInfo.subscribedCount)})`}
+                disabled={listInfo.userId === userId}
+                onClick={toggleSubscribe}
+                content={
+                  listInfo.subscribed === false
+                    ? `收藏(${formatNumber(listInfo.subscribedCount)})`
+                    : `已收藏(${formatNumber(listInfo.subscribedCount)})`
+                }
               />
               <HeaderButton
                 icon={<ShareAltOutlined />}
