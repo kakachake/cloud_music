@@ -142,6 +142,7 @@
 }
 
 .historyItem {
+  height: 25px;
   line-height: 25px;
   font-size: 14px;
   padding: 0 5px;

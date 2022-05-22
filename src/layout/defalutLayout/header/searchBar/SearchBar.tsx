@@ -29,7 +29,7 @@ const SearchBar: FC<SearchBarProps> = () => {
   }
 
   //优先使用searchText，searchText为空则使用state中的searchInput
-  const handleSearch = (searchText?: string, key?: string) => {
+  const handleSearch = (searchText?: string, key = 'songs') => {
     if (searchText === undefined && searchInput === '') {
       return
     }
@@ -90,7 +90,7 @@ const SearchBar: FC<SearchBarProps> = () => {
                             setSearchInput(item)
                             handleSearch(item)
                           }}
-                          className={style.historyItem}
+                          className={`${style.historyItem} line1`}
                         >
                           {item}
                         </div>
