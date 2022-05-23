@@ -21,9 +21,12 @@ export const fmListSlice = createSlice({
     setCurrent: (state, action: PayloadAction<number>) => {
       state.current = action.payload
     },
+    delCurrent: (state) => {
+      state.list.splice(state.current, 1)
+      state.current = state.current === 0 ? 0 : state.current
+    },
     addSongToPlayList: (state, action: PayloadAction<any>) => {
-      state.list.splice(state.current, 0, action.payload)
-      state.current++
+      state.list.splice(state.current + 1, 0, action.payload)
     },
     clearList: (state) => {
       state.list = []

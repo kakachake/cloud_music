@@ -51,12 +51,11 @@
 }
 
 .iconWrap {
-  padding: 2px;
-  width: 20px;
+  width: 25px;
   font-size: 10px;
   text-align: center;
-  line-height: 18px;
-  height: 20px;
+  line-height: 25px;
+  height: 25px;
 
   background-color: rgb(0, 0, 0, 0.05);
   border-radius: 50%;

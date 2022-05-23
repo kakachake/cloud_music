@@ -20,7 +20,8 @@ export const changeMusic = debounce((direction: number, needPlay = true) => {
         song: list[newIndex],
         needPlay
       })
-    )
+    ) &&
+    listControl.setCurrent(newIndex)
   //fmlist需要特殊处理
   listControl.curListType === 'fmList' && getSongBaseInfoAndSet(list[newIndex].id)
   // store.dispatch(getSongInfoAndSet(list[newIndex]))
@@ -45,8 +46,9 @@ export const setMusicList = (payload: any[], type: 'musicList' | 'fmList') => {
 //新增一首音乐
 export const addMusic = async (data: any, options = { needPlay: true, needFetch: false }) => {
   const listControl = useListControl()
+  const { current } = listControl.getList()
 
-  const { music, idx } = getMusicById(data.id)
+  const { idx } = getMusicById(data.id)
   if (idx == -1) {
     listControl.addSongToPlayList(data)
     store.dispatch(
@@ -55,6 +57,7 @@ export const addMusic = async (data: any, options = { needPlay: true, needFetch:
         needPlay: options.needPlay
       })
     )
+    listControl.setCurrent(current + 1)
   } else {
     store.dispatch(
       getSongInfoAndSet({

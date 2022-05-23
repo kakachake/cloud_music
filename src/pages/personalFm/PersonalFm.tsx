@@ -74,6 +74,11 @@ const PersonalFm: FC<PersonalFmProps> = () => {
 
     mainContentEl?.scrollTo({ top: commentAreaTop, behavior: 'smooth' })
   }
+  const deleteCur = () => {
+    store.dispatch(fmListSlice.actions.delCurrent())
+
+    changeMusic(0)
+  }
   return (
     <div id='fmContainer' className={`baseContainer ${style.personFmWrap}`}>
       <div className={style.songArea}>
@@ -89,7 +94,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
             <div className={style.handleItem}>
               <Like id={song.id} />
             </div>
-            <div className={style.handleItem}>
+            <div onClick={deleteCur} className={style.handleItem}>
               <DeleteOutlined />
             </div>
             <div onClick={handleChangIdx} className={style.handleItem}>
