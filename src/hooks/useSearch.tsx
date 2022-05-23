@@ -37,7 +37,6 @@ export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
   return {
     searchResult,
     setCurPage,
-
     loading
   }
 }
@@ -53,13 +52,15 @@ const formatRes = (
   const result = res.result
 
   const parseType = SEARCH_TYPE[type].toLowerCase()
-  setSearchResult({
-    ...searchResult,
-    [parseType]: {
-      ...[searchResult?.[parseType]],
-      curPage: curPage,
-      dataList: result[parseType],
-      totalPage: Math.ceil(result[parseType + 'Count'] / limit)
+  setSearchResult((searchResult: any) => {
+    return {
+      ...searchResult,
+      [parseType]: {
+        ...[searchResult?.[parseType]],
+        curPage: curPage,
+        dataList: result[parseType],
+        totalPage: Math.ceil(result[parseType + 'Count'] / limit)
+      }
     }
   })
 }
