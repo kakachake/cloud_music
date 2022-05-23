@@ -17,6 +17,7 @@ export const getSongInfoAndSet = createAsyncThunk(
       if (lyric.code === 200 && url.code === 200) {
         if (url.data[0].url === null) {
           Toast.error('歌曲暂无歌源')
+          needPlay = false
         }
         return {
           song,
@@ -127,6 +128,13 @@ export const musicControlSlice = createSlice({
       state.currentTime = 0
       state.duration = 0
       state.bufferProgress = 0
+    },
+    clearPlayStatus: (state) => {
+      state.isPlaying = false
+      state.progress = 0
+      state.currentTime = 0
+      state.duration = 0
+      state.bufferProgress = 0
     }
   },
   extraReducers: {
@@ -137,6 +145,12 @@ export const musicControlSlice = createSlice({
       musicInstance.setUrl(action.payload.url)
       if (action.payload.needPlay) {
         musicInstance.play()
+      } else {
+        state.isPlaying = false
+        state.progress = 0
+        state.currentTime = 0
+        state.duration = 0
+        state.bufferProgress = 0
       }
     }
   }

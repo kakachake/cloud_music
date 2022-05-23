@@ -28,7 +28,7 @@ interface TableProps {
 const MuTable: FunctionComponent<TableProps> = (props) => {
   const { columns, data, showIdx, onColDoubleClick, hideHeader = false, height = 30 } = props
 
-  if (!data || (data && !data.length)) {
+  if (!data || (data && data?.length === 0)) {
     return <div className={style.empty}>暂无数据</div>
   }
   return (

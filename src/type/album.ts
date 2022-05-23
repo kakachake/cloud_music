@@ -15,7 +15,7 @@ export interface Artist {
 
 export interface AlbumType {
   name: string
-  id: number
+  id: string
   type: string
   size: number
   picId: number

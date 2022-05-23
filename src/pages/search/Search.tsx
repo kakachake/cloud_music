@@ -4,6 +4,7 @@ import { useSearch } from '../../hooks/useSearch'
 import { getSearchResult, SEARCH_TYPE } from '../../service/api/search'
 import TabBar from '../component/tabBar/TabBar'
 import TabBarItem from '../component/tabBar/TabBarItem'
+import AlbumTabPage from './albumTabPage/AlbumTabPage'
 import ArtistTabPage from './artistTabPage/ArtistTabPage'
 import PlayListTabPage from './playListTabPage/PlayListTabPage'
 import style from './Search.module.css'
@@ -74,6 +75,9 @@ const Search: FC<SearchProps> = () => {
               setCurPage={setCurPage}
               data={searchResult?.playlists}
             ></PlayListTabPage>
+          )}
+          {type === SEARCH_TYPE.ALBUMS && (
+            <AlbumTabPage setCurPage={setCurPage} data={searchResult?.albums}></AlbumTabPage>
           )}
         </div>
       )}

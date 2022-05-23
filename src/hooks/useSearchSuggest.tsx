@@ -16,10 +16,10 @@ export const useSearchSuggest = () => {
   }>()
   const [loading, setLoading] = useState(false)
   const handleSearchSuggest = (keyword: string) => {
-    setSearchSuggest({
-      data: {},
-      order: []
-    })
+    // setSearchSuggest({
+    //   data: {},
+    //   order: []
+    // })
     setLoading(true)
     getSearchSuggest(keyword)
       .then((res) => {

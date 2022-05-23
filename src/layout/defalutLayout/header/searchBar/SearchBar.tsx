@@ -16,7 +16,7 @@ const SearchBar: FC<SearchBarProps> = () => {
   const { keyword } = useParams()
   const [hotSearch, setHotSearch] = useState([])
   const [searchInput, setSearchInput] = useState(keyword || '')
-  const [searchSuggest, handleSearchSuggest, loading] = useSearchSuggest()
+  const [searchSuggest, handleSearchSuggest, suggestLoading] = useSearchSuggest()
   const [showTip, setShowTip] = useState(false)
   const searchHistory = store.getState().public.searchHistory.slice(0, 6)
   const navigate = useNavigate()
@@ -142,6 +142,7 @@ const SearchBar: FC<SearchBarProps> = () => {
           ) : (
             <>
               <div>搜索“{searchInput}”相关的内容</div>
+
               <div className={style.suggest}>
                 {searchSuggest?.order.map((key) => {
                   return (

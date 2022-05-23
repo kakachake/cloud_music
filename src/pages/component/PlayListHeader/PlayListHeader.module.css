@@ -66,6 +66,19 @@
   flex-direction: row;
 }
 
+.albumCreator {
+  font-size: 12px;
+  line-height: 28px;
+  height: 28px;
+  font-weight: bold;
+}
+
+.albumCreator .creatorName {
+  line-height: 28px;
+  font-size: 12px;
+  color: #0b58b0;
+}
+
 .creator > * {
   margin-right: 5px;
 }

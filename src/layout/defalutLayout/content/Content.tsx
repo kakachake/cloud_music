@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import Home from '../../../pages/home/Home'
 import Suggest from '../../../pages/home/suggest/Suggest'
 import SongSheet from '../../../pages/songSheet/SongSheet'
+import Album from '../../../pages/album/Album'
 import PlayList from '../../../components/playList/PlayList'
 import { useSelector } from '../../../redux/hooks'
 import { linkItems, LinkItemTypes } from './config'
@@ -93,6 +94,7 @@ const Content: FC = (props) => {
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>
+          <Route path='/album/:id' element={<Album />}></Route>
           <Route path='/search/:keyword' element={<Search />}></Route>
         </Routes>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { getAlbumComment } from '../service/api/album'
 import { getPlaylistComment, getSongComment } from '../service/api/music'
 import { CommentType } from '../type/type'
 
@@ -19,6 +20,7 @@ export const useComment = (id: string | number, type: 'Song' | 'PlayList' | 'Alb
           res = await getPlaylistComment(id, curPage)
           break
         case 'Album':
+          res = await getAlbumComment(id, curPage)
           break
       }
       if (res.hotComments) {

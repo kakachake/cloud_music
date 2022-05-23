@@ -1,3 +1,4 @@
+import Toast from '../components/Toast'
 import { musicControlSlice } from '../redux/musicControl/slice'
 import { Store } from '../redux/store'
 import { changeMusic } from './musicControl'
@@ -63,13 +64,17 @@ export class AudioController {
     this.audio
       .play()
       .then((e) => {
+        console.log(e)
+
         this.store?.dispatch(musicControlSlice.actions.setIsPlaying(true))
       })
       .catch((err) => {
+        console.log(err)
+        Toast.error('歌曲播放失败')
         this.store?.dispatch(musicControlSlice.actions.setIsPlaying(false))
       })
       .finally(() => {
-        this.store?.dispatch(musicControlSlice.actions.setIsPlaying(true))
+        // this.store?.dispatch(musicControlSlice.actions.setIsPlaying(true))
       })
   }
   pause() {

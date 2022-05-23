@@ -17,11 +17,12 @@ import HeaderButton from './headerButton/HeaderButton'
 import style from './PlayListHeader.module.css'
 
 export enum PLAY_LIST_TYPE {
-  songSheet = '歌单'
+  songSheet = '歌单',
+  album = '专辑'
 }
 
 interface PlayListHeaderProps {
-  listInfo: SongSheetType
+  listInfo: Partial<SongSheetType>
   type: PLAY_LIST_TYPE
   handlePlayList?: () => void
   toggleSubscribe?: () => void
@@ -40,101 +41,126 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
   const handleToggleFoldDesc = () => {
     setIsFold(!isFold)
   }
-
-  return (
-    <div>
-      {listInfo && (
-        <div className={style.playListHeader}>
-          <div className={style.listImage}>
-            <img src={listInfo.coverImgUrl} alt='' />
-          </div>
-          <div className={style.listDescribe}>
-            <div className={style.listTitle}>
-              <div className={style.listType}>{type}</div>
-              <div className={style.listName}>{listInfo.name}</div>
+  if (!listInfo) {
+    return <div></div>
+  } else {
+    return (
+      <div>
+        {listInfo && (
+          <div className={style.playListHeader}>
+            <div className={style.listImage}>
+              <img src={listInfo.coverImgUrl} alt='' />
             </div>
-            <Link to={'/'} className={style.creator}>
-              <img src={listInfo.creator?.avatarUrl} alt='' />
-              <div className={style.creatorName}>{listInfo.creator?.nickname}</div>
-              <div className={style.createTime}>{formatTime(listInfo.createTime)}创建</div>
-            </Link>
-            <div className={style.handle}>
-              <div>
-                <HeaderButton
-                  onClick={handlePlayList}
-                  bg='#ec4141'
-                  bgHover='#cc3232'
-                  icon={
-                    <IconFont className={`${style.playIcon} ${style.icon}`} type={'icon-play'} />
-                  }
-                  direction='left'
-                  content={`播放全部`}
-                />
-                <HeaderButton
-                  bg='#ec4141'
-                  bgHover='#cc3232'
-                  direction='right'
-                  border='left'
-                  icon={<PlusOutlined />}
-                />
+            <div className={style.listDescribe}>
+              <div className={style.listTitle}>
+                <div className={style.listType}>{type}</div>
+                <div className={style.listName}>{listInfo.name}</div>
               </div>
-              <HeaderButton
-                icon={<StarOutlined />}
-                disabled={listInfo.userId === userId}
-                onClick={toggleSubscribe}
-                content={
-                  listInfo.subscribed === false
-                    ? `收藏(${formatNumber(listInfo.subscribedCount)})`
-                    : `已收藏(${formatNumber(listInfo.subscribedCount)})`
-                }
-              />
-              <HeaderButton
-                icon={<ShareAltOutlined />}
-                content={`分享(${formatNumber(listInfo.shareCount)})`}
-              />
-              <HeaderButton icon={<DownloadOutlined />} content={`下载全部`} />
-            </div>
-            <div className={style.otherDesc}>
-              {type === PLAY_LIST_TYPE.songSheet ? (
+              {type === PLAY_LIST_TYPE.songSheet && (
+                <Link to={'/'} className={style.creator}>
+                  <img src={listInfo.creator?.avatarUrl} alt='' />
+                  <div className={style.creatorName}>{listInfo.creator?.nickname}</div>
+                  <div className={style.createTime}>
+                    {formatTime(listInfo.createTime || '')}创建
+                  </div>
+                </Link>
+              )}
+              <div className={style.handle}>
                 <div>
-                  <div className={`${style.otherDescItem} ${style.tags}`}>
-                    标签：
-                    {listInfo?.tags?.map((tag: any, idx: number) => (
-                      <div key={idx} className={style.tag}>
-                        {idx != 0 ? '/ ' : ''}
-                        {tag}
+                  <HeaderButton
+                    onClick={handlePlayList}
+                    bg='#ec4141'
+                    bgHover='#cc3232'
+                    icon={
+                      <IconFont className={`${style.playIcon} ${style.icon}`} type={'icon-play'} />
+                    }
+                    direction='left'
+                    content={`播放全部`}
+                  />
+                  <HeaderButton
+                    bg='#ec4141'
+                    bgHover='#cc3232'
+                    direction='right'
+                    border='left'
+                    icon={<PlusOutlined />}
+                  />
+                </div>
+                <HeaderButton
+                  icon={<StarOutlined />}
+                  disabled={listInfo.userId === userId}
+                  onClick={toggleSubscribe}
+                  content={
+                    listInfo.subscribed
+                      ? `已收藏${
+                          listInfo.subscribed
+                            ? '(' + formatNumber(listInfo.subscribedCount || 0) + ')'
+                            : ''
+                        }`
+                      : `收藏${
+                          listInfo.subscribedCount
+                            ? '(' + formatNumber(listInfo.subscribedCount || 0) + ')'
+                            : ''
+                        }`
+                  }
+                />
+                <HeaderButton
+                  icon={<ShareAltOutlined />}
+                  content={`分享${
+                    listInfo.shareCount ? '(' + formatNumber(listInfo.shareCount || 0) + ')' : ''
+                  }`}
+                />
+                <HeaderButton icon={<DownloadOutlined />} content={`下载全部`} />
+              </div>
+              <div className={style.otherDesc}>
+                {type === PLAY_LIST_TYPE.songSheet && (
+                  <div>
+                    <div className={`${style.otherDescItem} ${style.tags}`}>
+                      标签：
+                      {listInfo?.tags?.map((tag: any, idx: number) => (
+                        <div key={idx} className={style.tag}>
+                          {idx != 0 ? '/ ' : ''}
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                    <div className={`${style.otherDescItem}`}>
+                      <div>歌曲：{listInfo.trackCount}</div>
+                      <div>播放：{formatNumber(listInfo.playCount || 0)}</div>
+                    </div>
+                    <div className={`${style.otherDescItem}`}>
+                      <div
+                        className={isFold ? 'line2' : ''}
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            '简介：' +
+                            (listInfo.description
+                              ? listInfo?.description?.replaceAll('\n', '<br/>')
+                              : '')
+                        }}
+                      ></div>
+                      <div style={{ cursor: 'pointer' }} onClick={handleToggleFoldDesc}>
+                        {isFold ? <CaretDownOutlined /> : <CaretUpOutlined />}
                       </div>
-                    ))}
-                  </div>
-                  <div className={`${style.otherDescItem}`}>
-                    <div>歌曲：{listInfo.trackCount}</div>
-                    <div>播放：{formatNumber(listInfo.playCount)}</div>
-                  </div>
-                  <div className={`${style.otherDescItem}`}>
-                    <div
-                      className={isFold ? 'line2' : ''}
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          '简介：' +
-                          (listInfo.description
-                            ? listInfo?.description?.replaceAll('\n', '<br/>')
-                            : '')
-                      }}
-                    ></div>
-                    <div style={{ cursor: 'pointer' }} onClick={handleToggleFoldDesc}>
-                      {isFold ? <CaretDownOutlined /> : <CaretUpOutlined />}
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div></div>
-              )}
+                )}
+                {type === PLAY_LIST_TYPE.album && (
+                  <div className={style.albumCreator}>
+                    <div>
+                      歌手：<span className={style.creatorName}>{listInfo.creator?.nickname}</span>
+                    </div>
+                    <div className={style.createTime}>
+                      时间：{formatTime(listInfo.createTime || '', 'YYYY-MM-DD')}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  )
+        )}
+      </div>
+    )
+  }
 }
 
 export default PlayListHeader
