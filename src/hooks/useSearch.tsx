@@ -53,13 +53,15 @@ const formatRes = (
 
   const parseType = SEARCH_TYPE[type].toLowerCase()
   setSearchResult((searchResult: any) => {
+    console.log(parseType.slice(0, -1))
+
     return {
       ...searchResult,
       [parseType]: {
         ...[searchResult?.[parseType]],
         curPage: curPage,
         dataList: result[parseType],
-        totalPage: Math.ceil(result[parseType + 'Count'] / limit)
+        totalPage: Math.ceil(result[parseType.slice(0, -1) + 'Count'] / limit)
       }
     }
   })
