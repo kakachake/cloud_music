@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useLayoutEffect, useState } from 'react'
 import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useSearch } from '../../hooks/useSearch'
 import { getSearchResult, SEARCH_TYPE } from '../../service/api/search'
@@ -16,7 +16,7 @@ const Search: FC<SearchProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [type, setType] = useState<SEARCH_TYPE>(SEARCH_TYPE.SONGS)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setType(+(searchParams.get('type') || SEARCH_TYPE.SONGS))
   }, [searchParams])
 
