@@ -52,13 +52,13 @@
 }
 
 .defaultClickIcon {
-  color: #bcbcbc;
+  color: #666666;
   line-height: 100%;
   font-size: 16px;
   cursor: pointer;
 }
 .defaultClickIcon:hover {
-  color: #484848;
+  color: #000;
 }
 .liked {
   color: var(--backgroundColor);

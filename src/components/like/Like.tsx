@@ -12,7 +12,7 @@ const Like: FC<LikeProps> = (props) => {
   return (
     <IconFont
       type={isLiked(id) ? 'icon-aixin_shixin' : 'icon-aixin'}
-      className={`${isLiked(id) ? 'liked' : 'defaultLike'} `}
+      className={`${isLiked(id) ? 'liked' : 'defaultClickIcon'} `}
       onClick={() => handleToggleLike(id, isLiked(id))}
     />
   )

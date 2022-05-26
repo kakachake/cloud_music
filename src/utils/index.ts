@@ -150,3 +150,16 @@ export function isScrollBottom(el: Element) {
     return false
   }
 }
+
+// /n转br
+export function n2br(str: string) {
+  return str.replace(/\n/g, '<br/>')
+}
+
+// 分割/n
+export function splitN(str: string) {
+  if (!str) {
+    return []
+  }
+  return str.split('\n')
+}

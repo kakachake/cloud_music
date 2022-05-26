@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { getSearchResult, SEARCH_TYPE } from '../service/api/search'
 
@@ -10,11 +10,13 @@ export const useSearch = (type: SEARCH_TYPE, limit = 20) => {
       dataList: any[]
       curPage: number
       totalPage: number
+      totalCount: number
     }
   }>()
 
   const [loading, setLoading] = useState(false)
-  useEffect(() => {
+  //防止页面闪烁
+  useLayoutEffect(() => {
     getData()
   }, [keyword, type])
   const getData = (page?: number) => {
@@ -61,7 +63,8 @@ const formatRes = (
         ...[searchResult?.[parseType]],
         curPage: curPage,
         dataList: result[parseType],
-        totalPage: Math.ceil(result[parseType.slice(0, -1) + 'Count'] / limit)
+        totalPage: Math.ceil(result[parseType.slice(0, -1) + 'Count'] / limit),
+        totalCount: result[parseType.slice(0, -1) + 'Count']
       }
     }
   })

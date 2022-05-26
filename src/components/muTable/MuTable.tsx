@@ -60,9 +60,9 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
                 className={`${style.muTableItem}`}
               >
                 {showIdx === true && (
-                  <td className={style.tableIndex}>
-                    <div>{pad(idx + 1)}</div>
-                  </td>
+                  <MuTableItemTd height={height} className={style.tableIndex}>
+                    <div className={style.tableIndex}>{pad(idx + 1)}</div>
+                  </MuTableItemTd>
                 )}
                 {columns.map((col) => {
                   return (

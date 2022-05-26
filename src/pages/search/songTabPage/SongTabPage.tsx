@@ -9,7 +9,7 @@ import { addMusic, setMusicList } from '../../../controller/musicControl'
 import { downLoadMusic } from '../../../service/api/music'
 import { SongType } from '../../../type/song'
 import { parseSecondToTime } from '../../../utils'
-import HeaderButton from '../../component/PlayListHeader/headerButton/HeaderButton'
+import HeaderButton from '../../component/headerButton/HeaderButton'
 import { SearchSongType } from '../type/searchSongType'
 import style from './SongTabPage.module.css'
 interface SongTabPageProps {

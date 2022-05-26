@@ -37,10 +37,10 @@ export const publicSlice = createSlice({
       state.curListType = action.payload
     },
     setSearchHistory(state, action: PayloadAction<string>) {
-      if (state.searchHistory.includes(action.payload)) {
-        return
-      }
-      state.searchHistory = [action.payload, ...state.searchHistory]
+      state.searchHistory = [
+        action.payload,
+        ...state.searchHistory.filter((item) => item !== action.payload)
+      ]
     }
   }
 })

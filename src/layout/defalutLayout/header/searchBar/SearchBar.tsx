@@ -26,6 +26,7 @@ const SearchBar: FC<SearchBarProps> = () => {
     getHotSearch().then((res) => {
       setHotSearch(res.data)
     })
+    searchInput && handleSearchSuggest(searchInput)
   }
 
   //优先使用searchText，searchText为空则使用state中的searchInput
@@ -54,6 +55,12 @@ const SearchBar: FC<SearchBarProps> = () => {
         break
       case 'playlists':
         navigate(`/songSheet/${item.id}`)
+        break
+      case 'artists':
+        navigate(`/artist/${item.id}`)
+        break
+      case 'albums':
+        navigate(`/album/${item.id}`)
     }
   }
 
@@ -107,7 +114,7 @@ const SearchBar: FC<SearchBarProps> = () => {
                       <div
                         onClick={() => clickHot(item.searchWord)}
                         className={style.hotSearchItem}
-                        key={item.first}
+                        key={item.searchWord}
                       >
                         <div
                           className={`${style.hotItemIndex} ${

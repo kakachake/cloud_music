@@ -13,7 +13,7 @@ import store from '../../../redux/store'
 import { subPlayList } from '../../../service/api/reqLoginApi/songSheets'
 import { SongSheetType } from '../../../type/songSheet'
 import { formatNumber, formatTime } from '../../../utils'
-import HeaderButton from './headerButton/HeaderButton'
+import HeaderButton from '../headerButton/HeaderButton'
 import style from './PlayListHeader.module.css'
 
 export enum PLAY_LIST_TYPE {
