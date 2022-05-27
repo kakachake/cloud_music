@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import style from './Content.module.css'
 import SideBar from '../../../components/sideBar/SideBar'
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import Home from '../../../pages/home/Home'
 import Suggest from '../../../pages/home/suggest/Suggest'
 import SongSheet from '../../../pages/songSheet/SongSheet'
@@ -84,21 +84,7 @@ const Content: FC = (props) => {
       </div>
 
       <div id='mainContent' className={style.mainPage}>
-        <Routes>
-          <Route path='/' element={<Home />}>
-            <Route path='' element={<Suggest />} />
-            <Route path='/songSheets' element={<Navigate to='/songSheets/default/' />}></Route>
-            <Route path='/songSheets/default/' element={<SongSheets />} />
-            <Route path='/songSheets/default/:type' element={<SongSheets />} />
-            <Route path='/songSheets/highquality/:type' element={<HighQuality />} />
-            <Route path='/rank' element={<Rank />} />
-          </Route>
-          <Route path='/personalfm' element={<PersonalFm />}></Route>
-          <Route path='/songSheet/:id' element={<SongSheet />}></Route>
-          <Route path='/album/:id' element={<Album />}></Route>
-          <Route path='/search/:keyword' element={<Search />}></Route>
-          <Route path='/artist/:id' element={<Artist />}></Route>
-        </Routes>
+        <Outlet />
       </div>
       <div id='rightSideBar' className={style.rightSideContent}>
         {/* 右侧显示的内容：消息列表和播放列表 */}
