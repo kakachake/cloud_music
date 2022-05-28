@@ -47,7 +47,6 @@ class MusicControl extends React.Component<PropsType, StateType> {
   }
   setPercent = (percent: number) => {
     console.log(percent)
-
     audioInstance.setCurrentTime(percent * this.props.duration)
     this.props.setProgress(percent * 100)
   }
