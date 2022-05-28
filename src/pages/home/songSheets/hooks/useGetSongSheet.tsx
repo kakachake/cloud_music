@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getHighQualitySongSheets, getHotSongSheets } from '../../../service/api/music'
-import { mainContentScroll } from '../../../utils'
+import { getHighQualitySongSheets, getHotSongSheets } from '../../../../service/api/music'
+import { mainContentScroll } from '../../../../utils'
 
 export const useGetSongSheet = () => {
   const [curPage, setCurPage] = useState(1)

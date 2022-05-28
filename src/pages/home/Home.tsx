@@ -20,6 +20,10 @@ const Home: FunctionComponent<HomeProps> = () => {
     {
       title: '排行榜',
       path: '/rank'
+    },
+    {
+      title: '歌手',
+      path: '/artists'
     }
   ])
   return (

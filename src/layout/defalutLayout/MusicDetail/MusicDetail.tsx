@@ -14,6 +14,7 @@ import styled from 'styled-components'
 import Pagination from '../../../components/pagination/Pagination'
 import CommentTabPage from '../../../pages/component/commentTabPage/CommentTabPage'
 import fullScreen from '../fullScreen/index'
+import ArNameItem from '../../../pages/component/arNameItem/ArNameItem'
 interface MusicDetailProps {}
 
 const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
@@ -85,7 +86,7 @@ const MusicDetail: FunctionComponent<MusicDetailProps> = () => {
           <div className={style.songBaseInfo} id='songBaseInfo'>
             <div className={`${style.songName} line1`}>{song?.name}</div>
             <div className={`${style.ar} line1`}>
-              {song?.ar?.map((item: any) => item.name).join('/')} - {song?.al?.name}
+              <ArNameItem artists={song?.ar} /> - {song?.al?.name}
             </div>
           </div>
           <div className={`${style.songPicWrap} `}>

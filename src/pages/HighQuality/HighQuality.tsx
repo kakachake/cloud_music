@@ -11,14 +11,23 @@ interface HighQualityProps {}
 
 const HighQuality: FC<HighQualityProps> = () => {
   const { type } = useParams()
-  const { highQualityList, curPage, setCurPage, isLoading, hasMore } = useGetHighSongSheet()
-  const scrollAddPage = () => {
+  const { highQualityList, isLoading, hasMore, getMore } = useGetHighSongSheet()
+  const addPage = useCallback(() => {
+    console.log('addPage')
+    console.log(isLoading, hasMore)
+
+    if (!isLoading && hasMore) {
+      getMore()
+    }
+  }, [getMore, highQualityList])
+  const scrollAddPage = useCallback(() => {
     const mainContent = document.querySelector('#mainContent')
     const isBottom = isScrollBottom(mainContent!)
+    console.log(isBottom, isLoading)
     if (isBottom) {
       addPage()
     }
-  }
+  }, [addPage])
   useEffect(() => {
     const mainContent = document.querySelector('#mainContent')
     mainContent?.addEventListener('scroll', scrollAddPage)
@@ -26,12 +35,8 @@ const HighQuality: FC<HighQualityProps> = () => {
     return () => {
       mainContent?.removeEventListener('scroll', scrollAddPage)
     }
-  }, [curPage, isLoading])
-  const addPage = () => {
-    if (!isLoading && hasMore) {
-      setCurPage(curPage + 1)
-    }
-  }
+  }, [scrollAddPage])
+
   return (
     <div>
       <div className={style.listWrap}>

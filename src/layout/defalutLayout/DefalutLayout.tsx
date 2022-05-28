@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 import style from './Default.module.css'
 import HandTrack from '../../components/handtrack/HandTrack'
 import Suggest from '../../pages/home/suggest/Suggest'
-import SongSheets from '../../pages/songSheets/SongSheets'
+import SongSheets from '../../pages/home/songSheets/SongSheets'
 import HighQuality from '../../pages/HighQuality/HighQuality'
 import Rank from '../../pages/home/rank/Rank'
 import PersonalFm from '../../pages/personalFm/PersonalFm'
@@ -19,6 +19,7 @@ import SongSheet from '../../pages/songSheet/SongSheet'
 import Album from '../../pages/album/Album'
 import Artist from '../../pages/artist/Artist'
 import Search from '../../pages/search/Search'
+import Artists from '../../pages/home/artists/Artists'
 const DefaultLayout: FunctionComponent = () => {
   const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
   return (
@@ -33,6 +34,7 @@ const DefaultLayout: FunctionComponent = () => {
             <Route path='/songSheets/default/:type' element={<SongSheets />} />
             <Route path='/songSheets/highquality/:type' element={<HighQuality />} />
             <Route path='/rank' element={<Rank />} />
+            <Route path='/Artists' element={<Artists />} />
           </Route>
           <Route path='/personalfm' element={<PersonalFm />}></Route>
           <Route path='/songSheet/:id' element={<SongSheet />}></Route>

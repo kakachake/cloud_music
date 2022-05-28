@@ -15,6 +15,8 @@ import { fmListSlice } from '../../redux/fmList/slice'
 import { publicSlice } from '../../redux/publicSlice/slice'
 import { useListControl } from '../../controller/listController'
 import Like from '../../components/like/Like'
+import { useNavigate } from 'react-router-dom'
+import ArNameItem from '../component/arNameItem/ArNameItem'
 export interface PersonalFmItem {
   album: AlbumType
   name: string
@@ -31,6 +33,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
   const currentTime = useSelector((state: RootState) => state.musicControl.currentTime)
   const [parsedLrc, setParseLrc] = useState<any[]>([])
   const { song, lyric } = useSelector((state) => state.musicControl.musicInfo)
+  const navigate = useNavigate()
   useEffect(() => {
     const listControl = useListControl()
     const { current } = listControl.getList()
@@ -79,6 +82,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
 
     changeMusic(0)
   }
+
   return (
     <div id='fmContainer' className={`baseContainer ${style.personFmWrap}`}>
       <div className={style.songArea}>
@@ -112,7 +116,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
               <div className='line1'>专辑：{song?.al?.name}</div>
               <div className='line1'>
                 歌手：
-                {song?.ar?.map((item: any) => item.name).join('/')}
+                <ArNameItem artists={song?.ar} />
               </div>
             </div>
           </div>

@@ -4,10 +4,10 @@ import { useGetSongSheet } from './hooks/useGetSongSheet'
 import { useSongsheetsCategory } from './hooks/usePlayListHot'
 import style from './SongSheets.module.css'
 import styled from 'styled-components'
-import TabBar from '../component/tabBar/TabBar'
-import TabBarItem from '../component/tabBar/TabBarItem'
-import SongSheetItem from '../component/songSheetItem/SongSheetItem'
-import Pagination from '../../components/pagination/Pagination'
+import TabBar from '../../component/tabBar/TabBar'
+import TabBarItem from '../../component/tabBar/TabBarItem'
+import SongSheetItem from '../../component/songSheetItem/SongSheetItem'
+import Pagination from '../../../components/pagination/Pagination'
 interface SongSheetsProps {}
 
 const SongSheets: FC<SongSheetsProps> = () => {

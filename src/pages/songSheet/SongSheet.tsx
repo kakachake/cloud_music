@@ -19,6 +19,7 @@ import { useIsLiked } from '../../hooks/useLikeList'
 import Like from '../../components/like/Like'
 import { subPlayList } from '../../service/api/reqLoginApi/songSheets'
 import Toast from '../../components/Toast'
+import ArNameItem from '../component/arNameItem/ArNameItem'
 
 interface SongSheetProps {}
 
@@ -77,7 +78,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       dataIndex: 'ar',
       key: 'ar',
       render: (data: any) => {
-        return <span className={`line1`}>{data.ar.map((item: any) => item.name).join('/')}</span>
+        return <ArNameItem artists={data?.ar} />
       },
       width: (5 / 24) * 100 + '%',
       align: 'left'

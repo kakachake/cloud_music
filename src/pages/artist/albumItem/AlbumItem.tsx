@@ -98,7 +98,7 @@ const Album: FC<AlbumProps> = ({ title, songs, pic, defalutFold = true, albumId 
   return (
     <div className={style.albumItemWrap}>
       <div className={style.left}>
-        <img src={pic} alt='' />
+        <img src={pic + '?param=300y300'} alt='' />
       </div>
       <div className={style.right}>
         <div className={style.rightTop}>

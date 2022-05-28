@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getHotSongSheetsCategory } from '../../../service/api/music'
+import { getHotSongSheetsCategory } from '../../../../service/api/music'
 
 export const useSongsheetsCategory = () => {
   const [songSheetsCategory, setSongSheetsCategory] = useState<any[]>([])

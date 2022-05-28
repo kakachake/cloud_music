@@ -16,7 +16,7 @@ interface ArtistProps {}
 
 const Artist: FC<ArtistProps> = () => {
   const id = useParams().id
-  const [artist, loading] = useArtist(id)
+  const [artist, loading, error] = useArtist(id)
   const [hotSongs, hotSongsLoading] = useHotSongs(id)
   const [albums, albumsLoading] = useArtistAlbums(id)
   const [artistDetail, artistDetailLoading] = useArtistDetail(id)
@@ -39,6 +39,9 @@ const Artist: FC<ArtistProps> = () => {
       id: 3
     }
   ])
+  if (error) {
+    return <div>未知歌手信息！</div>
+  }
 
   return (
     <div className={style.artistWrap}>
@@ -63,7 +66,9 @@ const Artist: FC<ArtistProps> = () => {
                   display: activeTab === 0 ? 'block' : 'none'
                 }}
               >
-                <div>{hotSongs && <AlbumItem title='热门50首' songs={hotSongs} pic={top50} />}</div>
+                <div>
+                  {hotSongs?.length && <AlbumItem title='热门50首' songs={hotSongs} pic={top50} />}
+                </div>
                 {albums && albums.length > 0 && (
                   <div>
                     {albums.map((item) => {
