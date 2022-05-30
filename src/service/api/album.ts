@@ -1,4 +1,4 @@
-// 歌单相关api
+// 专辑相关api
 import axRequest from '../index'
 
 enum ALBUM_API {

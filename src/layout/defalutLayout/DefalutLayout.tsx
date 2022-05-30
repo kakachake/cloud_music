@@ -45,7 +45,7 @@ const DefaultLayout: FunctionComponent = () => {
           <Route path='/mv/:id' element={<div>mv</div>}></Route>
         </Route>
         <Route path='/' element={<Content hiddenSideBar={true} />}>
-          <Route path='/videoDetail/:id' element={<VideoDetail />}></Route>
+          <Route path='/videoDetail/:type/:id' element={<VideoDetail />}></Route>
         </Route>
       </Routes>
       {/* <Content /> */}

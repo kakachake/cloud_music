@@ -1,4 +1,4 @@
-// 歌单相关api
+// 歌手相关api
 import axRequest from '../index'
 
 enum HOME_API {

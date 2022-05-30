@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const useVideo = () => {
   const [percent, setPercent] = useState(0)
@@ -12,14 +12,18 @@ export const useVideo = () => {
   const [bufferProgress, setBufferProgress] = useState(0)
   const videoEl = useRef<HTMLVideoElement | null>(null)
 
-  const onChangePercent = (per: number) => {
-    setPercent(per)
-    setCurrentTime((per / 100) * duration)
+  const onChangePercent = useCallback(
+    (per: number) => {
+      setPercent(per)
+      setCurrentTime((per / 100) * duration)
+      console.log(duration)
 
-    if (!isAdjust.current && videoEl.current) {
-      videoEl.current.currentTime = (per / 100) * duration
-    }
-  }
+      if (!isAdjust.current && videoEl.current) {
+        videoEl.current.currentTime = (per / 100) * duration
+      }
+    },
+    [duration]
+  )
 
   const handleTogglePlay = () => {
     if (isPlaying) {
@@ -46,13 +50,14 @@ export const useVideo = () => {
   const listenTimeupdate = () => {
     if (videoEl.current && !isAdjust.current) {
       const { current } = videoEl
-      const { duration, currentTime, buffered } = current
-      const timeRanges = buffered
+      const { duration, currentTime } = current
+      const timeRanges = current.buffered
       if (timeRanges.length > 0) {
         setBufferProgress((timeRanges.end(timeRanges.length - 1) / duration) * 100)
       }
+      if (isNaN(duration) || isNaN(currentTime)) return
+      const percent = duration === 0 ? 0 : currentTime / duration
 
-      const percent = currentTime / duration
       setPercent(percent * 100)
       setCurrentTime(currentTime)
       setDuration(duration)
@@ -68,8 +73,6 @@ export const useVideo = () => {
   }
 
   const handleSetVolume = (volume: number) => {
-    console.log(volume)
-
     if (videoEl.current) {
       if (volume > 0) {
         videoEl.current.volume = volume / 100
@@ -81,19 +84,39 @@ export const useVideo = () => {
     }
   }
 
-  const onHandleCanPlay = () => {
+  const onHandleCanPlay = useCallback(() => {
     if (videoEl.current) {
+      setLoading(false)
       const { current } = videoEl
       const { duration, currentTime } = current
-      console.log('currentTime', currentTime)
+      console.log(duration)
       const percent = currentTime / duration
+
+      if (isPlaying) {
+        console.log(111)
+
+        current.play()
+      }
       setPercent(percent * 100)
       setCurrentTime(currentTime)
       setDuration(duration)
     }
-  }
+  }, [isPlaying])
+
   const listenVolumeupdate = (e: any) => {
     console.log(e)
+  }
+
+  const onPlay = () => {
+    setIsPlaying(true)
+  }
+
+  const onPause = () => {
+    setIsPlaying(false)
+  }
+
+  const onLoadstart = () => {
+    setLoading(true)
   }
 
   useEffect(() => {
@@ -101,32 +124,26 @@ export const useVideo = () => {
     if (videoEl.current) {
       videoEl.current.addEventListener('canplay', onHandleCanPlay)
       videoEl.current.addEventListener('volumechange', listenVolumeupdate)
-      // videoEl.current.addEventListener('canplaythrough', props.onCanPlayThrough)
-      // videoEl.current.addEventListener('ended', props.onEnded)
-      // videoEl.current.addEventListener('error', props.onError)
-      // videoEl.current.addEventListener('pause', props.onPause)
-      // videoEl.current.addEventListener('play', props.onPlay)
-      // videoEl.current.addEventListener('playing', props.onPlaying)
-      videoEl.current.addEventListener('seeked', () => {
-        console.log('seeked')
-      })
+      videoEl.current.addEventListener('play', onPlay)
+      videoEl.current.addEventListener('pause', onPause)
       videoEl.current.addEventListener('waiting', onWating)
       videoEl.current.addEventListener('playing', onPlaying)
-
-      videoEl.current.addEventListener('loadstart', () => {
-        console.log('loadstart')
-      })
-
+      videoEl.current.addEventListener('loadstart', onLoadstart)
       videoEl.current.addEventListener('timeupdate', listenTimeupdate)
     }
     return () => {
       if (videoEl.current) {
-        videoEl.current.addEventListener('timeupdate', listenTimeupdate)
-        // videoEl.current.removeEventListener('canplay', props.onCanPlay)
-        // videoEl.current.removeEventListener('canplaythrough', props.onCanPlayThrough)
+        videoEl.current.removeEventListener('canplay', onHandleCanPlay)
+        videoEl.current.removeEventListener('volumechange', listenVolumeupdate)
+        videoEl.current.removeEventListener('play', onPlay)
+        videoEl.current.removeEventListener('pause', onPause)
+        videoEl.current.removeEventListener('waiting', onWating)
+        videoEl.current.removeEventListener('playing', onPlaying)
+        videoEl.current.removeEventListener('loadstart', onLoadstart)
+        videoEl.current.removeEventListener('timeupdate', listenTimeupdate)
       }
     }
-  }, [])
+  }, [onHandleCanPlay, listenTimeupdate, onChangePercent])
   return [
     videoEl,
     {

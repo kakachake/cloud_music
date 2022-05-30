@@ -1,5 +1,5 @@
 import { ArrowsAltOutlined, LoadingOutlined, ShrinkOutlined } from '@ant-design/icons'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styled from 'styled-components'
 import { IconFont } from '../../assets/css/iconFont'
@@ -14,6 +14,13 @@ interface VideoPlayerProps {
   width?: number
   height?: number
   src?: string
+  urls?: {
+    url: string
+    type: string
+    id: string
+    br: string
+  }[]
+  defaultId?: string | number
   poster?: string
   controls?: boolean
   autoplay?: boolean
@@ -39,6 +46,8 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
     width = '100%',
     height = '100%',
     src,
+    urls,
+    defaultId,
     poster,
     controls = true,
     autoplay = false,
@@ -58,7 +67,14 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
     onStalled,
     onWaiting
   } = props
-
+  const [videoBrs, setVideoBrs] = useState(urls)
+  const [activeBr, setActiveBr] = useState<any>()
+  useEffect(() => {
+    if (urls) {
+      setVideoBrs(urls)
+      setActiveBr(urls?.find((item) => item.id == defaultId))
+    }
+  }, [urls])
   const [
     videoEl,
     {
@@ -77,11 +93,22 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
       volume
     }
   ] = useVideo()
+
   const videoPlayEl = useRef<HTMLElement | null>(null)
+
   useEffect(() => {
     videoPlayEl.current = document.getElementById('videoPlayer')
   }, [])
+
+  useLayoutEffect(() => {
+    if (videoEl.current) {
+      videoEl.current.src = activeBr.url
+      onChangePercent(percent)
+    }
+  }, [activeBr])
+
   const [isFull] = useFullScreen()
+
   const handleFullScreen = () => {
     if (isFullScreen()) {
       exitFullScreen()
@@ -103,7 +130,7 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
       height={height}
     >
       <div className={style.video}>
-        <video onClick={handleClick} onDoubleClick={fullScreen} id='videoPlay' src={src}></video>
+        <video onClick={handleClick} onDoubleClick={fullScreen} id='videoPlay'></video>
       </div>
       <div className={style.layerIcon}>
         <CSSTransition in={loading} unmountOnExit timeout={500} classNames='fade'>
@@ -146,7 +173,30 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
                 type={`${ismuted ? 'icon-sound-off' : 'icon-sound-on'}`}
               />
               <div className={style.volumeBar}>
-                <ProgressBar percent={volume} setPercent={(number) => handleSetVolume(number)} />
+                <ProgressBar
+                  percent={ismuted ? 0 : volume}
+                  setPercent={(number) => handleSetVolume(number)}
+                />
+              </div>
+            </div>
+            <div className={style.selectBr}>
+              <div className={style.selectBrTitle}>
+                <span>{activeBr?.type}</span>
+              </div>
+              <div className={style.selectList}>
+                {videoBrs?.map((item) => (
+                  <span
+                    key={item.id}
+                    className={`${style.selectItem} ${
+                      item.id == activeBr?.id ? style.activeBr : ''
+                    }`}
+                    onClick={() => {
+                      setActiveBr(item)
+                    }}
+                  >
+                    {item.type}
+                  </span>
+                ))}
               </div>
             </div>
             <div onClick={fullScreen} className={style.fullscreen}>

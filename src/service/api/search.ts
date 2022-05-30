@@ -1,4 +1,4 @@
-// 歌单相关api
+// 搜索相关api
 import axRequest from '../index'
 
 enum SEARCH_API {

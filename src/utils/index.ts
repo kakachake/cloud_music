@@ -163,3 +163,17 @@ export function splitN(str: string) {
   }
   return str.split('\n')
 }
+
+export function parseBr(br: number) {
+  switch (br) {
+    case 1080:
+      return '超清'
+    case 720:
+      return '高清'
+    case 480:
+      return '标清'
+    case 240:
+      return '流畅'
+  }
+  return ''
+}
