@@ -20,6 +20,7 @@ import Album from '../../pages/album/Album'
 import Artist from '../../pages/artist/Artist'
 import Search from '../../pages/search/Search'
 import Artists from '../../pages/home/artists/Artists'
+import VideoDetail from '../../pages/videoDetail/VideoDetail'
 const DefaultLayout: FunctionComponent = () => {
   const songDetailOpen = useSelector((state: RootState) => state.public.songDetailOpen)
   return (
@@ -41,8 +42,11 @@ const DefaultLayout: FunctionComponent = () => {
           <Route path='/album/:id' element={<Album />}></Route>
           <Route path='/search/:keyword' element={<Search />}></Route>
           <Route path='/artist/:id' element={<Artist />}></Route>
+          <Route path='/mv/:id' element={<div>mv</div>}></Route>
         </Route>
-        <Route path='/mv/:id' element={<div>mv</div>}></Route>
+        <Route path='/' element={<Content hiddenSideBar={true} />}>
+          <Route path='/videoDetail/:id' element={<VideoDetail />}></Route>
+        </Route>
       </Routes>
       {/* <Content /> */}
       <MusicBar />

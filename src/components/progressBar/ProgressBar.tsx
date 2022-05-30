@@ -1,5 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import style from './ProgressBar.module.css'
+import styled from 'styled-components'
+
 interface ProgressBarProps {
   percent: number
   underPercent?: number
@@ -7,6 +9,7 @@ interface ProgressBarProps {
   onChangeStart?: () => void
   onChangeing?: () => void
   onChangeEnd?: () => void
+  height?: number
 }
 
 const ProgressBar: FunctionComponent<ProgressBarProps> = ({
@@ -15,7 +18,8 @@ const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   onChangeStart,
   onChangeing,
   onChangeEnd,
-  underPercent
+  underPercent = 0,
+  height = 5
 }) => {
   const [random, setRandom] = useState<string>()
   useEffect(() => {
@@ -26,7 +30,7 @@ const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const left = e.clientX - e.currentTarget.getBoundingClientRect().left
     const percent = left / e.currentTarget.offsetWidth
-    setPercent(percent)
+    setPercent(percent * 100)
   }
 
   const setBarPercent = (
@@ -50,7 +54,7 @@ const ProgressBar: FunctionComponent<ProgressBarProps> = ({
       let percent = direction === 'row' ? curLength / length : (length - curLength) / length
 
       percent = percent > 1 ? 1 : percent < 0 ? 0 : percent
-      setPercent(percent)
+      setPercent(percent * 100)
     }
     window.addEventListener('mousemove', _mouseMoveHandler)
     window.addEventListener('mouseup', () => {
@@ -65,16 +69,25 @@ const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   }
   return (
     <div id={'progressBar' + random} onClick={handleClick} className={style.progress}>
-      <div className={style.progressBar}>
+      <ProgressBarStyle height={height} className={style.progressBar}>
         <div style={{ width: `${percent}%` }} className={style.curBar}>
           <div onMouseDown={handleMouseDownDot} className={style.dot}></div>
         </div>
-        {underPercent && (
+        {underPercent > 0 && (
           <div style={{ width: `${underPercent}%` }} className={style.bufferBar}></div>
         )}
-      </div>
+      </ProgressBarStyle>
     </div>
   )
 }
 
 export default ProgressBar
+
+const ProgressWrap = styled.div<{ height: number }>`
+  &:hover {
+  }
+`
+
+const ProgressBarStyle = styled.div<{ height: number }>`
+  height: ${(props) => props.height}px;
+`

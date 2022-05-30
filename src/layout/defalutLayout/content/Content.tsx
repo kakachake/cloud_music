@@ -11,8 +11,12 @@ import SideBarGroup from '../../../components/sideBar/sideBarGroup/SideBarGroup'
 import { FC } from 'react'
 import { IconFont } from '../../../assets/css/iconFont'
 import { HeartOutlined } from '@ant-design/icons'
+interface ContentProps {
+  hiddenSideBar?: boolean
+}
 
-const Content: FC = (props) => {
+const Content: FC<ContentProps> = (props) => {
+  const { hiddenSideBar } = props
   const curSideOpen = useSelector((state: any) => state.public.curSideOpen)
   const [sideBarItems, setSideBarItems] = useState<LinkItemTypes[]>([])
   const userPlayList = useSelector((state: any) => state.user.userPlayList)
@@ -51,28 +55,30 @@ const Content: FC = (props) => {
 
   return (
     <div className={style.content}>
-      <div className={style.siderBar}>
-        <SideBar route>
-          {sideBarItems.map((item, index) => {
-            return item.children ? (
-              <SideBarGroup title={item.name} key={index}>
-                {item?.children.map((item, index) => {
-                  return (
-                    <SideBarItem
-                      icon={item.icon || null}
-                      key={item.href}
-                      name={item.name}
-                      href={item.href}
-                    />
-                  )
-                })}
-              </SideBarGroup>
-            ) : (
-              <SideBarItem key={item.href} name={item.name} href={item.href} id={item.id} />
-            )
-          })}
-        </SideBar>
-      </div>
+      {hiddenSideBar ? null : (
+        <div className={style.siderBar}>
+          <SideBar route>
+            {sideBarItems.map((item, index) => {
+              return item.children ? (
+                <SideBarGroup title={item.name} key={index}>
+                  {item?.children.map((item, index) => {
+                    return (
+                      <SideBarItem
+                        icon={item.icon || null}
+                        key={item.href}
+                        name={item.name}
+                        href={item.href}
+                      />
+                    )
+                  })}
+                </SideBarGroup>
+              ) : (
+                <SideBarItem key={item.href} name={item.name} href={item.href} id={item.id} />
+              )
+            })}
+          </SideBar>
+        </div>
+      )}
 
       <div id='mainContent' className={style.mainPage}>
         <Outlet />

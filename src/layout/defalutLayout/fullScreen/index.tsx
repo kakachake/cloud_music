@@ -16,7 +16,7 @@ function createFullScreen(el: any) {
       if (node.requestFullscreen) {
         node.requestFullscreen()
       }
-      document.onfullscreenchange = function (event) {
+      document.onfullscreenchange = function () {
         if (!document.fullscreenElement) {
           root!.unmount()
         }

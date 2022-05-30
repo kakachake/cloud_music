@@ -46,9 +46,8 @@ class MusicControl extends React.Component<PropsType, StateType> {
     audioInstance.togglePlay()
   }
   setPercent = (percent: number) => {
-    console.log(percent)
-    audioInstance.setCurrentTime(percent * this.props.duration)
-    this.props.setProgress(percent * 100)
+    audioInstance.setCurrentTime((percent / 100) * this.props.duration)
+    this.props.setProgress(percent)
   }
   render() {
     return (
@@ -69,13 +68,15 @@ class MusicControl extends React.Component<PropsType, StateType> {
 
         <div className={style.bottom}>
           <div className={style.curTime}>{parseSecondToTime(this.props.currentTime)}</div>
-          <ProgressBar
-            setPercent={this.setPercent}
-            percent={this.props.progress}
-            underPercent={this.props.bufferProgress}
-            onChangeStart={() => this.props.setAdjust(true)}
-            onChangeEnd={() => this.props.setAdjust(false)}
-          />
+          <div style={{ margin: '0 15px', width: '300px' }}>
+            <ProgressBar
+              setPercent={this.setPercent}
+              percent={this.props.progress}
+              underPercent={this.props.bufferProgress}
+              onChangeStart={() => this.props.setAdjust(true)}
+              onChangeEnd={() => this.props.setAdjust(false)}
+            />
+          </div>
           <div className={style.totalTime}>{parseSecondToTime(this.props.duration)}</div>
         </div>
       </div>
