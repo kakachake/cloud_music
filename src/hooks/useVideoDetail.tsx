@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 import { getMVVideoDetail, getMVVideoUrl } from '../service/api/video'
+import { MVVideoType } from '../type/mvVideo'
 import { parseBr } from '../utils'
 
 export const useVideoDetail = (id = '') => {
   if (id == '') return [null, null]
-  const [videoDetail, setVideoDetail] = useState<any>()
+  const [videoDetail, setVideoDetail] = useState<MVVideoType>()
   const [videoUrl, setVideoUrl] = useState<
     {
       url: string
       type: string
+      id: string
+      br: string
     }[]
   >([])
   useEffect(() => {
@@ -33,5 +36,8 @@ export const useVideoDetail = (id = '') => {
       }
     })
   }, [])
-  return [videoDetail, videoUrl]
+  return [videoDetail, videoUrl] as [
+    MVVideoType,
+    { url: string; type: string; id: string; br: string }[]
+  ]
 }

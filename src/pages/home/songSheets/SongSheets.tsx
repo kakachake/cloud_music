@@ -24,7 +24,7 @@ const SongSheets: FC<SongSheetsProps> = () => {
       {highquality && (
         <div onClick={handleToHighQualityPage} className={style.headerWrap}>
           <div className={style.leftImg}>
-            <img src={highquality?.coverImgUrl} alt='' />
+            <img src={highquality?.coverImgUrl + '?param=300y300'} alt='' />
           </div>
           <div className={style.right}>
             <div className={style.tag}>精品歌单</div>

@@ -6,6 +6,7 @@ import style from './SongSheetItem.module.css'
 import { useNavigate } from 'react-router-dom'
 import playListImg from '../../../assets/img/playListImg.png'
 import { ToplistType } from '../../../type/topListItem'
+import LazyImg from '../../../components/lazyImg/lazyImg'
 interface SongSheetItemProps {
   songSheetInfo: Partial<SongSheetsType & ToplistType>
 }
@@ -18,7 +19,11 @@ const SongSheetItem: FunctionComponent<SongSheetItemProps> = ({ songSheetInfo })
   return (
     <div onClick={handleToSongSheet} className={style.songSheetItem}>
       <div className={style.contentWrap}>
-        <img src={(songSheetInfo.picUrl || songSheetInfo.coverImgUrl) ?? playListImg} alt='' />
+        <LazyImg
+          src={
+            ((songSheetInfo.picUrl || songSheetInfo.coverImgUrl) ?? playListImg) + '?param=300y300'
+          }
+        />
         <div className={style.content}>
           <div className={style.playCount}>
             <PlayCircleOutlined className={style.playIcon} />

@@ -145,7 +145,7 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
         )}
         {activeIndex === 'comment' && (
           <div>
-            <CommentTabPage songId={id!} type='PlayList' />
+            <CommentTabPage id={id!} type='PlayList' />
           </div>
         )}
         {activeIndex === 'favoriter' && <div>收藏者</div>}

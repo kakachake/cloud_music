@@ -96,9 +96,23 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
 
   const videoPlayEl = useRef<HTMLElement | null>(null)
 
+  const keyDown = (e: any) => {
+    if (e.keyCode === 32) {
+      e.preventDefault()
+      console.log(211)
+      handleClick()
+    }
+  }
+
   useEffect(() => {
     videoPlayEl.current = document.getElementById('videoPlayer')
-  }, [])
+    if (videoPlayEl.current) {
+      document.addEventListener('keydown', keyDown)
+    }
+    return () => {
+      document.removeEventListener('keydown', keyDown)
+    }
+  }, [handleTogglePlay])
 
   useLayoutEffect(() => {
     if (videoEl.current) {

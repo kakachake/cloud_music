@@ -126,7 +126,7 @@ const PersonalFm: FC<PersonalFmProps> = () => {
         </div>
       </div>
       <div id='commentArea'>
-        <CommentTabPage onPageChange={changePage} songId={song?.id} type='Song' />
+        <CommentTabPage onPageChange={changePage} id={song?.id} type='Song' />
       </div>
     </div>
   )

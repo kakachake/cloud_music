@@ -30,8 +30,7 @@
   width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
-
-  opacity: 1;
+  opacity: 0;
   transition: all 0.5s;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.971) 100%);
 }
@@ -136,6 +135,7 @@
   left: 0;
   flex-direction: column;
   right: 0;
+  z-index: 10;
 }
 
 .selectItem {

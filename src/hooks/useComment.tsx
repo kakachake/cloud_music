@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { getAlbumComment } from '../service/api/album'
 import { getPlaylistComment, getSongComment } from '../service/api/music'
+import { getMVVideoComment } from '../service/api/video'
 import { CommentType } from '../type/type'
 
-export const useComment = (id: string | number, type: 'Song' | 'PlayList' | 'Album') => {
+export const useComment = (id: string | number, type: 'Song' | 'PlayList' | 'Album' | 'MV') => {
   const [comments, setComments] = useState<CommentType[]>([])
   const [hotComments, setHotComments] = useState<CommentType[]>([])
   const [curPage, setCurPage] = useState<number>(1)
@@ -21,6 +22,9 @@ export const useComment = (id: string | number, type: 'Song' | 'PlayList' | 'Alb
           break
         case 'Album':
           res = await getAlbumComment(id, curPage)
+          break
+        case 'MV':
+          res = await getMVVideoComment(id, curPage)
           break
       }
       if (res.hotComments) {

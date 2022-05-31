@@ -1,12 +1,12 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { FunctionComponent } from 'react'
 import style from './Swiper.module.css'
 interface SwiperProps {
   children: React.ReactElement<any, any>[] | React.ReactElement<any, any>
 }
 
-const Swiper: FunctionComponent<SwiperProps> = (props) => {
+const Swiper: FC<SwiperProps> = (props) => {
   const { children: child } = props
   const [curIndex, setCurIndex] = useState(5)
   const timerRef = useRef<NodeJS.Timer | null>(null)
