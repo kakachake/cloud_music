@@ -17,6 +17,7 @@ import { useListControl } from '../../controller/listController'
 import Like from '../../components/like/Like'
 import { useNavigate } from 'react-router-dom'
 import ArNameItem from '../component/arNameItem/ArNameItem'
+import { comment_type } from '../../service/api/comment'
 export interface PersonalFmItem {
   album: AlbumType
   name: string

@@ -4,12 +4,16 @@ import axRequest from '../index'
 enum VIDEO_API {
   //获取mv视频详情
   GET_MV_VIDEO_DETAIL = '/mv/detail',
+  //获取普通视频详情
+  GET_VIDEO_DETAIL = '/video/detail',
   //获取mv视频地址
   GET_MV_VIDEO_URL = '/mv/url',
   //获取普通视频播放地址
   GET_VIDEO_URL = '/video/url',
   //获取MV评论
   GET_MV_VIDEO_COMMENT = '/comment/mv',
+  //获取视频评论
+  GET_VIDEO_COMMENT = '/comment/video',
   //获取最新MV
   GET_MV_VIDEO_NEW = '/mv/first',
   //获取网易出品MV
@@ -45,8 +49,8 @@ export function getMVVideoUrl(id: string, r: number) {
   })
 }
 
-//获取mv视频地址
-export function getVideoUrl(id: string, r: number) {
+//获取普通视频地址
+export function getVideoUrl(id: string, r?: number) {
   return axRequest.get({
     url: VIDEO_API.GET_VIDEO_URL,
     params: {
@@ -59,6 +63,17 @@ export function getVideoUrl(id: string, r: number) {
 export function getMVVideoComment(id: number | string, page: number) {
   return axRequest.get({
     url: VIDEO_API.GET_MV_VIDEO_COMMENT,
+    params: {
+      id,
+      offset: (page - 1) * 20
+    }
+  })
+}
+
+//获取视频评论
+export function getVideoComment(id: number | string, page: number) {
+  return axRequest.get({
+    url: VIDEO_API.GET_VIDEO_COMMENT,
     params: {
       id,
       offset: (page - 1) * 20
@@ -121,6 +136,16 @@ export function getVideoAllList(page: number, limit = 30) {
     params: {
       offset: (page - 1) * limit,
       limit
+    }
+  })
+}
+
+//获取普通视频详情
+export function getVideoDetail(id: string) {
+  return axRequest.get({
+    url: VIDEO_API.GET_VIDEO_DETAIL,
+    params: {
+      id
     }
   })
 }

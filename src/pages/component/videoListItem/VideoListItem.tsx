@@ -26,7 +26,7 @@ const VideoListItem: FC<VideoListItemProps> = (props) => {
   const navigate = useNavigate()
   const previewVideo = useRef<HTMLVideoElement | null>(null)
   const handleToDetail = () => {
-    navigate(`/videoDetail/${id}`)
+    type === 'mv' ? navigate(`/videoDetail/mv/${id}`) : navigate(`/videoDetail/v/${id}`)
   }
   const handlePreview = (preview: boolean) => {
     setPreview(preview)

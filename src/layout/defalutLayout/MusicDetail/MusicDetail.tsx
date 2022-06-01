@@ -15,6 +15,7 @@ import Pagination from '../../../components/pagination/Pagination'
 import CommentTabPage from '../../../pages/component/commentTabPage/CommentTabPage'
 import fullScreen from '../fullScreen/index'
 import ArNameItem from '../../../pages/component/arNameItem/ArNameItem'
+import { comment_type } from '../../../service/api/comment'
 interface MusicDetailProps {}
 
 const MusicDetail: FunctionComponent<MusicDetailProps> = () => {

@@ -20,6 +20,7 @@ import Like from '../../components/like/Like'
 import { subPlayList } from '../../service/api/reqLoginApi/songSheets'
 import Toast from '../../components/Toast'
 import { SongSheetType } from '../../type/songSheet'
+import { comment_type } from '../../service/api/comment'
 
 interface SongSheetProps {}
 

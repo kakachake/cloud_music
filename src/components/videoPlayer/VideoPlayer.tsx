@@ -1,4 +1,5 @@
 import { ArrowsAltOutlined, LoadingOutlined, ShrinkOutlined } from '@ant-design/icons'
+import { log } from 'console'
 import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styled from 'styled-components'
@@ -72,7 +73,7 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
   useEffect(() => {
     if (urls) {
       setVideoBrs(urls)
-      setActiveBr(urls?.find((item) => item.id == defaultId))
+      setActiveBr(urls?.find((item) => item.id == defaultId) || urls?.[0])
     }
   }, [urls])
   const [
@@ -144,7 +145,12 @@ const VideoPlayer: FC<VideoPlayerProps> = (props) => {
       height={height}
     >
       <div className={style.video}>
-        <video onClick={handleClick} onDoubleClick={fullScreen} id='videoPlay'></video>
+        <video
+          autoPlay={autoplay}
+          onClick={handleClick}
+          onDoubleClick={fullScreen}
+          id='videoPlay'
+        ></video>
       </div>
       <div className={style.layerIcon}>
         <CSSTransition in={loading} unmountOnExit timeout={500} classNames='fade'>

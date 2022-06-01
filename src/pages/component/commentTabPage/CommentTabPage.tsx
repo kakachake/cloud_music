@@ -5,9 +5,10 @@ import { useComment } from '../../../hooks/useComment'
 import Comment from '../../../components/comment/Comment'
 import style from './Comment.module.css'
 import Pagination from '../../../components/pagination/Pagination'
+import { comment_type } from '../../../service/api/comment'
 interface CommentTabPageProps {
-  id: string | number
-  type: 'Song' | 'PlayList' | 'Album' | 'MV'
+  id: string
+  type: 'Song' | 'PlayList' | 'Album' | 'MV' | 'Video'
   onPageChange?: (page: number) => void
 }
 

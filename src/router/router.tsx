@@ -4,6 +4,8 @@ import Loading from '../components/loading/Loading'
 import MVList from '../pages/video/mvList/MVList'
 import Video from '../pages/video/Video'
 import VideoList from '../pages/video/videoList/VideoList'
+import MVDetail from '../pages/videoDetail/mv/MVDetail'
+import VideoDetail from '../pages/videoDetail/v/VideoDetail'
 
 const Content = lazy(() => import('../layout/defalutLayout/content/Content'))
 const Home = lazy(() => import('../pages/home/Home'))
@@ -18,7 +20,7 @@ const Album = lazy(() => import('../pages/album/Album'))
 const Artist = lazy(() => import('../pages/artist/Artist'))
 const Search = lazy(() => import('../pages/search/Search'))
 const Artists = lazy(() => import('../pages/home/artists/Artists'))
-const VideoDetail = lazy(() => import('../pages/videoDetail/VideoDetail'))
+// const VideoDetail = lazy(() => import('../pages/videoDetail/v/VideoDetail'))
 
 export const GetRoutes = () => {
   const routes = useRoutes([
@@ -173,10 +175,18 @@ export const GetRoutes = () => {
       ),
       children: [
         {
-          path: '/videoDetail/:id',
+          path: '/videoDetail/v/:id',
           element: (
             <Suspense fallback={<Loading />}>
               <VideoDetail />
+            </Suspense>
+          )
+        },
+        {
+          path: '/videoDetail/mv/:id',
+          element: (
+            <Suspense fallback={<Loading />}>
+              <MVDetail />
             </Suspense>
           )
         }

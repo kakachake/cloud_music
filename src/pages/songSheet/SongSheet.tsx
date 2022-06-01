@@ -21,6 +21,7 @@ import { subPlayList } from '../../service/api/reqLoginApi/songSheets'
 import Toast from '../../components/Toast'
 import ArNameItem from '../component/arNameItem/ArNameItem'
 import Loading from '../../components/loading/Loading'
+import { comment_type } from '../../service/api/comment'
 
 interface SongSheetProps {}
 
