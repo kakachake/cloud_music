@@ -2,8 +2,11 @@
   height: 30px;
   border: 1px solid #dddddd;
   display: inline-block;
-  flex-direction: row;
   line-height: 30px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: row;
   padding: 0px 10px;
   cursor: pointer;
   font-size: 0;
@@ -11,15 +14,15 @@
   user-select: none;
 }
 .headerButton:hover {
-  background-color: #f2f2f2;
 }
 .headerButton > * {
   display: inline-block;
-  margin-right: 5px;
-  vertical-align: middle;
 }
 .headerButton .icon {
   font-size: 16px;
+}
+.headerButton .icon + .content {
+  margin-left: 5px;
 }
 .headerButton .content {
   font-size: 14px;

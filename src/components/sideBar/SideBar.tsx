@@ -15,9 +15,11 @@ const SideBar: FC<SideBarProps> = (props) => {
   if (!Array.isArray(children)) {
     children = [children]
   }
+
   children = children?.map((o, i) => {
     return React.cloneElement(o, {
-      activeId
+      activeId,
+      route
     })
   })
   return <div className={style.sideBar}>{children}</div>

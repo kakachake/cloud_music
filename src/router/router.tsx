@@ -1,5 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
+import Loading from '../components/loading/Loading'
+import MVList from '../pages/video/mvList/MVList'
+import Video from '../pages/video/Video'
+import VideoList from '../pages/video/videoList/VideoList'
 
 const Content = lazy(() => import('../layout/defalutLayout/content/Content'))
 const Home = lazy(() => import('../pages/home/Home'))
@@ -21,7 +25,7 @@ export const GetRoutes = () => {
     {
       path: '/',
       element: (
-        <Suspense fallback='加载中。。。'>
+        <Suspense fallback={<Loading />}>
           <Content />
         </Suspense>
       ),
@@ -29,64 +33,90 @@ export const GetRoutes = () => {
         {
           path: '/',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <Home />
             </Suspense>
           ),
           children: [
             {
-              path: '/',
+              path: '',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <Suggest />
                 </Suspense>
               )
             },
             {
-              path: '/songSheets',
+              path: 'songSheets',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <SongSheets />
                 </Suspense>
               )
             },
             {
-              path: '/songSheets/default/',
+              path: 'songSheets/default/',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <SongSheets />
                 </Suspense>
               )
             },
             {
-              path: '/songSheets/default/:type',
+              path: 'songSheets/default/:type',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <SongSheets />
                 </Suspense>
               )
             },
             {
-              path: '/songSheets/highquality/:type',
+              path: 'songSheets/highquality/:type',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <HighQuality />
                 </Suspense>
               )
             },
             {
-              path: '/rank',
+              path: 'rank',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <Rank />
                 </Suspense>
               )
             },
             {
-              path: '/artists',
+              path: 'artists',
               element: (
-                <Suspense fallback='加载中。。。'>
+                <Suspense fallback={<Loading />}>
                   <Artists />
+                </Suspense>
+              )
+            }
+          ]
+        },
+        {
+          path: '/video',
+          element: (
+            <Suspense fallback={<Loading />}>
+              <Video />
+            </Suspense>
+          ),
+          children: [
+            {
+              path: 'v',
+              element: (
+                <Suspense fallback={<Loading />}>
+                  <VideoList />
+                </Suspense>
+              )
+            },
+            {
+              path: 'mv',
+              element: (
+                <Suspense fallback={<Loading />}>
+                  <MVList />
                 </Suspense>
               )
             }
@@ -95,7 +125,7 @@ export const GetRoutes = () => {
         {
           path: '/personalFm',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <PersonalFm />
             </Suspense>
           )
@@ -103,7 +133,7 @@ export const GetRoutes = () => {
         {
           path: '/songSheet/:id',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <SongSheet />
             </Suspense>
           )
@@ -111,15 +141,15 @@ export const GetRoutes = () => {
         {
           path: '/album/:id',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <Album />
             </Suspense>
           )
         },
         {
-          path: '/artist:/id',
+          path: '/artist/:id',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <Artist />
             </Suspense>
           )
@@ -127,7 +157,7 @@ export const GetRoutes = () => {
         {
           path: '/search/:keyword',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <Search />
             </Suspense>
           )
@@ -137,15 +167,15 @@ export const GetRoutes = () => {
     {
       path: '/',
       element: (
-        <Suspense fallback='加载中。。。'>
+        <Suspense fallback={<Loading />}>
           <Content hiddenSideBar={true} />
         </Suspense>
       ),
       children: [
         {
-          path: '/videoDetail',
+          path: '/videoDetail/:id',
           element: (
-            <Suspense fallback='加载中。。。'>
+            <Suspense fallback={<Loading />}>
               <VideoDetail />
             </Suspense>
           )

@@ -8,4 +8,5 @@ export interface SideBarItemType {
   activeId?: number | string
   active?: boolean
   icon?: ReactNode
+  regPath?: RegExp
 }

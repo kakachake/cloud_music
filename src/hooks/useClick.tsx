@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 
+//实现单击双击
 export const useClick = (
   {
     clickFn,
@@ -8,14 +9,14 @@ export const useClick = (
     clickFn: (...args: any[]) => void
     doubleFn: (...args: any[]) => void
   },
-  delay: number
+  delay = 200
 ) => {
   const timer = useRef<any>()
   function _click(this: any, ...args: any[]) {
     clearTimeout(timer.current)
     timer.current = setTimeout(() => {
       clickFn.call(this, ...args)
-    }, 200)
+    }, delay)
   }
   function _doubleClick(this: any, ...args: any[]) {
     clearTimeout(timer.current)

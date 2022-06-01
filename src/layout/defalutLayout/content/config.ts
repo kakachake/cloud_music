@@ -6,6 +6,7 @@ export interface LinkItemTypes {
   id?: number
   icon?: ReactNode
   children?: LinkItemTypes[]
+  regPath?: RegExp
 }
 
 export const linkItems: LinkItemTypes[] = [
@@ -20,10 +21,11 @@ export const linkItems: LinkItemTypes[] = [
       //   name: '播客',
       //   href: '/play'
       // },
-      // {
-      //   name: '视频',
-      //   href: '/video'
-      // },
+      {
+        name: '视频',
+        href: '/video/mv',
+        regPath: /^\/video/
+      },
       {
         name: '私人FM',
         href: '/personalfm'

@@ -68,6 +68,7 @@ const Content: FC<ContentProps> = (props) => {
                         key={item.href}
                         name={item.name}
                         href={item.href}
+                        regPath={item.regPath}
                       />
                     )
                   })}

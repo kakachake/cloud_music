@@ -87,3 +87,14 @@
   z-index: 9999;
   background-color: rgb(255, 255, 255);
 }
+
+.combineBtn {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 10px 0;
+}

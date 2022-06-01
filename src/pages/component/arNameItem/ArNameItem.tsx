@@ -6,8 +6,9 @@ import store from '../../../redux/store'
 import style from './ArNameItem.module.css'
 interface ArNameItemProps {
   artists: any[]
+  className?: string
 }
-const ArNameItem: FC<ArNameItemProps> = ({ artists }) => {
+const ArNameItem: FC<ArNameItemProps> = ({ artists, className }) => {
   const navigate = useNavigate()
   const handleToAr = (id: string) => {
     console.log(id)
@@ -20,10 +21,10 @@ const ArNameItem: FC<ArNameItemProps> = ({ artists }) => {
     navigate('/artist/' + id)
   }
   return (
-    <div className={style.arNameWrap}>
+    <div className={`${style.arNameWrap} ${className}`}>
       {artists?.map((item: any, idx: number) => (
         <div style={{ display: 'inline-block' }} key={item.id}>
-          <span style={{ margin: '0 5px' }}>{idx > 0 ? '/' : ''}</span>
+          {idx > 0 ? <span style={{ margin: '0 5px' }}>/</span> : ''}
           <span className={style.nameItem} onClick={() => handleToAr(item.id)}>
             {item.name}
           </span>

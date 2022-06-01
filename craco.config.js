@@ -1,6 +1,17 @@
 const CracoLessPlugin = require('craco-less')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
+  webpack: {
+    plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled', //可选值有server static disabled
+        generateStatsFile: false,
+        statsOptions: { source: false },
+        openAnalyzer: false
+      })
+    ]
+  },
   plugins: [
     {
       plugin: CracoLessPlugin,

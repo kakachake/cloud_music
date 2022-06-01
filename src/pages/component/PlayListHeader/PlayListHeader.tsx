@@ -66,7 +66,7 @@ const PlayListHeader: FunctionComponent<PlayListHeaderProps> = ({
                 </Link>
               )}
               <div className={style.handle}>
-                <div>
+                <div className={'combineBtn'}>
                   <HeaderButton
                     onClick={handlePlayList}
                     bg='#ec4141'

@@ -21,7 +21,7 @@ const Artists: FC<ArtistsProps> = () => {
       type: typeActive,
       area: areaActive,
       initial: initialActive,
-      curPage
+      curPage: 1
     }).then((res) => {
       setArtists(res.artists)
     })

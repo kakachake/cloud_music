@@ -45,14 +45,15 @@
     "commit": "npx cz",
     "electron-start": "electron .",
     "prepare": "husky install",
-    "deploy": "npm run build && npm run dockerPublish",
+    "deploy": "cross-env use_analyzer=false npm run build && npm run dockerPublish",
     "dockerPublish": "docker build -t cloud_music . && docker tag cloud_music registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest && docker push registry.cn-hangzhou.aliyuncs.com/music_cloud_kaka/music_cloud:latest",
     "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "pack": "electron-builder",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "analyz": "cross-env use_analyzer=true npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -107,7 +108,8 @@
     "prettier-eslint": "^14.0.2",
     "redux-devtools": "^3.7.0",
     "typescript-plugin-css-modules": "^3.4.0",
-    "wait-on": "^6.0.1"
+    "wait-on": "^6.0.1",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "config": {
     "commitizen": {

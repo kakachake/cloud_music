@@ -3,7 +3,7 @@ import style from './HeaderButton.module.css'
 import styled from 'styled-components'
 
 interface HeaderButtonProps {
-  icon: ReactElement
+  icon?: ReactElement
   onClick?: () => void
   content?: string
   direction?: 'left' | 'right' | 'both' | 'none'
@@ -11,6 +11,7 @@ interface HeaderButtonProps {
   bgHover?: string
   border?: 'left' | 'right' | 'both' | 'none'
   disabled?: boolean
+  children?: ReactElement | string
 }
 
 const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
@@ -21,7 +22,8 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   bgHover,
   border,
   onClick,
-  disabled
+  disabled,
+  children
 }) => {
   return (
     <HeaderButtonWrap
@@ -53,8 +55,8 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
       }}
       className={`${style.headerButton} ${style['border-' + direction]}`}
     >
-      <div className={style.icon}>{icon}</div>
-
+      {icon && <div className={style.icon}>{icon}</div>}
+      {children && <div className={style.content}>{children}</div>}
       {content && <div className={style.content}>{content}</div>}
     </HeaderButtonWrap>
   )

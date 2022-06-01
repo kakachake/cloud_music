@@ -20,12 +20,13 @@ import Like from '../../components/like/Like'
 import { subPlayList } from '../../service/api/reqLoginApi/songSheets'
 import Toast from '../../components/Toast'
 import ArNameItem from '../component/arNameItem/ArNameItem'
+import Loading from '../../components/loading/Loading'
 
 interface SongSheetProps {}
 
 const SongSheet: FunctionComponent<SongSheetProps> = () => {
   const { id } = useParams()
-  const { songSheetInfo, tabList, handleGetPlaylistDetail } = useSongSheet(id!)
+  const { songSheetInfo, tabList, handleGetPlaylistDetail, loading } = useSongSheet(id!)
 
   const [activeIndex, setActiveIndex] = useState<string>('playList')
   const handleChangeTab = (id: string) => setActiveIndex(id)
@@ -116,6 +117,9 @@ const SongSheet: FunctionComponent<SongSheetProps> = () => {
       Toast.success(songSheetInfo.subscribed ? '取消收藏成功' : '收藏成功')
       handleGetPlaylistDetail()
     })
+  }
+  if (loading) {
+    return <Loading />
   }
   return (
     <div className={style.songSheet}>

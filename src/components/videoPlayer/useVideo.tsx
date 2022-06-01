@@ -130,6 +130,7 @@ export const useVideo = () => {
       videoEl.current.addEventListener('playing', onPlaying)
       videoEl.current.addEventListener('loadstart', onLoadstart)
       videoEl.current.addEventListener('timeupdate', listenTimeupdate)
+      videoEl.current.volume = volume / 100
     }
     return () => {
       if (videoEl.current) {

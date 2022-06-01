@@ -11,6 +11,7 @@ import top50 from '../../assets/img/top50.png'
 import { useArtistAlbums } from '../../hooks/useArtistAlbums'
 import { useArtistDetail } from '../../hooks/useArtistDetail'
 import { n2br, splitN } from '../../utils'
+import Loading from '../../components/loading/Loading'
 
 interface ArtistProps {}
 
@@ -46,7 +47,7 @@ const Artist: FC<ArtistProps> = () => {
   return (
     <div className={style.artistWrap}>
       {loading ? (
-        'loading'
+        <Loading />
       ) : (
         <div>
           <ArtistHeader artist={artist} />
@@ -67,7 +68,9 @@ const Artist: FC<ArtistProps> = () => {
                 }}
               >
                 <div>
-                  {hotSongs?.length && <AlbumItem title='热门50首' songs={hotSongs} pic={top50} />}
+                  {hotSongs?.length > 0 && (
+                    <AlbumItem title='热门50首' songs={hotSongs} pic={top50} />
+                  )}
                 </div>
                 {albums && albums.length > 0 && (
                   <div>

@@ -48,8 +48,6 @@ React Netease Music——一个基于 React、TypeScript 的高仿网易云播�
 - [ ] 私信/@我/评论等通知功能
 - [ ] 主题换肤
 
-注意：部分歌曲可能由于版权问题无法播放喔。
-
 ## 技术栈
 
 - React
