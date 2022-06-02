@@ -93,7 +93,7 @@ const QrCodeLogin: FunctionComponent<QrCodeLoginProps> = ({ handleClose }) => {
   }, [])
   return (
     <div className={style.qrCodeLogin}>
-      <h2>扫码登录</h2>
+      <h2>扫码登录以体验所有功能</h2>
       <div
         onClick={getQrImg}
         className={`${style.qrCodeImg} ${qrState !== QRCodeStatus.FAIL ? style.qrCodeActive : ''}`}

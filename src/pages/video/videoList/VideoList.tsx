@@ -15,7 +15,7 @@ interface VideoListProps {}
 const VideoList: FC<VideoListProps> = () => {
   const [groupList, categoryList, loading] = useVideoGroupList()
   const [showSelectPanel, setShowSelectPanel] = useState(false)
-  const [typeActive, setTypeActive] = useState(-1)
+  const [typeActive, setTypeActive] = useState(58100)
   const [curPage, setCurPage] = useState(1)
   const [videoList, setVideoList] = useState<VideoType[]>([])
   const activeName = useMemo(() => {
@@ -38,6 +38,9 @@ const VideoList: FC<VideoListProps> = () => {
     return typeActive !== -1
       ? async (curPage: number) => {
           await getVideoCategoryVideoList(typeActive, curPage).then((res) => {
+            if (res.code !== 200) {
+              return
+            }
             curPage === 1
               ? setVideoList(res.datas.map((item: any) => item.data))
               : setVideoList((videoList) => [
@@ -48,6 +51,9 @@ const VideoList: FC<VideoListProps> = () => {
         }
       : async (curPage: number) => {
           await getVideoAllList(curPage).then((res) => {
+            if (res.code !== 200) {
+              return
+            }
             curPage === 1
               ? setVideoList(res.datas.map((item: any) => item.data))
               : setVideoList((videoList) => [

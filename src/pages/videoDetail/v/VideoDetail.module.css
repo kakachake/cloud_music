@@ -47,6 +47,7 @@
   transition: height 0.3s;
 }
 .descMore {
+  max-height: max-content;
   height: auto;
 }
 

@@ -1,12 +1,14 @@
 import { lazy, Suspense } from 'react'
-import { useRoutes } from 'react-router-dom'
+import { Navigate, Route, useLocation, useRoutes } from 'react-router-dom'
 import Loading from '../components/loading/Loading'
 import MVList from '../pages/video/mvList/MVList'
 import Video from '../pages/video/Video'
 import VideoList from '../pages/video/videoList/VideoList'
 import MVDetail from '../pages/videoDetail/mv/MVDetail'
 import VideoDetail from '../pages/videoDetail/v/VideoDetail'
-
+import store, { RootState } from '../redux/store'
+import createLogin from '../components/login'
+import { useSelector } from 'react-redux'
 const Content = lazy(() => import('../layout/defalutLayout/content/Content'))
 const Home = lazy(() => import('../pages/home/Home'))
 const MusicDetail = lazy(() => import('../layout/defalutLayout/MusicDetail/MusicDetail'))
@@ -22,14 +24,31 @@ const Search = lazy(() => import('../pages/search/Search'))
 const Artists = lazy(() => import('../pages/home/artists/Artists'))
 // const VideoDetail = lazy(() => import('../pages/videoDetail/v/VideoDetail'))
 
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const userInfo = useSelector((state: RootState) => state.user.userInfo)
+  const location = useLocation()
+
+  if (!userInfo?.userId) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    createLogin.create()
+  }
+
+  return children
+}
+
 export const GetRoutes = () => {
   const routes = useRoutes([
     {
       path: '/',
       element: (
-        <Suspense fallback={<Loading />}>
-          <Content />
-        </Suspense>
+        <RequireAuth>
+          <Suspense fallback={<Loading />}>
+            <Content />
+          </Suspense>
+        </RequireAuth>
       ),
       children: [
         {
