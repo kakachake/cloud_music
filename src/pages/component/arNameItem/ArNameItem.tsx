@@ -23,7 +23,7 @@ const ArNameItem: FC<ArNameItemProps> = ({ artists, className }) => {
   return (
     <div className={`${style.arNameWrap} ${className}`}>
       {artists?.map((item: any, idx: number) => (
-        <div style={{ display: 'inline-block' }} key={item.id}>
+        <div style={{ display: 'inline-block' }} key={item.id + idx}>
           {idx > 0 ? <span style={{ margin: '0 5px' }}>/</span> : ''}
           <span className={style.nameItem} onClick={() => handleToAr(item.id)}>
             {item.name}

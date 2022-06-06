@@ -14,13 +14,11 @@ const DefaultLayout: FunctionComponent = () => {
     <div>
       <Header />
       <GetRoutes />
-
       {/* <Content /> */}
       <MusicBar />
       <CSSTransition in={songDetailOpen} timeout={300} classNames='musicDetail' unmountOnExit>
         <MusicDetail />
       </CSSTransition>
-      {/* <HandTrack /> */}
     </div>
   )
 }

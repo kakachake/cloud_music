@@ -18,7 +18,10 @@ const axRequest = new AxRequest({
     },
     responseInterceptor: (res) => {
       //可以只把我们需要的数据返回
-      return res.data
+      return {
+        ...res.data,
+        config: res.config
+      }
     },
     responseErrorInterceptor: (error) => {
       Toast.error(error.message)

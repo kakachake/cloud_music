@@ -12,9 +12,10 @@ import audioInstance from './musicPlayer'
 export const changeMusic = debounce((direction: number, needPlay = true) => {
   const listControl = useListControl()
   const { list, current } = listControl.getList()
-
+  if (list.length === 0) return
   const newIndex = (list.length + current + direction) % list.length
-  listControl.curListType != 'fmList' &&
+  audioInstance.clearCurMusic()
+  listControl.curListType !== 'fmList' &&
     store.dispatch(
       getSongInfoAndSet({
         song: list[newIndex],

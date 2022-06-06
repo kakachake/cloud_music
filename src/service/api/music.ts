@@ -1,7 +1,7 @@
 import Toast from '../../components/Toast'
 import axRequest from '../index'
 
-enum MUSIC_API {
+export enum MUSIC_API {
   //获取推荐歌单，不需登录
   //可选参数 : limit: 取出数量 , 默认为 30 (不支持 offset)
   GET_PERSONALIZED_SONG_SHEETS = '/personalized',

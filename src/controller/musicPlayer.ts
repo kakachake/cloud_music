@@ -110,6 +110,10 @@ export class AudioController {
       this.setVolume(0)
     }
   }
+  clearCurMusic() {
+    this.audio.src = ''
+    this.store?.dispatch(musicControlSlice.actions.clearMusicInfo())
+  }
 }
 
 const audioInstance = new AudioController()

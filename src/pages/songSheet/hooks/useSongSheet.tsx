@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { getPlaylistComment, getPlaylistDetail } from '../../../service/api/music'
+import axRequest from '../../../service'
+import { getPlaylistComment, getPlaylistDetail, MUSIC_API } from '../../../service/api/music'
 import { formatNumber } from '../../../utils'
 
 export const useSongSheet = (id: string) => {
@@ -8,8 +9,11 @@ export const useSongSheet = (id: string) => {
   const [songSheetInfo, setSongSheetInfo] = useState<any>({})
   const [loading, setLoading] = useState<boolean>(false)
   const [tabList, setTabList] = useState<any[]>([])
-  const handleGetPlaylistDetail = () => {
+
+  const handleGetPlaylistDetail = async () => {
     setLoading(true)
+    // 取消之前的请求
+    axRequest.removePendingByUrl(MUSIC_API.GET_PLAYLIST_DETAIL)
     getPlaylistDetail(id!)
       .then((res) => {
         setSongSheetInfo(res.playlist)
@@ -27,9 +31,10 @@ export const useSongSheet = (id: string) => {
             id: 'favoriter'
           }
         ])
-      })
-      .finally(() => {
         setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
   useEffect(() => {

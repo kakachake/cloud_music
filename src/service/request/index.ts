@@ -1,11 +1,20 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-
+import qs from 'qs'
+import { isGeneratorFunction } from 'util/types'
 import { AxRequestInterceptor, AxRequestConfig } from './types'
 
 class AxRequest {
   instance: AxiosInstance
+  pendingRequests: Map<
+    string,
+    {
+      controller: AbortController
+      url: string
+    }
+  > = new Map()
   interceptors?: AxRequestInterceptor
   loading?: any
+
   constructor(config: AxRequestConfig) {
     this.instance = axios.create(config) //创建axios实例
     this.interceptors = config.interceptors
@@ -19,6 +28,14 @@ class AxRequest {
       this.interceptors?.responseInterceptor,
       this.interceptors?.responseErrorInterceptor
     )
+    this.instance.interceptors.response.use((response: AxiosResponse) => {
+      console.log(response)
+      if (response) {
+        this.removePendingRequest(response.config)
+        return response
+      }
+      throw new Error('response is null')
+    })
   }
 
   request<T = any>(config: AxRequestConfig<T>): Promise<T | any> {
@@ -27,6 +44,13 @@ class AxRequest {
       config = config.interceptors.requestInterceptor(config)
     }
     return new Promise((resolve, reject) => {
+      const url = config.url
+      if (url) {
+        const controller = new AbortController()
+        config.signal = controller.signal
+        const requestKey = generateReqKey(config)
+        this.pendingRequests.set(requestKey, { controller, url })
+      }
       this.instance
         .request<T>(config)
         .then((res) => {
@@ -68,6 +92,34 @@ class AxRequest {
       method: 'delete'
     })
   }
+
+  removePendingRequest(config: AxRequestConfig) {
+    const requestKey = generateReqKey(config)
+
+    if (this.pendingRequests.has(requestKey)) {
+      const { controller } = this.pendingRequests.get(requestKey) || {}
+      controller?.abort()
+      this.pendingRequests.delete(requestKey)
+    }
+  }
+
+  removePendingByUrl(url: string) {
+    this.pendingRequests.forEach((value, key) => {
+      if (value.url === url) {
+        const { controller } = value || {}
+        controller?.abort()
+        this.pendingRequests.delete(key)
+      }
+    })
+  }
+}
+
+function generateReqKey(config: AxRequestConfig) {
+  const { method, url, params, data } = config
+  const parsedParams = { ...params }
+  delete parsedParams.timerstamp
+  delete parsedParams.cookie
+  return [method, url, qs.stringify(parsedParams), qs.stringify(data)].join('&')
 }
 
 export default AxRequest

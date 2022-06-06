@@ -45,12 +45,14 @@ export const publicSlice = createSlice({
   }
 })
 
-window.addEventListener('click', (e: any) => {
-  //查询是否点击到了侧边栏
-  const sideBar = document.querySelector('#rightSideBar')
-  const musicBar = document.querySelector('#musicBar')
-  if (e.path.includes(sideBar) || e.path.includes(musicBar)) {
-  } else {
-    store.dispatch(publicSlice.actions.setCurSideOpen(''))
-  }
-})
+if (!import.meta.env.SSR) {
+  window.addEventListener('click', (e: any) => {
+    //查询是否点击到了侧边栏
+    const sideBar = document.querySelector('#rightSideBar')
+    const musicBar = document.querySelector('#musicBar')
+    if (e.path.includes(sideBar) || e.path.includes(musicBar)) {
+    } else {
+      store.dispatch(publicSlice.actions.setCurSideOpen(''))
+    }
+  })
+}
