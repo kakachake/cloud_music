@@ -29,12 +29,7 @@ class AxRequest {
       this.interceptors?.responseErrorInterceptor
     )
     this.instance.interceptors.response.use((response: AxiosResponse) => {
-      console.log(response)
-      if (response) {
-        this.removePendingRequest(response.config)
-        return response
-      }
-      throw new Error('response is null')
+      return response
     })
   }
 
@@ -61,6 +56,9 @@ class AxRequest {
         })
         .catch((error) => {
           reject(error)
+        })
+        .finally(() => {
+          this.removePendingRequest(config)
         })
     })
   }

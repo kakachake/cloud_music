@@ -24,6 +24,10 @@ const axRequest = new AxRequest({
       }
     },
     responseErrorInterceptor: (error) => {
+      console.log(error)
+      if (error.code === 'ERR_CANCELED') {
+        return error
+      }
       Toast.error(error.message)
     }
   }

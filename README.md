@@ -87,6 +87,10 @@ React Netease Music——一个基于 React、TypeScript 的高仿网易云播�
 
 ![07_搜索页](./screenshots/7_搜索页.png)
 
+![08_视频页](./screenshots/8_视频页.png)
+
+![09_歌手页](./screenshots/9_歌手页.png)
+
 ## 项目启动
 
 ```

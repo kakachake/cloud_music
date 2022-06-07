@@ -30,16 +30,13 @@ const VideoListItem: FC<VideoListItemProps> = (props) => {
   }
   const handlePreview = (preview: boolean) => {
     setPreview(preview)
-    console.log(preview)
   }
 
   useEffect(() => {
     previewVideo.current = document.getElementById('previewVideo' + id) as HTMLVideoElement
     if (previewVideo.current && preview) {
-      console.log('play')
       previewVideo.current.play()
     } else {
-      console.log('pause')
       previewVideo.current?.pause()
     }
   }, [preview])
