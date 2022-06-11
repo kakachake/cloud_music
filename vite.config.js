@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { terser } from 'rollup-plugin-terser'
-import compressPlugin from 'vite-plugin-compression'
 
 export default defineConfig({
   plugins: [
@@ -12,6 +11,7 @@ export default defineConfig({
     //   deleteOriginFile: true
     // })
   ],
+
   outDir: './build',
   base: '/'
 })

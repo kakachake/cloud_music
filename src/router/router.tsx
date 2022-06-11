@@ -9,6 +9,7 @@ import VideoDetail from '../pages/videoDetail/v/VideoDetail'
 import store, { RootState } from '../redux/store'
 import createLogin from '../components/login'
 import { useSelector } from 'react-redux'
+import UserDetail from '../pages/userDetail/UserDetail'
 const Content = lazy(() => import('../layout/defalutLayout/content/Content'))
 const Home = lazy(() => import('../pages/home/Home'))
 const MusicDetail = lazy(() => import('../layout/defalutLayout/MusicDetail/MusicDetail'))
@@ -180,6 +181,22 @@ export const GetRoutes = () => {
           element: (
             <Suspense fallback={<Loading />}>
               <Search />
+            </Suspense>
+          )
+        },
+        {
+          path: 'user/me',
+          element: (
+            <Suspense fallback={<Loading />}>
+              <UserDetail me />
+            </Suspense>
+          )
+        },
+        {
+          path: 'user/:id',
+          element: (
+            <Suspense fallback={<Loading />}>
+              <UserDetail />
             </Suspense>
           )
         }

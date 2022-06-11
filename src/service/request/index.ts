@@ -44,6 +44,7 @@ class AxRequest {
         const controller = new AbortController()
         config.signal = controller.signal
         const requestKey = generateReqKey(config)
+        this.removePendingRequestByConfigByKey(requestKey)
         this.pendingRequests.set(requestKey, { controller, url })
       }
       this.instance
@@ -53,13 +54,18 @@ class AxRequest {
             res = config.interceptors.responseInterceptor(res)
           }
           resolve(res)
+          this.removePendingRequestByConfig(config)
         })
         .catch((error) => {
+          // 如果不是取消请求再移除
+          if (!(error.code === 'ERR_CANCELED')) {
+            this.removePendingRequestByConfig(config)
+          }
           reject(error)
         })
-        .finally(() => {
-          this.removePendingRequest(config)
-        })
+      // .finally(() => {
+
+      // })
     })
   }
 
@@ -91,14 +97,17 @@ class AxRequest {
     })
   }
 
-  removePendingRequest(config: AxRequestConfig) {
-    const requestKey = generateReqKey(config)
-
-    if (this.pendingRequests.has(requestKey)) {
-      const { controller } = this.pendingRequests.get(requestKey) || {}
+  removePendingRequestByConfigByKey(key: string) {
+    if (this.pendingRequests.has(key)) {
+      const { controller } = this.pendingRequests.get(key) || {}
       controller?.abort()
-      this.pendingRequests.delete(requestKey)
+      this.pendingRequests.delete(key)
     }
+  }
+
+  removePendingRequestByConfig(config: AxRequestConfig) {
+    const requestKey = generateReqKey(config)
+    this.removePendingRequestByConfigByKey(requestKey)
   }
 
   removePendingByUrl(url: string) {
@@ -114,9 +123,9 @@ class AxRequest {
 
 function generateReqKey(config: AxRequestConfig) {
   const { method, url, params, data } = config
-  const parsedParams = { ...params }
-  delete parsedParams.timerstamp
-  delete parsedParams.cookie
+  // timerstamp和cookie不参与key的生成，因为可能会导致参数相同key不同
+  const { timerstamp, cookie, ...parsedParams } = params
+
   return [method, url, qs.stringify(parsedParams), qs.stringify(data)].join('&')
 }
 
