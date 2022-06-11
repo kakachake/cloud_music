@@ -16,7 +16,7 @@ export interface PrivacyItemUnlimit {
 
 export interface Experts {}
 
-export interface Profile {
+export interface UserProfile {
   privacyItemUnlimit: PrivacyItemUnlimit
   avatarDetail?: any
   avatarImgIdStr: string
@@ -89,7 +89,7 @@ export interface UserDetailType {
   userPoint: UserPoint
   mobileSign: boolean
   pcSign: boolean
-  profile: Profile
+  profile: UserProfile
   peopleCanSeeMyPlayRecord: boolean
   bindings: Binding[]
   adValid: boolean

@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-var-requires': 'off',
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-empty-interface': 'off'
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-empty-function': 'off'
   }
 }

@@ -2,6 +2,7 @@ import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import Toast from '../../components/Toast'
 import { checkLoginStatus, getUserPlayList } from '../../service/api/login'
 import { getLikeList } from '../../service/api/reqLoginApi/songSheets'
+import { filterPlayList } from '../../service/utils'
 import store from '../store'
 import { UserAccountType, UserInfoType } from './userType'
 interface UserState {
@@ -54,12 +55,9 @@ export const userSlice = createSlice({
       state.userAccount = action.payload.account
     },
     [getPlayList.fulfilled.type]: (state, action: PayloadAction<any>) => {
-      state.userPlayList = action.payload?.filter(
-        (item: { userId: any }) => item.userId === state.userInfo?.userId
-      )
-      state.userLikeList = action.payload?.filter(
-        (item: { userId: any }) => item.userId !== state.userInfo?.userId
-      )
+      const { ownList, likeList } = filterPlayList(action.payload, state.userInfo?.userId)
+      state.userPlayList = ownList
+      state.userLikeList = likeList
     },
     [getLList.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.likeIdList = action.payload

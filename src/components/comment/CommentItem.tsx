@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { CommentType } from '../../type/type'
 import { formatTime } from '../../utils'
 import style from './CommentItem.module.css'
@@ -14,7 +15,9 @@ const CommentItem: FC<CommentItemProps> = ({ comment }) => {
       </div>
       <div className={style.content}>
         <div className={style.commentContent}>
-          <div className={style.userName}>{comment.user.nickname}：</div>
+          <Link to={'/user/' + comment.user.userId}>
+            <div className={style.userName}>{comment.user.nickname}：</div>
+          </Link>
           <div className={style.commentDesc}>{comment.content}</div>
         </div>
         {comment.beReplied.length > 0 && (

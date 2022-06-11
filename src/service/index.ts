@@ -8,6 +8,8 @@ const axRequest = new AxRequest({
   timeout: 10000,
   interceptors: {
     requestInterceptor: (config) => {
+      console.log('requestInterceptor', config)
+
       const cookie = localStorage.getItem('cookie')
       config.params = config.params || {}
       if (cookie) {

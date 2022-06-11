@@ -122,7 +122,8 @@ class AxRequest {
 }
 
 function generateReqKey(config: AxRequestConfig) {
-  const { method, url, params, data } = config
+  const { method, url, params = {}, data } = config
+
   // timerstamp和cookie不参与key的生成，因为可能会导致参数相同key不同
   const { timerstamp, cookie, ...parsedParams } = params
 

@@ -9,6 +9,7 @@ import ArtistTabPage from './artistTabPage/ArtistTabPage'
 import PlayListTabPage from './playListTabPage/PlayListTabPage'
 import style from './Search.module.css'
 import SongTabPage from './songTabPage/SongTabPage'
+import UserTabPage from './userTabPage/UserTabPage'
 interface SearchProps {}
 
 const Search: FC<SearchProps> = () => {
@@ -113,6 +114,9 @@ const Search: FC<SearchProps> = () => {
           )}
           {type === SEARCH_TYPE.ALBUMS && (
             <AlbumTabPage setCurPage={setCurPage} data={searchResult?.albums}></AlbumTabPage>
+          )}
+          {type === SEARCH_TYPE.USERPROFILES && (
+            <UserTabPage setCurPage={setCurPage} data={searchResult?.userprofiles}></UserTabPage>
           )}
         </div>
       )}

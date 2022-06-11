@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react'
 import { pad } from '../../utils'
 import style from './MuTable.module.css'
 import styled from 'styled-components'
+import { useClick } from '../../hooks/useClick'
 
 export interface TableColumnType<DataType = any> {
   // 列名
@@ -21,16 +22,29 @@ interface TableProps {
   data: any[]
   showIdx?: boolean
   onColDoubleClick?: (data: any, idx: number) => void
+  onColClick?: (data: any, idx: number) => void
   hideHeader?: boolean
   height?: number
 }
 
 const MuTable: FunctionComponent<TableProps> = (props) => {
-  const { columns, data, showIdx, onColDoubleClick, hideHeader = false, height = 30 } = props
+  const {
+    columns,
+    data,
+    showIdx,
+    onColDoubleClick,
+    onColClick,
+    hideHeader = false,
+    height = 30
+  } = props
 
   if (!data || (data && data?.length === 0)) {
     return <div className={style.empty}>暂无数据</div>
   }
+  const [click, doubleClick] = useClick({
+    clickFn: onColClick ?? (() => {}),
+    doubleFn: onColDoubleClick ?? (() => {})
+  })
   return (
     <div className={style.muTable}>
       <table>
@@ -55,7 +69,8 @@ const MuTable: FunctionComponent<TableProps> = (props) => {
             return (
               <MuTableItemTr
                 height={height}
-                onDoubleClick={() => onColDoubleClick && onColDoubleClick(item, idx)}
+                onDoubleClick={() => doubleClick(item, idx)}
+                onClick={() => click(item, idx)}
                 key={item.id}
                 className={`${style.muTableItem}`}
               >

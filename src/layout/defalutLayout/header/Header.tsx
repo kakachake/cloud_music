@@ -70,7 +70,7 @@ const Header: FunctionComponent = () => {
         </div>
         <div className={style.right}>
           {userInfo ? (
-            <Link className={style.loginItem} to='/'>
+            <Link className={style.loginItem} to='/user/me'>
               <img className={style.avatar} src={userInfo.avatarUrl} alt='' />
               <div>{userInfo.nickname}</div>
             </Link>
