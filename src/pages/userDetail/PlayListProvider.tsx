@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
+import LazyLoad from '../../components/lazyLoad/lazyLoad'
 import Loading from '../../components/loading/Loading'
 import PlayListPreviewCard from '../../components/playListPreviewCard/PlayListPreviewCard'
 import { getPlaylistDetail } from '../../service/api/music'
@@ -12,7 +13,8 @@ const PlayListProvider: FC<PlayListProviderProps> = (props) => {
   const { playList } = props
   const [playListDetail, setPlayListDetail] = useState<SongSheetType>()
   const [loading, setLoading] = useState(false)
-  useEffect(() => {
+
+  const fetchData = useCallback(() => {
     setLoading(true)
     const { id } = playList
     getPlaylistDetail(id)
@@ -27,13 +29,15 @@ const PlayListProvider: FC<PlayListProviderProps> = (props) => {
   return (
     <>
       {
-        <PlayListPreviewCard
-          title={playList?.name}
-          songs={playListDetail?.tracks || []}
-          pic={playList?.coverImgUrl}
-          type='playList'
-          id={playList.id}
-        />
+        <LazyLoad onIntersecting={fetchData}>
+          <PlayListPreviewCard
+            title={playList?.name}
+            songs={playListDetail?.tracks || []}
+            pic={playList?.coverImgUrl}
+            type='playList'
+            id={playList.id}
+          />
+        </LazyLoad>
       }
     </>
   )

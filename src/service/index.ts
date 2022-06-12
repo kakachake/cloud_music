@@ -5,11 +5,9 @@ import Toast from '../components/Toast'
 
 const axRequest = new AxRequest({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 20000,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log('requestInterceptor', config)
-
       const cookie = localStorage.getItem('cookie')
       config.params = config.params || {}
       if (cookie) {
