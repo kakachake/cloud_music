@@ -36,6 +36,7 @@ const PlayListProvider: FC<PlayListProviderProps> = (props) => {
             pic={playList?.coverImgUrl}
             type='playList'
             id={playList.id}
+            loading={loading}
           />
         </LazyLoad>
       }

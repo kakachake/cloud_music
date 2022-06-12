@@ -20,6 +20,7 @@ interface PlayListPreviewCardProps {
   type: 'playList' | 'album'
   id?: string
   defalutFold?: boolean
+  loading?: boolean
 }
 
 const PlayListPreviewCard: FC<PlayListPreviewCardProps> = ({
@@ -28,7 +29,8 @@ const PlayListPreviewCard: FC<PlayListPreviewCardProps> = ({
   pic,
   defalutFold = true,
   id,
-  type
+  type,
+  loading
 }) => {
   const onColDoubleClick = (data: any) => {
     addMusic(data)
@@ -118,13 +120,17 @@ const PlayListPreviewCard: FC<PlayListPreviewCardProps> = ({
             <FolderAddOutlined className={`defaultClickIcon`} />
           </div>
         </div>
-        <MuTable
-          height={30}
-          onColDoubleClick={onColDoubleClick}
-          columns={columns}
-          data={sliceSongs}
-          showIdx
-        />
+        {loading ? (
+          <div className={style.loading}>加载中...</div>
+        ) : (
+          <MuTable
+            height={30}
+            onColDoubleClick={onColDoubleClick}
+            columns={columns}
+            data={sliceSongs}
+            showIdx
+          />
+        )}
         {fold === true && songs.length > 10 && (
           <div onClick={viewAll} className={style.footer}>
             查看全部{songs.length}首

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getAlbumComment } from '../service/api/album'
 import { getPlaylistComment, getSongComment } from '../service/api/music'
 import { getMVVideoComment, getVideoComment } from '../service/api/video'
@@ -13,7 +13,7 @@ export const useComment = (
   const [curPage, setCurPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     ;(async () => {
       let res: any = {}
       switch (type) {
@@ -41,7 +41,10 @@ export const useComment = (
     })()
   }, [curPage, id])
   useEffect(() => {
+    fetchData()
+  }, [fetchData])
+  useEffect(() => {
     setCurPage(1)
   }, [id])
-  return { comments, hotComments, curPage, setCurPage, total, loading, setLoading }
+  return { comments, hotComments, curPage, setCurPage, total, loading, setLoading, fetchData }
 }

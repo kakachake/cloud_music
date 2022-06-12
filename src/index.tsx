@@ -14,7 +14,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { beautifulConsole } from './utils/console'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-beautifulConsole('React Netease Music V1.1.0')
+beautifulConsole('React Netease Music')
 root.render(
   // <React.StrictMode>
   <Provider store={store}>

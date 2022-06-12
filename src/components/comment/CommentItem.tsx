@@ -1,13 +1,15 @@
+import { LikeOutlined } from '@ant-design/icons'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { CommentType } from '../../type/type'
 import { formatTime } from '../../utils'
-import style from './CommentItem.module.css'
+import style from './CommentItem.module.less'
 interface CommentItemProps {
   comment: CommentType
+  onLike: (id: number, liked: 0 | 1) => void
 }
 
-const CommentItem: FC<CommentItemProps> = ({ comment }) => {
+const CommentItem: FC<CommentItemProps> = ({ comment, onLike }) => {
   return (
     <div className={style.commentItem}>
       <div className={style.avatar}>
@@ -37,6 +39,16 @@ const CommentItem: FC<CommentItemProps> = ({ comment }) => {
         )}
         <div className={style.footer}>
           <div className={style.time}>{formatTime(comment.time, 'YYYY年MM月DD日 HH:mm')}</div>
+          <div className={style.otherRight}>
+            <div
+              className={`${style.star} ${comment.liked ? style.liked : ''}`}
+              onClick={() => {
+                onLike(comment.commentId, comment.liked ? 0 : 1)
+              }}
+            >
+              <LikeOutlined /> {comment.likedCount}
+            </div>
+          </div>
         </div>
       </div>
     </div>

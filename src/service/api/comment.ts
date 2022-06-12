@@ -3,7 +3,9 @@ import axRequest from '../index'
 
 enum COMMENT_API {
   //获取热门评论
-  GET_HOT_COMMENT = '/comment/hot'
+  GET_HOT_COMMENT = '/comment/hot',
+  //点赞评论
+  LIKE_COMMENT = '/comment/like'
 }
 
 export enum comment_type {
@@ -23,6 +25,20 @@ export function getHotComment(id: string, type: comment_type, page = 1, limit = 
       limit,
       offset: (page - 1) * limit,
       type
+    }
+  })
+}
+
+// 点赞评论
+// 是否点赞 , 1 为点赞 ,0 为取消点赞
+export function likeComment(id: string, cid: number, type: comment_type, t: 0 | 1) {
+  return axRequest.get({
+    url: COMMENT_API.LIKE_COMMENT,
+    params: {
+      id,
+      cid,
+      type,
+      t
     }
   })
 }
